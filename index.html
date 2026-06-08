@@ -110,6 +110,7 @@
             border: 2px solid var(--border-color);
             border-radius: 6px;
             outline: none;
+            text-align: right;
         }
 
         input:focus,
@@ -167,7 +168,7 @@
 
         .col-grid {
             display: grid;
-            grid-template-columns: 1fr 100px;
+            grid-template-columns: 1fr 125px;
             gap: 8px;
             align-items: center;
             margin-bottom: 6px;
@@ -377,6 +378,175 @@
             font-size: 0.95rem;
         }
 
+        /* SCHLICHTES PRINT-STYLING FÜR DIE PDF UNSERES VERGLEICHS */
+        body.clean-pdf-mode {
+            background-color: #ffffff !important;
+            color: #222222 !important;
+        }
+
+        body.clean-pdf-mode .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding-bottom: 0px !important;
+        }
+
+        body.clean-pdf-mode h1 {
+            font-size: 1.3rem !important;
+            margin: 0 0 10px 0 !important;
+        }
+
+        body.clean-pdf-mode h2 {
+            font-size: 1rem !important;
+            margin-bottom: 6px !important;
+        }
+
+        body.clean-pdf-mode h3 {
+            font-size: 0.85rem !important;
+            margin: 2px 0 !important;
+        }
+
+        body.clean-pdf-mode .panel {
+            padding: 8px 12px !important;
+            margin-bottom: 8px !important;
+        }
+
+        body.clean-pdf-mode .budget-section {
+            padding: 6px 10px !important;
+        }
+
+        body.clean-pdf-mode .card {
+            padding: 8px !important;
+        }
+
+        body.clean-pdf-mode .etf-card {
+            padding: 6px 10px !important;
+        }
+
+        body.clean-pdf-mode .col-grid {
+            margin-bottom: 2px !important;
+            gap: 4px !important;
+            grid-template-columns: 1fr 125px !important;
+        }
+
+        body.clean-pdf-mode table td {
+            padding: 3px 0 !important;
+            font-size: 0.78rem !important;
+        }
+
+        body.clean-pdf-mode .category-title {
+            margin: 4px 0 2px 0 !important;
+            font-size: 0.68rem !important;
+        }
+
+        body.clean-pdf-mode .total-expenses-box {
+            margin-top: 6px !important;
+            padding: 4px !important;
+            font-size: 0.8rem !important;
+        }
+
+        body.clean-pdf-mode .sticky-result {
+            margin-top: 8px !important;
+            padding: 6px !important;
+        }
+
+        body.clean-pdf-mode .result-bar-container {
+            height: 8px !important;
+            margin-bottom: 2px !important;
+        }
+
+        body.clean-pdf-mode .bar-label {
+            font-size: 0.8rem !important;
+        }
+
+        /* ABSCHNEIDEN BEHOBEN: Punkte entfernt, line-height normalisiert und Padding erhöht */
+        body.clean-pdf-mode input,
+        body.clean-pdf-mode select {
+            font-size: 0.78rem !important;
+            line-height: 1.4 !important;
+            padding-bottom: 2px !important;
+            border: none !important;
+            border-bottom: 1px solid transparent !important;
+            /* Punkte komplett weg */
+        }
+
+        body.clean-pdf-mode .side-by-side-grid {
+            flex-direction: row !important;
+            display: flex !important;
+            gap: 15px !important;
+        }
+
+        body.clean-pdf-mode .etf-flex-grid {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 10px !important;
+        }
+
+        body.clean-pdf-mode .panel,
+        body.clean-pdf-mode .budget-section,
+        body.clean-pdf-mode .card,
+        body.clean-pdf-mode .etf-card {
+            background: #ffffff !important;
+            color: #222222 !important;
+            border: 1px solid #dddddd !important;
+            box-shadow: none !important;
+        }
+
+        body.clean-pdf-mode input,
+        body.clean-pdf-mode select {
+            background: #ffffff !important;
+            color: #222222 !important;
+            border: none !important;
+            border-radius: 0px !important;
+            padding-left: 0px !important;
+            padding-right: 3px !important;
+            text-align: right;
+        }
+
+        body.clean-pdf-mode .col-grid label {
+            color: #333333 !important;
+        }
+
+        body.clean-pdf-mode .category-title {
+            border-bottom-color: #dddddd !important;
+            color: #555555 !important;
+        }
+
+        body.clean-pdf-mode table td,
+        body.clean-pdf-mode .etf-table td {
+            color: #222222 !important;
+            border-bottom-color: #eeeeee !important;
+        }
+
+        body.clean-pdf-mode .highlight-row {
+            background-color: #f5f5f7 !important;
+        }
+
+        body.clean-pdf-mode .savings-row {
+            background-color: #f9f9fb !important;
+            border-top: 2px solid #222222 !important;
+        }
+
+        body.clean-pdf-mode .savings-amount,
+        body.clean-pdf-mode .total-expenses-box,
+        body.clean-pdf-mode .total-expenses-box span {
+            color: #111111 !important;
+            background: transparent !important;
+        }
+
+        body.clean-pdf-mode .sticky-result {
+            background: #f5f5f7 !important;
+            border: 1px solid #dddddd !important;
+        }
+
+        body.clean-pdf-mode .result-bar-container {
+            background: #e5e7eb !important;
+        }
+
+        body.clean-pdf-mode .monthly-badge {
+            background: #f0f0f2 !important;
+            color: #333333 !important;
+        }
+
         @media (min-width: 992px) {
             .container {
                 max-width: 1100px;
@@ -406,61 +576,65 @@
 <body>
 
     <div class="container" id="capture-area">
-        <h1>Detaillierter Sparpotenzial-Vergleich</h1>
+        <h1>Finanz- und Lebenshaltungskostenvergleich</h1>
 
         <div class="info-box" data-html2canvas-ignore="true">
-            <strong>Präzise Energie-Aufteilung:</strong> Posten wie Gas, Wasser und der Holzofen sind nun für
-            Deutschland einzeln aufgeführt, um saisonale Heizkosten realitätsnah abzubilden.
+            <strong>PDF-Fehler behoben:</strong> Die gepunkteten Linien unter den Zahlen wurden im PDF-Export komplett
+            entfernt. Dadurch stehen die Zahlen jetzt absolut frei und werden an der Unterkante nicht mehr
+            abgeschnitten.
         </div>
 
         <div class="panel">
             <h2>1. Einnahmen & Startkapital</h2>
-            <div class="input-group">
-                <label for="startkapital">Vorhandenes Startkapital (z.B. Hausverkauf):</label>
-                <div class="input-wrapper"><input type="number" id="startkapital" value="150000" step="5000"
-                        oninput="calculate()"><span>€</span></div>
-            </div>
-            <div style="border-top: 1px dashed var(--border-color); margin: 15px 0;"></div>
-            <div class="input-group">
-                <label for="stundensatz">Stundensatz (Netto):</label>
-                <div class="input-wrapper"><input type="number" id="stundensatz" value="85" step="5"
-                        oninput="calculate()"><span>€</span></div>
-            </div>
-            <div class="input-group">
-                <label for="stunden">Fakturierbare Stunden pro Monat:</label>
-                <div class="input-wrapper">
-                    <select id="stunden" onchange="calculate()">
-                        <option value="80">80 Std.</option>
-                        <option value="100">100 Std.</option>
-                        <option value="120" selected>120 Std. (Standard)</option>
-                        <option value="140">140 Std.</option>
-                        <option value="160">160 Std.</option>
-                    </select>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label for="startkapital">Startkapital:</label>
+                    <div class="input-wrapper"><input type="number" id="startkapital" value="150000" step="5000"
+                            oninput="calculate()"><span>€</span></div>
+                </div>
+                <div class="input-group" style="margin-bottom:0;">
+                    <label for="intl-kv-input">Auslands-KV / Monat (Modell 2):</label>
+                    <div class="input-wrapper"><input type="number" id="intl-kv-input" value="80" step="5"
+                            oninput="calculate()"><span>€</span></div>
                 </div>
             </div>
-            <div class="input-group">
-                <label for="intl-kv-input">Kosten Auslands-KV pro Monat (Modell 2):</label>
-                <div class="input-wrapper"><input type="number" id="intl-kv-input" value="80" step="5"
-                        oninput="calculate()"><span>€</span></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label for="stundensatz">Stundensatz (Netto):</label>
+                    <div class="input-wrapper"><input type="number" id="stundensatz" value="85" step="5"
+                            oninput="calculate()"><span>€</span></div>
+                </div>
+                <div class="input-group" style="margin-bottom:0;">
+                    <label for="stunden">Fakturierbare Stunden:</label>
+                    <div class="input-wrapper">
+                        <select id="stunden" onchange="calculate()" style="text-align: left;">
+                            <option value="80">80 Std.</option>
+                            <option value="100">100 Std.</option>
+                            <option value="120" selected>120 Std.</option>
+                            <option value="140">140 Std.</option>
+                            <option value="160">160 Std.</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <button class="btn-pdf" data-html2canvas-ignore="true" onclick="exportToPDF()">💾 PDF-Bericht
-                herunterladen</button>
+                generieren</button>
         </div>
 
         <div class="panel">
-            <h2>2. Aufgedröselte Lebenshaltungskosten (Monatlich)</h2>
+            <h2>2. Detaillierte Lebenshaltungskosten (Monatlich)</h2>
 
             <div class="side-by-side-grid">
                 <div class="budget-section de">
                     <h3>Modell 1: Deutschland</h3>
 
-                    <div class="category-title">Wohnen & Energie (Detailliert)</div>
-                    <div class="col-grid"><label for="de-rent">Kaltmiete / Basiswohnung:</label>
+                    <div class="category-title">Wohnen & Energie</div>
+                    <div class="col-grid"><label for="de-rent">Miete:</label>
                         <div class="input-wrapper"><input type="number" id="de-rent" value="800"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-strom">Stromkosten einzeln:</label>
+                    <div class="col-grid"><label for="de-strom">Strom einzeln:</label>
                         <div class="input-wrapper"><input type="number" id="de-strom" value="90"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -468,69 +642,51 @@
                         <div class="input-wrapper"><input type="number" id="de-gas" value="85"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-wasser">Wasser & Abwasser:</label>
+                    <div class="col-grid"><label for="de-wasser">Wasser / Abwasser:</label>
                         <div class="input-wrapper"><input type="number" id="de-wasser" value="35"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-holz">Holzofen (Brennholz / Pellets):</label>
+                    <div class="col-grid"><label for="de-holz">Holzofen (Pellets):</label>
                         <div class="input-wrapper"><input type="number" id="de-holz" value="40"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-gez">GEZ / Rundfunkbeitrag:</label>
+                    <div class="col-grid"><label for="de-gez">GEZ Gebühr:</label>
                         <div class="input-wrapper"><input type="number" id="de-gez" value="18"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
 
-                    <div class="category-title">Konnektivität & Medien</div>
-                    <div class="col-grid"><label for="de-internet">Festnetz-Internet (VDSL/Kabel):</label>
+                    <div class="category-title">Medien, Abos & Freizeit</div>
+                    <div class="col-grid"><label for="de-internet">Festnetz-Internet:</label>
                         <div class="input-wrapper"><input type="number" id="de-internet" value="35"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-mobil">Mobilfunk / Handyvertrag:</label>
+                    <div class="col-grid"><label for="de-mobil">Mobilfunk-Vertrag:</label>
                         <div class="input-wrapper"><input type="number" id="de-mobil" value="25"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-
-                    <div class="category-title">Streaming & Abos</div>
-                    <div class="col-grid"><label for="de-netflix">Netflix Abo:</label>
-                        <div class="input-wrapper"><input type="number" id="de-netflix" value="18"
+                    <div class="col-grid"><label for="de-netflix">Netflix / Disney+ / Spotify:</label>
+                        <div class="input-wrapper"><input type="number" id="de-netflix" value="40"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-disney">Disney+ / Amazon Prime:</label>
-                        <div class="input-wrapper"><input type="number" id="de-disney" value="14"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-music">Spotify / Apple Music:</label>
-                        <div class="input-wrapper"><input type="number" id="de-music" value="11"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-gym">Fitnessstudio / Sportverein:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gym" value="45"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-software">Sonstige Cloud/Software-Abos:</label>
-                        <div class="input-wrapper"><input type="number" id="de-software" value="15"
+                    <div class="col-grid"><label for="de-gym">Gym & Software-Abos:</label>
+                        <div class="input-wrapper"><input type="number" id="de-gym" value="60"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Alltag & Mobilität</div>
-                    <div class="col-grid"><label for="de-food">Lebensmittel & Drogerie (Supermarkt):</label>
+                    <div class="col-grid"><label for="de-food">Supermarkt & Drogerie:</label>
                         <div class="input-wrapper"><input type="number" id="de-food" value="350"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-car">Auto (Sprit, Vers., Steuer) / Bahn:</label>
+                    <div class="col-grid"><label for="de-car">Auto / Transportkosten:</label>
                         <div class="input-wrapper"><input type="number" id="de-car" value="160"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-gastro">Restaurants, Cafés & Lieferdienste:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gastro" value="120"
+                    <div class="col-grid"><label for="de-gastro">Gastro & Ausgehen:</label>
+                        <div class="input-wrapper"><input type="number" id="de-gastro" value="250"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-leisure">Freizeit, Kino, Bar, Ausflüge:</label>
-                        <div class="input-wrapper"><input type="number" id="de-leisure" value="130"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-vers">Haftpflicht, Hausrat & Co.:</label>
+                    <div class="col-grid"><label for="de-vers">Versicherungen:</label>
                         <div class="input-wrapper"><input type="number" id="de-vers" value="25"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -542,15 +698,15 @@
                     <h3>Modell 2: Thailand</h3>
 
                     <div class="category-title">Wohnen & Energie</div>
-                    <div class="col-grid"><label for="th-rent">Miete (Modernes Condo + Pool/Gym):</label>
+                    <div class="col-grid"><label for="th-rent">Condo Miete (Pool/Gym):</label>
                         <div class="input-wrapper"><input type="number" id="th-rent" value="450"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-strom">Strom (v.a. Klimaanlage):</label>
+                    <div class="col-grid"><label for="th-strom">Strom (Klimaanlage):</label>
                         <div class="input-wrapper"><input type="number" id="th-strom" value="65"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-gas">Gas (in TH meist unüblich/0):</label>
+                    <div class="col-grid"><label for="th-gas">Gas (in TH unüblich):</label>
                         <div class="input-wrapper"><input type="number" id="th-gas" value="0"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -558,49 +714,35 @@
                         <div class="input-wrapper"><input type="number" id="th-wasser" value="8"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-holz">Holzofen (entfällt komplett/0):</label>
+                    <div class="col-grid"><label for="th-holz">Holzofen (entfällt):</label>
                         <div class="input-wrapper"><input type="number" id="th-holz" value="0"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-gez">Rundfunkgebühren / Sonstiges:</label>
+                    <div class="col-grid"><label for="th-gez">Rundfunk (entfällt):</label>
                         <div class="input-wrapper"><input type="number" id="th-gez" value="0"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
 
-                    <div class="category-title">Konnektivität & Medien</div>
+                    <div class="category-title">Medien, Abos & Freizeit</div>
                     <div class="col-grid"><label for="th-internet">Faser-Internet (Highspeed):</label>
                         <div class="input-wrapper"><input type="number" id="th-internet" value="15"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-mobil">Mobilfunk (Unlimited Data):</label>
+                    <div class="col-grid"><label for="th-mobil">Mobilfunk (Unlimited):</label>
                         <div class="input-wrapper"><input type="number" id="th-mobil" value="12"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-
-                    <div class="category-title">Streaming & Abos (Lokal-Preise)</div>
-                    <div class="col-grid"><label for="th-netflix">Netflix Abo (TH Tarif):</label>
-                        <div class="input-wrapper"><input type="number" id="th-netflix" value="11"
+                    <div class="col-grid"><label for="th-netflix">Netflix / Disney+ / Spotify (TH):</label>
+                        <div class="input-wrapper"><input type="number" id="th-netflix" value="24"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-disney">Disney+ / Amazon Prime (TH):</label>
-                        <div class="input-wrapper"><input type="number" id="th-disney" value="7"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-music">Spotify / Apple Music (TH):</label>
-                        <div class="input-wrapper"><input type="number" id="th-music" value="6"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-gym">Fitnessstudio vor Ort (falls exklusive):</label>
-                        <div class="input-wrapper"><input type="number" id="th-gym" value="0"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-software">Sonstige Cloud/Software-Abos:</label>
+                    <div class="col-grid"><label for="th-gym">Sonstige Software-Abos:</label>
                         <div class="input-wrapper"><input type="number" id="th-software" value="15"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Alltag & Mobilität</div>
-                    <div class="col-grid"><label for="th-food">Lebensmittel (Märkte / 7-Eleven):</label>
+                    <div class="col-grid"><label for="th-food">Lebensmittel / Märkte:</label>
                         <div class="input-wrapper"><input type="number" id="th-food" value="150"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -608,15 +750,11 @@
                         <div class="input-wrapper"><input type="number" id="th-car" value="50"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-gastro">Gastro, Streetfood & Coffee Shops:</label>
-                        <div class="input-wrapper"><input type="number" id="th-gastro" value="220"
+                    <div class="col-grid"><label for="th-gastro">Streetfood, Gastro & Coffee:</label>
+                        <div class="input-wrapper"><input type="number" id="th-gastro" value="370"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-leisure">Massagen, Nightlife, Ausflüge:</label>
-                        <div class="input-wrapper"><input type="number" id="th-leisure" value="150"
-                                oninput="calculate()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-visa">Visumskosten (auf Monat umgelegt):</label>
+                    <div class="col-grid"><label for="th-visa">Visumskosten (umgelegt):</label>
                         <div class="input-wrapper"><input type="number" id="th-visa" value="35"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -626,7 +764,7 @@
             </div>
         </div>
 
-        <div class="side-by-side-grid" style="margin-top: 20px;">
+        <div class="side-by-side-grid">
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
                 <table>
@@ -635,12 +773,8 @@
                         <td><span id="gkv-brutto">0,00 €</span></td>
                     </tr>
                     <tr>
-                        <td>- GKV Beitrag (16,9%)</td>
+                        <td>- GKV / Pflege (21,1%)</td>
                         <td><span id="gkv-kv">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- Pflegeversicherung (4,2%)</td>
-                        <td><span id="gkv-pv">0,00 €</span></td>
                     </tr>
                     <tr>
                         <td>Einkommensteuer (ca.)</td>
@@ -649,10 +783,6 @@
                     <tr class="highlight-row">
                         <td>Netto verbleibend</td>
                         <td><span id="gkv-netto">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- Lebenshaltungskosten (DE)</td>
-                        <td id="gkv-applied-col" style="color:var(--primary-red);">0,00 €</td>
                     </tr>
                     <tr class="savings-row">
                         <td>Reales Sparpotenzial</td>
@@ -673,20 +803,12 @@
                         <td><span id="intl-kv-display">0,00 €</span></td>
                     </tr>
                     <tr>
-                        <td>- Pflegeversicherung</td>
-                        <td><span>0,00 €</span></td>
-                    </tr>
-                    <tr>
                         <td>Einkommensteuer (ca.)</td>
                         <td><span id="intl-tax">0,00 €</span></td>
                     </tr>
                     <tr class="highlight-row">
                         <td>Netto verbleibend</td>
                         <td><span id="intl-netto">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- Lebenshaltungskosten (TH)</td>
-                        <td id="intl-applied-col" style="color:var(--primary-green);">0,00 €</td>
                     </tr>
                     <tr class="savings-row">
                         <td>Reales Sparpotenzial</td>
@@ -703,78 +825,50 @@
             <div id="comparison-text" class="bar-label">Berechne...</div>
         </div>
 
-        <div class="panel" style="margin-top: 25px;">
+        <div class="panel">
             <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
-                Inklusive Startkapital. Rente basiert auf einer sicheren, ewigen Entnahmerate von 4% p.a.
-            </p>
-
             <div class="etf-flex-grid">
                 <div class="etf-card diff">
-                    <h4><span>Szenario A: Startkapital + Differenz</span><span class="monthly-badge"
-                            id="etf-diff-rate">0 €/M</span></h4>
+                    <h4><span>A: Startkapital + Diff.</span><span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
+                    </h4>
                     <table class="etf-table">
-                        <tr>
-                            <td>Eingezahlt gesamt:</td>
-                            <td id="etf-diff-invested">0,00 €</td>
-                        </tr>
-                        <tr>
-                            <td>+ Zinsen gesamt:</td>
-                            <td id="etf-diff-interest">0,00 €</td>
-                        </tr>
                         <tr class="total-etf-row">
-                            <td>Endvermögen (5 J.):</td>
+                            <td>Endvermögen:</td>
                             <td id="etf-diff-total">0,00 €</td>
                         </tr>
                         <tr class="rente-row">
-                            <td>Mögliche Monatsrente:</td>
-                            <td id="etf-diff-rent">0,00 € / M.</td>
+                            <td>Monatsrente:</td>
+                            <td id="etf-diff-rent">0,00 €</td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="etf-card de-full">
-                    <h4><span>Szenario B: Startkapital + Sparrate DE</span><span class="monthly-badge"
-                            id="etf-de-rate">0 €/M</span></h4>
+                    <h4><span>B: Startkapital + Spar. DE</span><span class="monthly-badge" id="etf-de-rate">0 €/M</span>
+                    </h4>
                     <table class="etf-table">
-                        <tr>
-                            <td>Eingezahlt gesamt:</td>
-                            <td id="etf-de-invested">0,00 €</td>
-                        </tr>
-                        <tr>
-                            <td>+ Zinsen gesamt:</td>
-                            <td id="etf-de-interest">0,00 €</td>
-                        </tr>
                         <tr class="total-etf-row">
-                            <td>Endvermögen (5 J.):</td>
+                            <td>Endvermögen:</td>
                             <td id="etf-de-total">0,00 €</td>
                         </tr>
                         <tr class="rente-row">
-                            <td>Mögliche Monatsrente:</td>
-                            <td id="etf-de-rent">0,00 € / M.</td>
+                            <td>Monatsrente:</td>
+                            <td id="etf-de-rent">0,00 €</td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="etf-card th-full">
-                    <h4><span>Szenario C: Startkapital + Sparrate TH</span><span class="monthly-badge"
-                            id="etf-th-rate">0 €/M</span></h4>
+                    <h4><span>C: Startkapital + Spar. TH</span><span class="monthly-badge" id="etf-th-rate">0 €/M</span>
+                    </h4>
                     <table class="etf-table">
-                        <tr>
-                            <td>Eingezahlt gesamt:</td>
-                            <td id="etf-th-invested">0,00 €</td>
-                        </tr>
-                        <tr>
-                            <td>+ Zinsen gesamt:</td>
-                            <td id="etf-th-interest">0,00 €</td>
-                        </tr>
                         <tr class="total-etf-row">
-                            <td>Endvermögen (5 J.):</td>
+                            <td>Endvermögen:</td>
                             <td id="etf-th-total">0,00 €</td>
                         </tr>
                         <tr class="rente-row">
-                            <td>Mögliche Monatsrente:</td>
-                            <td id="etf-th-rent">0,00 € / M.</td>
+                            <td>Monatsrente:</td>
+                            <td id="etf-th-rent">0,00 €</td>
                         </tr>
                     </table>
                 </div>
@@ -783,15 +877,14 @@
     </div>
 
     <script>
-        // Alle Eingabeschlüssel für die Formulare (inklusive der neuen Felder)
-        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'disney', 'music', 'gym', 'software', 'food', 'car', 'gastro', 'leisure', 'vers', 'visa'];
+        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
 
         function formatEuro(amount) {
             return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
         }
 
         function estimateTax(annualIncome) {
-            let taxable = annualIncome - 11784; // Grundfreibetrag 2026
+            let taxable = annualIncome - 11784;
             if (taxable <= 0) return 0;
             let tax = 0;
             if (taxable <= 50000) { tax = taxable * 0.20; }
@@ -803,14 +896,11 @@
             let months = years * 12;
             let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
             let total = startCapital;
-            let invested = startCapital + (monthlyRate * months);
-
             for (let i = 0; i < months; i++) {
                 total = (total * (1 + monthlyReturn)) + monthlyRate;
             }
-            let interest = total - invested;
             let monthlyRent = (total * 0.04) / 12;
-            return { invested: Math.max(0, invested), interest: Math.max(0, interest), total: Math.max(0, total), monthlyRent: Math.max(0, monthlyRent) };
+            return { total: Math.max(0, total), monthlyRent: Math.max(0, monthlyRent) };
         }
 
         function loadSavedValues() {
@@ -848,13 +938,15 @@
                     localStorage.setItem('c_de_' + key, val);
                     totalDeCoL += val;
                 }
-                let elTH = document.getElementById('th-' + key);
-                if (elTH) {
+                let elTH = document.getElementById('th-' + key) || document.getElementById('th-software');
+                if (elTH && elTH.id.startsWith('th-' + key)) {
                     let val = parseFloat(elTH.value) || 0;
                     localStorage.setItem('c_th_' + key, val);
                     totalThCoL += val;
                 }
             });
+            let swVal = parseFloat(document.getElementById('th-software').value) || 0;
+            totalThCoL += swVal;
 
             document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
             document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
@@ -864,10 +956,9 @@
             // DE Berechnung
             const minGrenz = 1318.33, maxGrenz = 5812.50;
             let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
-            let gkvKv = brutto === 0 ? minGrenz * 0.169 : beitragsBasis * 0.169;
-            let gkvPv = brutto === 0 ? minGrenz * 0.042 : beitragsBasis * 0.042;
-            let gkvTax = estimateTax(Math.max(0, brutto - gkvKv - gkvPv) * 12);
-            let gkvNetto = brutto - gkvKv - gkvPv - gkvTax;
+            let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
+            let gkvTax = estimateTax(Math.max(0, brutto - gkvKv) * 12);
+            let gkvNetto = brutto - gkvKv - gkvTax;
             let gkvSavings = gkvNetto - totalDeCoL;
 
             // TH Berechnung
@@ -875,23 +966,18 @@
             let intlNetto = brutto - intlKv - intlTax;
             let intlSavings = intlNetto - totalThCoL;
 
-            // UI Tabellen befüllen
             document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
             document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
-            document.getElementById('gkv-pv').innerText = formatEuro(gkvPv);
             document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
             document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
-            document.getElementById('gkv-applied-col').innerText = `- ${formatEuro(totalDeCoL)}`;
             document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
 
             document.getElementById('intl-brutto').innerText = formatEuro(brutto);
             document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
             document.getElementById('intl-tax').innerText = formatEuro(intlTax);
             document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
-            document.getElementById('intl-applied-col').innerText = `- ${formatEuro(totalThCoL)}`;
             document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
-            // Fortschrittsbalken Logik
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -913,14 +999,13 @@
                 compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
             }
 
-            // ETF Logik
             let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
             let deRate = Math.max(0, gkvSavings);
             let thRate = Math.max(0, intlSavings);
 
-            document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} € / M.`;
-            document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} € / M.`;
-            document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} € / M.`;
+            document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
+            document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
+            document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
 
             let simDiff = simulateETFWithStart(startkapital, diffRate, 5, 0.07);
             let simDe = simulateETFWithStart(startkapital, deRate, 5, 0.07);
@@ -928,45 +1013,62 @@
 
             ['diff', 'de', 'th'].forEach(s => {
                 let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : simTh);
-                document.getElementById(`etf-${s}-invested`).innerText = formatEuro(sim.invested);
-                document.getElementById(`etf-${s}-interest`).innerText = formatEuro(sim.interest);
                 document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
-                document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / Mon.';
+                document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
             });
         }
 
-        // PDF Export-Funktion
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const targetElement = document.getElementById('capture-area');
 
+            document.body.classList.add('clean-pdf-mode');
+
             const options = {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: '#121214'
+                backgroundColor: '#ffffff'
             };
 
-            html2canvas(targetElement, options).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const imgWidth = 210;
-                const pageHeight = 295;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                let heightLeft = imgHeight;
-                let position = 0;
+            setTimeout(() => {
+                html2canvas(targetElement, options).then(canvas => {
+                    const pdf = new jsPDF('l', 'mm', 'a4');
 
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
+                    const pdfWidth = 297;
+                    const pdfHeight = 210;
 
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
+                    const marginX = 12;
+                    const marginTop = 14;
+                    const marginBottom = 12;
 
-                pdf.save('Finanzvergleich_Deutschland_Thailand.pdf');
-            });
+                    const usableWidth = pdfWidth - (marginX * 2);
+                    const usableHeight = pdfHeight - marginTop - marginBottom;
+
+                    const imgData = canvas.toDataURL('image/png');
+                    pdf.addImage(imgData, 'PNG', marginX, marginTop, usableWidth, usableHeight);
+
+                    // Kopfzeile
+                    pdf.setFont('Helvetica', 'normal');
+                    pdf.setFontSize(8);
+                    pdf.setTextColor(110, 110, 110);
+                    pdf.text('Persönlicher Finanz- & Standortvergleich', marginX, marginTop - 5);
+
+                    const dateStr = new Date().toLocaleDateString('de-DE');
+                    pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 5, { align: 'right' });
+
+                    pdf.setDrawColor(210, 210, 210);
+                    pdf.setLineWidth(0.2);
+                    pdf.line(marginX, marginTop - 3, pdfWidth - marginX, marginTop - 3);
+
+                    // Fußzeile
+                    pdf.line(marginX, pdfHeight - marginBottom + 3, pdfWidth - marginX, pdfHeight - marginBottom + 3);
+                    pdf.text('Alle Steuerberechnungen basieren auf Schätzwerten. Keine Finanzberatung.', marginX, pdfHeight - marginBottom + 7);
+                    pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 7, { align: 'right' });
+
+                    pdf.save('Finanzbericht_Professional.pdf');
+                    document.body.classList.remove('clean-pdf-mode');
+                });
+            }, 150);
         }
 
         loadSavedValues();

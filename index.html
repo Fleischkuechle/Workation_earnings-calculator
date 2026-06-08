@@ -382,14 +382,25 @@
         <h1>Reales Sparpotenzial-Vergleich</h1>
 
         <div class="info-box">
-            <strong>Zinseszins & Renten-Hebel:</strong> Unten siehst du nun vollautomatisiert, wie sich dein monatliches
-            Sparpotenzial über 5 Jahre in einem weltweiten ETF vermehrt und welche monatliche Zusatzrente daraus
-            entsteht.
+            <strong>Hebel-Effekt mit Startkapital:</strong> Ein bereits vorhandenes Startkapital (z.B. Hausverkauf)
+            vermehrt sich durch den Zinseszins über 5 Jahre hinweg massiv und hebt das Endvermögen sowie die Rente auf
+            ein völlig neues Niveau.
         </div>
 
-        <!-- 1. INCOME PANEL -->
+        <!-- 1. INCOME & STARTING CAPITAL PANEL -->
         <div class="panel">
-            <h2>1. Einnahmen & Krankenversicherung</h2>
+            <h2>1. Einnahmen, Versicherung & Startkapital</h2>
+
+            <div class="input-group">
+                <label for="startkapital">Vorhandenes Startkapital (z.B. Hausverkauf):</label>
+                <div class="input-wrapper">
+                    <input type="number" id="startkapital" value="150000" step="5000" oninput="calculate()">
+                    <span>€</span>
+                </div>
+            </div>
+
+            <div style="border-top: 1px dashed var(--border-color); margin: 15px 0;"></div>
+
             <div class="input-group">
                 <label for="stundensatz">Stundensatz (Netto):</label>
                 <div class="input-wrapper">
@@ -420,7 +431,7 @@
             </div>
         </div>
 
-        <!-- 2. COST OF LIVING PANEL (NEBENEINANDER) -->
+        <!-- 2. COST OF LIVING PANEL -->
         <div class="panel">
             <h2>2. Monatliche Lebenshaltungskosten im Vergleich</h2>
 
@@ -513,7 +524,7 @@
             </div>
         </div>
 
-        <!-- 3. COMPARISON RESULTS (NEBENEINANDER) -->
+        <!-- 3. COMPARISON RESULTS -->
         <div class="side-by-side-grid" style="margin-top: 20px;">
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
@@ -592,12 +603,12 @@
             <div id="comparison-text" class="bar-label">Berechne...</div>
         </div>
 
-        <!-- 4. ETF- & RENDITENSIMULATION (NEU) -->
+        <!-- 4. ETF- & RENDITENSIMULATION WITH STARTING CAPITAL -->
         <div class="panel" style="margin-top: 25px;">
             <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
-                Simulation bei monatlicher Einzahlung über genau 5 Jahre. Die Rente basiert auf einer sicheren, ewigen
-                Entnahmerate von 4% p.a. (Kapital bleibt unberührt).
+                Inklusive Verzinsung des eingebrachten Startkapitals. Die Rente basiert auf einer sicheren, ewigen
+                Entnahmerate von 4% p.a. (Kapital bleibt dauerhaft erhalten).
             </p>
 
             <div class="etf-flex-grid">
@@ -605,18 +616,18 @@
                 <!-- SZENARIO A: NUR DIE DIFFERENZ -->
                 <div class="etf-card diff">
                     <h4>
-                        <span>Szenario A: Nur die Differenz</span>
+                        <span>Szenario A: Startkapital + Differenz</span>
                         <span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
                     </h4>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du bleibst in DE leben,
-                        sparst aber nur den Thailand-Überschuss separat an.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Startkapital arbeitet
+                        im ETF + monatliche Einzahlung des Thailand-Überschusses.</p>
                     <table class="etf-table">
                         <tr>
-                            <td>Eingezahltes Kapital:</td>
+                            <td>Eingezahltes Kapital gesamt:</td>
                             <td id="etf-diff-invested">0,00 €</td>
                         </tr>
                         <tr>
-                            <td>+ Erzielte Zinsen:</td>
+                            <td>+ Erzielte Zinsen gesamt:</td>
                             <td id="etf-diff-interest">0,00 €</td>
                         </tr>
                         <tr class="total-etf-row">
@@ -633,18 +644,18 @@
                 <!-- SZENARIO B: DEUTSCHLAND GESAMT -->
                 <div class="etf-card de-full">
                     <h4>
-                        <span>Szenario B: Gesamtes Sparpotenzial DE</span>
+                        <span>Szenario B: Startkapital + Sparrate DE</span>
                         <span class="monthly-badge" id="etf-de-rate">0 €/M</span>
                     </h4>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du legst dein
-                        komplettes monatliches Sparpotenzial aus Deutschland an.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Startkapital arbeitet
+                        im ETF + monatliche Einzahlung des gesamten DE-Sparpotenzials.</p>
                     <table class="etf-table">
                         <tr>
-                            <td>Eingezahltes Kapital:</td>
+                            <td>Eingezahltes Kapital gesamt:</td>
                             <td id="etf-de-invested">0,00 €</td>
                         </tr>
                         <tr>
-                            <td>+ Erzielte Zinsen:</td>
+                            <td>+ Erzielte Zinsen gesamt:</td>
                             <td id="etf-de-interest">0,00 €</td>
                         </tr>
                         <tr class="total-etf-row">
@@ -661,18 +672,18 @@
                 <!-- SZENARIO C: THAILAND GESAMT -->
                 <div class="etf-card th-full">
                     <h4>
-                        <span>Szenario C: Gesamtes Sparpotenzial TH</span>
+                        <span>Szenario C: Startkapital + Sparrate TH</span>
                         <span class="monthly-badge" id="etf-th-rate">0 €/M</span>
                     </h4>
-                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du nutzt den
-                        thailändischen Hebel und legst das komplette dortige Sparpotenzial an.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Maximaler Hebel:
+                        Startkapital arbeitet + volles thailändisches Sparpotenzial jeden Monat.</p>
                     <table class="etf-table">
                         <tr>
-                            <td>Eingezahltes Kapital:</td>
+                            <td>Eingezahltes Kapital gesamt:</td>
                             <td id="etf-th-invested">0,00 €</td>
                         </tr>
                         <tr>
-                            <td>+ Erzielte Zinsen:</td>
+                            <td>+ Erzielte Zinsen gesamt:</td>
                             <td id="etf-th-interest">0,00 €</td>
                         </tr>
                         <tr class="total-etf-row">
@@ -712,29 +723,35 @@
             return tax / 12;
         }
 
-        // Sparplan-Formel (Zinseszins bei monatlicher Einzahlung)
-        // r = jährliche Rendite (0.07), n = Monate (60)
-        function simulateETF(monthlyRate, years, annualReturn) {
-            if (monthlyRate <= 0) return { invested: 0, interest: 0, total: 0, monthlyRent: 0 };
-
+        // Sparplan-Formel inklusive Einmal-Startkapital
+        function simulateETFWithStart(startCapital, monthlyRate, years, annualReturn) {
             let months = years * 12;
             let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
-            let total = 0;
-            let invested = monthlyRate * months;
+
+            // Startkapital wächst über die Monate eigenständig
+            let total = startCapital;
+            let invested = startCapital + (monthlyRate * months);
 
             for (let i = 0; i < months; i++) {
-                total = (total + monthlyRate) * (1 + monthlyReturn);
+                // Zuerst verzinst sich das bestehende Kapital, dann kommt die neue Sparrate dazu
+                total = (total * (1 + monthlyReturn)) + monthlyRate;
             }
 
             let interest = total - invested;
+            let monthlyRent = (total * 0.04) / 12; // 4% Regel
 
-            // 4% Regel für ewige Rente: (Endvermögen * 0.04) / 12 Monate
-            let monthlyRent = (total * 0.04) / 12;
-
-            return { invested, interest, total, monthlyRent };
+            return {
+                invested: Math.max(0, invested),
+                interest: Math.max(0, interest),
+                total: Math.max(0, total),
+                monthlyRent: Math.max(0, monthlyRent)
+            };
         }
 
         function loadSavedValues() {
+            if (localStorage.getItem('freiberufler_startkapital') !== null) {
+                document.getElementById('startkapital').value = localStorage.getItem('freiberufler_startkapital');
+            }
             if (localStorage.getItem('freiberufler_stundensatz') !== null) {
                 document.getElementById('stundensatz').value = localStorage.getItem('freiberufler_stundensatz');
             }
@@ -757,10 +774,12 @@
         }
 
         function calculate() {
+            let startkapital = parseFloat(document.getElementById('startkapital').value) || 0;
             let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
             let stunden = parseFloat(document.getElementById('stunden').value) || 0;
             let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
 
+            localStorage.setItem('freiberufler_startkapital', startkapital);
             localStorage.setItem('freiberufler_stundensatz', stundensatz);
             localStorage.setItem('freiberufler_stunden', stunden);
             localStorage.setItem('freiberufler_intl_kv', intlKv);
@@ -819,7 +838,7 @@
             document.getElementById('intl-applied-col').innerText = `- ${formatEuro(totalThCoL)}`;
             document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
-            // Progress Bar & Recommendation Text
+            // Progress Bar
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -842,20 +861,19 @@
                 compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
             }
 
-            // --- ETF RENDITE BERECHNUNGEN (NEU) ---
+            // --- ETF RENDITE BERECHNUNGEN (inkl. Startkapital) ---
             let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
             let deRate = Math.max(0, gkvSavings);
             let thRate = Math.max(0, intlSavings);
 
-            // Abzeichen in den Headers aktualisieren
             document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} € / M.`;
             document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} € / M.`;
             document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} € / M.`;
 
-            // Simulationen ausführen (5 Jahre, 7% Rendite)
-            let simDiff = simulateETF(diffRate, 5, 0.07);
-            let simDe = simulateETF(deRate, 5, 0.07);
-            let simTh = simulateETF(thRate, 5, 0.07);
+            // Simulationen ausführen (Startkapital, Sparrate, 5 Jahre, 7% Rendite)
+            let simDiff = simulateETFWithStart(startkapital, diffRate, 5, 0.07);
+            let simDe = simulateETFWithStart(startkapital, deRate, 5, 0.07);
+            let simTh = simulateETFWithStart(startkapital, thRate, 5, 0.07);
 
             // UI Zuweisung Szenario A (Differenz)
             document.getElementById('etf-diff-invested').innerText = formatEuro(simDiff.invested);

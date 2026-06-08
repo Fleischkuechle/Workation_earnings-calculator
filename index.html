@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freiberufler Brutto-Netto & Länder-Budget-Planer</title>
+    <style>
+        :root {
+            --bg-color: #121214;
+            --card-bg: #1e1e24;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #2d2d34;
+            --primary-green: #2ecc71;
+            --primary-red: #ff4d4d;
+            --accent-blue: #3498db;
+            --tooltip-bg: #2a2a35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin: 15px 0 20px 0;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            margin: 10px 0;
+            color: var(--text-main);
+        }
+
+        .info-box {
+            background-color: #1a2536;
+            border-left: 4px solid var(--accent-blue);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+        }
+
+        .panel {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input,
+        select {
+            background: #121214;
+            color: #fff;
+            padding: 10px 12px;
+            width: 100%;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .input-wrapper span {
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-width: 25px;
+        }
+
+        /* Responsive Layout Grids für Budgets und Ergebnisse */
+        .side-by-side-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .budget-section {
+            padding: 15px;
+            background: #19191d;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            flex: 1;
+        }
+
+        .budget-section.de {
+            border-top: 4px solid var(--primary-red);
+        }
+
+        .budget-section.th {
+            border-top: 4px solid var(--primary-green);
+        }
+
+        .col-grid {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .col-grid label {
+            font-size: 0.85rem;
+            color: #e5e7eb;
+        }
+
+        .total-expenses-box {
+            margin-top: 15px;
+            padding: 10px;
+            background: #121214;
+            border-radius: 6px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .de .total-expenses-box {
+            color: var(--primary-red);
+        }
+
+        .th .total-expenses-box {
+            color: var(--primary-green);
+        }
+
+        /* Comparison Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            flex: 1;
+        }
+
+        .card.gkv {
+            border-top: 4px solid var(--primary-red);
+        }
+
+        .card.intl {
+            border-top: 4px solid var(--primary-green);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        table td {
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        table tr.sub-calc {
+            color: var(--text-muted);
+            background-color: #19191d;
+        }
+
+        table tr.sub-calc td {
+            padding: 5px 4px;
+            font-size: 0.8rem;
+        }
+
+        table td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .highlight-row {
+            background-color: #252529;
+        }
+
+        .highlight-row td {
+            padding: 12px 8px !important;
+            font-weight: 700 !important;
+        }
+
+        .savings-row {
+            border-top: 2px solid #fff;
+        }
+
+        .gkv .savings-row {
+            background-color: #2d1919;
+        }
+
+        .intl .savings-row {
+            background-color: #1b2e24;
+        }
+
+        .savings-row td {
+            font-size: 1.1rem;
+            padding: 14px 8px !important;
+            font-weight: 700 !important;
+            color: #fff;
+        }
+
+        .gkv .savings-amount {
+            color: var(--primary-red);
+        }
+
+        .intl .savings-amount {
+            color: var(--primary-green);
+        }
+
+        /* --- STICKY RESULT BAR --- */
+        .sticky-result {
+            margin-top: 25px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-bar-container {
+            background: #121214;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .result-bar {
+            height: 100%;
+            width: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .bar-label {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Desktop-Optimierung für echtes Nebeneinander-Design */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 950px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .side-by-side-grid {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Reales Sparpotenzial-Vergleich</h1>
+
+        <div class="info-box">
+            <strong>Direkter Kosten-Vergleich:</strong> Die Lebenshaltungskosten und die finalen Überschüsse stehen sich
+            nun direkt gegenüber. So siehst du auf einen Blick, wo wie viel Geld hießt.
+        </div>
+
+        <!-- INCOME PANEL -->
+        <div class="panel">
+            <h2>1. Einnahmen & Krankenversicherung</h2>
+            <div class="input-group">
+                <label for="stundensatz">Stundensatz (Netto):</label>
+                <div class="input-wrapper">
+                    <input type="number" id="stundensatz" value="85" step="5" oninput="calculate()">
+                    <span>€</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="stunden">Fakturierbare Stunden pro Monat:</label>
+                <div class="input-wrapper">
+                    <select id="stunden" onchange="calculate()">
+                        <option value="80">80 Std. (Teilzeit)</option>
+                        <option value="100">100 Std. (Geringe Auslastung)</option>
+                        <option value="120" selected>120 Std. (Standard Pufferbereinigt)</option>
+                        <option value="140">140 Std. (Gute Auslastung)</option>
+                        <option value="160">160 Std. (Vollzeit-Maximum)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="intl-kv-input">Kosten Auslands-KV pro Monat (Modell 2):</label>
+                <div class="input-wrapper">
+                    <input type="number" id="intl-kv-input" value="80" step="5" oninput="calculate()">
+                    <span>€</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. COST OF LIVING PANEL (NEBENEINANDER) -->
+        <div class="panel">
+            <h2>2. Monatliche Lebenshaltungskosten im Vergleich</h2>
+
+            <div class="side-by-side-grid">
+                <!-- DEUTSCHLAND BUDGET -->
+                <div class="budget-section de">
+                    <h3>Modell 1: Deutschland</h3>
+                    <div class="col-grid">
+                        <label for="de-rent">Warmmiete / Wohnung:</label>
+                        <div class="input-wrapper"><input type="number" id="de-rent" value="950"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-util">Strom, Gas, GEZ & Nebenkosten:</label>
+                        <div class="input-wrapper"><input type="number" id="de-util" value="180"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-food">Lebensmittel & Drogerie:</label>
+                        <div class="input-wrapper"><input type="number" id="de-food" value="400"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-internet">Internet, Mobilfunk & TV:</label>
+                        <div class="input-wrapper"><input type="number" id="de-internet" value="50"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-transport">Auto (Sprit/Vers.) / ÖPNV:</label>
+                        <div class="input-wrapper"><input type="number" id="de-transport" value="150"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-leisure">Freizeit, Kultur & Gastro:</label>
+                        <div class="input-wrapper"><input type="number" id="de-leisure" value="250"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="de-subs">Fixe Abos & Versicherungen:</label>
+                        <div class="input-wrapper"><input type="number" id="de-subs" value="60"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="total-expenses-box">
+                        Kosten DE gesamt: <span id="de-total-display">0,00 €</span>
+                    </div>
+                </div>
+
+                <!-- THAILAND BUDGET -->
+                <div class="budget-section th">
+                    <h3>Modell 2: Thailand</h3>
+                    <div class="col-grid">
+                        <label for="th-rent">Miete (Condo mit Pool/Gym):</label>
+                        <div class="input-wrapper"><input type="number" id="th-rent" value="450"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-util">Strom (Klima) & Wasser:</label>
+                        <div class="input-wrapper"><input type="number" id="th-util" value="70"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-food">Essen (Markets, Streetfood, Gastro):</label>
+                        <div class="input-wrapper"><input type="number" id="th-food" value="350"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-internet">Highspeed-Netz & Unlimited LTE:</label>
+                        <div class="input-wrapper"><input type="number" id="th-internet" value="25"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-transport">Roller-Miete, Sprit & Taxis:</label>
+                        <div class="input-wrapper"><input type="number" id="th-transport" value="60"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-leisure">Massage, Nightlife & Ausflüge:</label>
+                        <div class="input-wrapper"><input type="number" id="th-leisure" value="200"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid">
+                        <label for="th-visa">Visum (auf Monat umgelegt):</label>
+                        <div class="input-wrapper"><input type="number" id="th-visa" value="35"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="total-expenses-box">
+                        Kosten TH gesamt: <span id="th-total-display">0,00 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. COMPARISON RESULTS (NEBENEINANDER) -->
+        <div class="side-by-side-grid" style="margin-top: 20px;">
+            <!-- Spalte GKV (Deutschland) -->
+            <div class="card gkv">
+                <h2>Ergebnis Modell 1: Deutschland</h2>
+                <table>
+                    <tr>
+                        <td>Errechnetes Brutto</td>
+                        <td><span id="gkv-brutto">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- GKV Beitrag (16,9%)</td>
+                        <td><span id="gkv-kv">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Pflegeversicherung (4,2%)</td>
+                        <td><span id="gkv-pv">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>Einkommensteuer (ca.)</td>
+                        <td><span id="gkv-tax">0,00 €</span></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Netto verbleibend</td>
+                        <td><span id="gkv-netto" class="netto-amount">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Lebenshaltungskosten (DE)</td>
+                        <td id="gkv-applied-col" style="color:var(--primary-red);">0,00 €</td>
+                    </tr>
+                    <tr class="savings-row">
+                        <td>Reales Sparpotenzial</td>
+                        <td id="gkv-savings" class="savings-amount">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Spalte Internationale KV (Thailand) -->
+            <div class="card intl">
+                <h2>Ergebnis Modell 2: Thailand</h2>
+                <table>
+                    <tr>
+                        <td>Errechnetes Brutto</td>
+                        <td><span id="intl-brutto">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Auslands-KV</td>
+                        <td><span id="intl-kv-display">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Pflegeversicherung</td>
+                        <td><span>0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>Einkommensteuer (ca.)</td>
+                        <td><span id="intl-tax">0,00 €</span></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Netto verbleibend</td>
+                        <td><span id="intl-netto" class="netto-amount">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Lebenshaltungskosten (TH)</td>
+                        <td id="intl-applied-col" style="color:var(--primary-green);">0,00 €</td>
+                    </tr>
+                    <tr class="savings-row">
+                        <td>Reales Sparpotenzial</td>
+                        <td id="intl-savings" class="savings-amount">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- STICKY RESULT BAR -->
+        <div class="sticky-result">
+            <div class="result-bar-container">
+                <div id="result-fill" class="result-bar"></div>
+            </div>
+            <div id="comparison-text" class="bar-label">Berechne...</div>
+        </div>
+    </div>
+
+    <script>
+        const deKeys = ['rent', 'util', 'food', 'internet', 'transport', 'leisure', 'subs'];
+        const thKeys = ['rent', 'util', 'food', 'internet', 'transport', 'leisure', 'visa'];
+
+        function formatEuro(amount) {
+            return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+        }
+
+        function estimateTax(annualIncome) {
+            let taxable = annualIncome - 11784; // Grundfreibetrag 2026
+            if (taxable <= 0) return 0;
+
+            let tax = 0;
+            if (taxable <= 50000) {
+                tax = taxable * 0.20;
+            } else {
+                tax = 50000 * 0.20 + (taxable - 50000) * 0.35;
+            }
+            return tax / 12;
+        }
+
+        function loadSavedValues() {
+            if (localStorage.getItem('freiberufler_stundensatz') !== null) {
+                document.getElementById('stundensatz').value = localStorage.getItem('freiberufler_stundensatz');
+            }
+            if (localStorage.getItem('freiberufler_stunden') !== null) {
+                document.getElementById('stunden').value = localStorage.getItem('freiberufler_stunden');
+            }
+            if (localStorage.getItem('freiberufler_intl_kv') !== null) {
+                document.getElementById('intl-kv-input').value = localStorage.getItem('freiberufler_intl_kv');
+            }
+
+            // Load Germany Costs
+            deKeys.forEach(key => {
+                const savedVal = localStorage.getItem('col_de_' + key);
+                if (savedVal !== null) document.getElementById('de-' + key).value = savedVal;
+            });
+
+            // Load Thailand Costs
+            thKeys.forEach(key => {
+                const savedVal = localStorage.getItem('col_th_' + key);
+                if (savedVal !== null) document.getElementById('th-' + key).value = savedVal;
+            });
+        }
+
+        function calculate() {
+            let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
+            let stunden = parseFloat(document.getElementById('stunden').value) || 0;
+            let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
+
+            // Save Base Settings
+            localStorage.setItem('freiberufler_stundensatz', stundensatz);
+            localStorage.setItem('freiberufler_stunden', stunden);
+            localStorage.setItem('freiberufler_intl_kv', intlKv);
+
+            // Sum and Save DE Expenses
+            let totalDeCoL = 0;
+            deKeys.forEach(key => {
+                let val = parseFloat(document.getElementById('de-' + key).value) || 0;
+                localStorage.setItem('col_de_' + key, val);
+                totalDeCoL += val;
+            });
+            document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
+
+            // Sum and Save TH Expenses
+            let totalThCoL = 0;
+            thKeys.forEach(key => {
+                let val = parseFloat(document.getElementById('th-' + key).value) || 0;
+                localStorage.setItem('col_th_' + key, val);
+                totalThCoL += val;
+            });
+            document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+
+            let brutto = stundensatz * stunden;
+
+            // --- MODEL 1: GKV (Deutschland) ---
+            const minGrenz = 1318.33;
+            const maxGrenz = 5812.50;
+            let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
+
+            let gkvKv = beitragsBasis * 0.169;
+            let gkvPv = beitragsBasis * 0.042;
+            if (brutto === 0) { gkvKv = minGrenz * 0.169; gkvPv = minGrenz * 0.042; }
+
+            let gkvMonatlichesZvE = Math.max(0, brutto - gkvKv - gkvPv);
+            let gkvTax = estimateTax(gkvMonatlichesZvE * 12);
+            let gkvNetto = brutto - gkvKv - gkvPv - gkvTax;
+
+            let gkvSavings = gkvNetto - totalDeCoL;
+
+            // --- MODEL 2: Thailand ---
+            let intlMonatlichesZvE = Math.max(0, brutto - intlKv);
+            let intlTax = estimateTax(intlMonatlichesZvE * 12);
+            let intlNetto = brutto - intlKv - intlTax;
+
+            let intlSavings = intlNetto - totalThCoL;
+
+            // --- UI Rendering ---
+            document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
+            document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
+            document.getElementById('gkv-pv').innerText = formatEuro(gkvPv);
+            document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
+            document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
+            document.getElementById('gkv-applied-col').innerText = `- ${formatEuro(totalDeCoL)}`;
+            document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
+
+            document.getElementById('intl-brutto').innerText = formatEuro(brutto);
+            document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
+            document.getElementById('intl-tax').innerText = formatEuro(intlTax);
+            document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
+            document.getElementById('intl-applied-col').innerText = `- ${formatEuro(totalThCoL)}`;
+            document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
+
+            // Progress Bar & Dynamische Spar-Empfehlung
+            let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
+            let displayPercent = 50;
+            if (gkvSavings !== intlSavings) {
+                let diff = intlSavings - gkvSavings;
+                displayPercent = 50 + (diff / totalSavingsSum) * 50;
+                displayPercent = Math.max(10, Math.min(90, displayPercent));
+            }
+
+            let fill = document.getElementById('result-fill');
+            let compText = document.getElementById('comparison-text');
+
+            if (intlSavings > gkvSavings) {
+                let totalDiff = intlSavings - gkvSavings;
+                fill.style.width = displayPercent + '%';
+                fill.style.backgroundColor = 'var(--primary-green)';
+                compText.innerHTML = `Monatliche Mehr-Ersparnis in Thailand: <span style="color:var(--primary-green)">+${formatEuro(totalDiff)}</span>`;
+            } else {
+                let totalDiff = gkvSavings - intlSavings;
+                fill.style.width = displayPercent + '%';
+                fill.style.backgroundColor = 'var(--primary-red)';
+                compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(totalDiff)}</span>`;
+            }
+        }
+
+        loadSavedValues();
+        calculate();
+    </script>
+
+</body>
+
+</html>

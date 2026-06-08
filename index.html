@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freiberufler Brutto-Netto & Länder-Budget-Planer</title>
+    <title>Freiberufler Brutto-Netto & ETF-Renten-Rechner</title>
     <style>
         :root {
             --bg-color: #121214;
@@ -15,6 +15,7 @@
             --primary-green: #2ecc71;
             --primary-red: #ff4d4d;
             --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
             --tooltip-bg: #2a2a35;
         }
 
@@ -123,7 +124,7 @@
             min-width: 25px;
         }
 
-        /* Responsive Layout Grids für Budgets und Ergebnisse */
+        /* Side by Side Grid Layouts */
         .side-by-side-grid {
             display: flex;
             flex-direction: column;
@@ -177,7 +178,7 @@
             color: var(--primary-green);
         }
 
-        /* Comparison Cards */
+        /* Results Cards */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -206,16 +207,6 @@
             border-bottom: 1px solid var(--border-color);
             font-size: 0.9rem;
             position: relative;
-        }
-
-        table tr.sub-calc {
-            color: var(--text-muted);
-            background-color: #19191d;
-        }
-
-        table tr.sub-calc td {
-            padding: 5px 4px;
-            font-size: 0.8rem;
         }
 
         table td:last-child {
@@ -259,7 +250,77 @@
             color: var(--primary-green);
         }
 
-        /* --- STICKY RESULT BAR --- */
+        /* ETF Section Layout */
+        .etf-card {
+            background: #19191d;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .etf-card.diff {
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .etf-card.de-full {
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .etf-card.th-full {
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .etf-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .etf-card .monthly-badge {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: #252529;
+        }
+
+        .diff .monthly-badge {
+            color: var(--accent-purple);
+        }
+
+        .de-full .monthly-badge {
+            color: var(--primary-red);
+        }
+
+        .th-full .monthly-badge {
+            color: var(--primary-green);
+        }
+
+        .etf-table td {
+            padding: 5px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed #2d2d34;
+        }
+
+        .etf-table tr.total-etf-row td {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #fff;
+            border-bottom: none;
+            padding-top: 8px;
+        }
+
+        .etf-table tr.rente-row td {
+            font-weight: bold;
+            font-size: 1.05rem;
+            color: var(--primary-green);
+            border-bottom: none;
+            padding-top: 8px;
+        }
+
+        /* STICKY RESULT BAR */
         .sticky-result {
             margin-top: 25px;
             background: var(--card-bg);
@@ -289,7 +350,6 @@
             font-size: 0.95rem;
         }
 
-        /* Desktop-Optimierung für echtes Nebeneinander-Design */
         @media (min-width: 768px) {
             .container {
                 max-width: 950px;
@@ -302,6 +362,16 @@
             .side-by-side-grid {
                 flex-direction: row;
             }
+
+            .etf-flex-grid {
+                display: flex;
+                gap: 15px;
+            }
+
+            .etf-card {
+                flex: 1;
+                margin-bottom: 0;
+            }
         }
     </style>
 </head>
@@ -312,11 +382,12 @@
         <h1>Reales Sparpotenzial-Vergleich</h1>
 
         <div class="info-box">
-            <strong>Direkter Kosten-Vergleich:</strong> Die Lebenshaltungskosten und die finalen Überschüsse stehen sich
-            nun direkt gegenüber. So siehst du auf einen Blick, wo wie viel Geld hießt.
+            <strong>Zinseszins & Renten-Hebel:</strong> Unten siehst du nun vollautomatisiert, wie sich dein monatliches
+            Sparpotenzial über 5 Jahre in einem weltweiten ETF vermehrt und welche monatliche Zusatzrente daraus
+            entsteht.
         </div>
 
-        <!-- INCOME PANEL -->
+        <!-- 1. INCOME PANEL -->
         <div class="panel">
             <h2>1. Einnahmen & Krankenversicherung</h2>
             <div class="input-group">
@@ -444,7 +515,6 @@
 
         <!-- 3. COMPARISON RESULTS (NEBENEINANDER) -->
         <div class="side-by-side-grid" style="margin-top: 20px;">
-            <!-- Spalte GKV (Deutschland) -->
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
                 <table>
@@ -479,7 +549,6 @@
                 </table>
             </div>
 
-            <!-- Spalte Internationale KV (Thailand) -->
             <div class="card intl">
                 <h2>Ergebnis Modell 2: Thailand</h2>
                 <table>
@@ -522,6 +591,104 @@
             </div>
             <div id="comparison-text" class="bar-label">Berechne...</div>
         </div>
+
+        <!-- 4. ETF- & RENDITENSIMULATION (NEU) -->
+        <div class="panel" style="margin-top: 25px;">
+            <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
+                Simulation bei monatlicher Einzahlung über genau 5 Jahre. Die Rente basiert auf einer sicheren, ewigen
+                Entnahmerate von 4% p.a. (Kapital bleibt unberührt).
+            </p>
+
+            <div class="etf-flex-grid">
+
+                <!-- SZENARIO A: NUR DIE DIFFERENZ -->
+                <div class="etf-card diff">
+                    <h4>
+                        <span>Szenario A: Nur die Differenz</span>
+                        <span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
+                    </h4>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du bleibst in DE leben,
+                        sparst aber nur den Thailand-Überschuss separat an.</p>
+                    <table class="etf-table">
+                        <tr>
+                            <td>Eingezahltes Kapital:</td>
+                            <td id="etf-diff-invested">0,00 €</td>
+                        </tr>
+                        <tr>
+                            <td>+ Erzielte Zinsen:</td>
+                            <td id="etf-diff-interest">0,00 €</td>
+                        </tr>
+                        <tr class="total-etf-row">
+                            <td>Endvermögen (5 J.):</td>
+                            <td id="etf-diff-total">0,00 €</td>
+                        </tr>
+                        <tr class="rente-row">
+                            <td>Mögliche Monatsrente:</td>
+                            <td id="etf-diff-rent">0,00 € / M.</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- SZENARIO B: DEUTSCHLAND GESAMT -->
+                <div class="etf-card de-full">
+                    <h4>
+                        <span>Szenario B: Gesamtes Sparpotenzial DE</span>
+                        <span class="monthly-badge" id="etf-de-rate">0 €/M</span>
+                    </h4>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du legst dein
+                        komplettes monatliches Sparpotenzial aus Deutschland an.</p>
+                    <table class="etf-table">
+                        <tr>
+                            <td>Eingezahltes Kapital:</td>
+                            <td id="etf-de-invested">0,00 €</td>
+                        </tr>
+                        <tr>
+                            <td>+ Erzielte Zinsen:</td>
+                            <td id="etf-de-interest">0,00 €</td>
+                        </tr>
+                        <tr class="total-etf-row">
+                            <td>Endvermögen (5 J.):</td>
+                            <td id="etf-de-total">0,00 €</td>
+                        </tr>
+                        <tr class="rente-row">
+                            <td>Mögliche Monatsrente:</td>
+                            <td id="etf-de-rent">0,00 € / M.</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- SZENARIO C: THAILAND GESAMT -->
+                <div class="etf-card th-full">
+                    <h4>
+                        <span>Szenario C: Gesamtes Sparpotenzial TH</span>
+                        <span class="monthly-badge" id="etf-th-rate">0 €/M</span>
+                    </h4>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Du nutzt den
+                        thailändischen Hebel und legst das komplette dortige Sparpotenzial an.</p>
+                    <table class="etf-table">
+                        <tr>
+                            <td>Eingezahltes Kapital:</td>
+                            <td id="etf-th-invested">0,00 €</td>
+                        </tr>
+                        <tr>
+                            <td>+ Erzielte Zinsen:</td>
+                            <td id="etf-th-interest">0,00 €</td>
+                        </tr>
+                        <tr class="total-etf-row">
+                            <td>Endvermögen (5 J.):</td>
+                            <td id="etf-th-total">0,00 €</td>
+                        </tr>
+                        <tr class="rente-row">
+                            <td>Mögliche Monatsrente:</td>
+                            <td id="etf-th-rent">0,00 € / M.</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -545,6 +712,28 @@
             return tax / 12;
         }
 
+        // Sparplan-Formel (Zinseszins bei monatlicher Einzahlung)
+        // r = jährliche Rendite (0.07), n = Monate (60)
+        function simulateETF(monthlyRate, years, annualReturn) {
+            if (monthlyRate <= 0) return { invested: 0, interest: 0, total: 0, monthlyRent: 0 };
+
+            let months = years * 12;
+            let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
+            let total = 0;
+            let invested = monthlyRate * months;
+
+            for (let i = 0; i < months; i++) {
+                total = (total + monthlyRate) * (1 + monthlyReturn);
+            }
+
+            let interest = total - invested;
+
+            // 4% Regel für ewige Rente: (Endvermögen * 0.04) / 12 Monate
+            let monthlyRent = (total * 0.04) / 12;
+
+            return { invested, interest, total, monthlyRent };
+        }
+
         function loadSavedValues() {
             if (localStorage.getItem('freiberufler_stundensatz') !== null) {
                 document.getElementById('stundensatz').value = localStorage.getItem('freiberufler_stundensatz');
@@ -556,13 +745,11 @@
                 document.getElementById('intl-kv-input').value = localStorage.getItem('freiberufler_intl_kv');
             }
 
-            // Load Germany Costs
             deKeys.forEach(key => {
                 const savedVal = localStorage.getItem('col_de_' + key);
                 if (savedVal !== null) document.getElementById('de-' + key).value = savedVal;
             });
 
-            // Load Thailand Costs
             thKeys.forEach(key => {
                 const savedVal = localStorage.getItem('col_th_' + key);
                 if (savedVal !== null) document.getElementById('th-' + key).value = savedVal;
@@ -574,12 +761,10 @@
             let stunden = parseFloat(document.getElementById('stunden').value) || 0;
             let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
 
-            // Save Base Settings
             localStorage.setItem('freiberufler_stundensatz', stundensatz);
             localStorage.setItem('freiberufler_stunden', stunden);
             localStorage.setItem('freiberufler_intl_kv', intlKv);
 
-            // Sum and Save DE Expenses
             let totalDeCoL = 0;
             deKeys.forEach(key => {
                 let val = parseFloat(document.getElementById('de-' + key).value) || 0;
@@ -588,7 +773,6 @@
             });
             document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
 
-            // Sum and Save TH Expenses
             let totalThCoL = 0;
             thKeys.forEach(key => {
                 let val = parseFloat(document.getElementById('th-' + key).value) || 0;
@@ -611,17 +795,15 @@
             let gkvMonatlichesZvE = Math.max(0, brutto - gkvKv - gkvPv);
             let gkvTax = estimateTax(gkvMonatlichesZvE * 12);
             let gkvNetto = brutto - gkvKv - gkvPv - gkvTax;
-
             let gkvSavings = gkvNetto - totalDeCoL;
 
             // --- MODEL 2: Thailand ---
             let intlMonatlichesZvE = Math.max(0, brutto - intlKv);
             let intlTax = estimateTax(intlMonatlichesZvE * 12);
             let intlNetto = brutto - intlKv - intlTax;
-
             let intlSavings = intlNetto - totalThCoL;
 
-            // --- UI Rendering ---
+            // --- UI Rendering Main Tables ---
             document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
             document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
             document.getElementById('gkv-pv').innerText = formatEuro(gkvPv);
@@ -637,7 +819,7 @@
             document.getElementById('intl-applied-col').innerText = `- ${formatEuro(totalThCoL)}`;
             document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
-            // Progress Bar & Dynamische Spar-Empfehlung
+            // Progress Bar & Recommendation Text
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -648,18 +830,50 @@
 
             let fill = document.getElementById('result-fill');
             let compText = document.getElementById('comparison-text');
+            let savingsDifference = Math.abs(intlSavings - gkvSavings);
 
             if (intlSavings > gkvSavings) {
-                let totalDiff = intlSavings - gkvSavings;
                 fill.style.width = displayPercent + '%';
                 fill.style.backgroundColor = 'var(--primary-green)';
-                compText.innerHTML = `Monatliche Mehr-Ersparnis in Thailand: <span style="color:var(--primary-green)">+${formatEuro(totalDiff)}</span>`;
+                compText.innerHTML = `Monatliche Mehr-Ersparnis in Thailand: <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
             } else {
-                let totalDiff = gkvSavings - intlSavings;
                 fill.style.width = displayPercent + '%';
                 fill.style.backgroundColor = 'var(--primary-red)';
-                compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(totalDiff)}</span>`;
+                compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
             }
+
+            // --- ETF RENDITE BERECHNUNGEN (NEU) ---
+            let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
+            let deRate = Math.max(0, gkvSavings);
+            let thRate = Math.max(0, intlSavings);
+
+            // Abzeichen in den Headers aktualisieren
+            document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} € / M.`;
+            document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} € / M.`;
+            document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} € / M.`;
+
+            // Simulationen ausführen (5 Jahre, 7% Rendite)
+            let simDiff = simulateETF(diffRate, 5, 0.07);
+            let simDe = simulateETF(deRate, 5, 0.07);
+            let simTh = simulateETF(thRate, 5, 0.07);
+
+            // UI Zuweisung Szenario A (Differenz)
+            document.getElementById('etf-diff-invested').innerText = formatEuro(simDiff.invested);
+            document.getElementById('etf-diff-interest').innerText = formatEuro(simDiff.interest);
+            document.getElementById('etf-diff-total').innerText = formatEuro(simDiff.total);
+            document.getElementById('etf-diff-rent').innerText = formatEuro(simDiff.monthlyRent) + ' / Mon.';
+
+            // UI Zuweisung Szenario B (DE Gesamt)
+            document.getElementById('etf-de-invested').innerText = formatEuro(simDe.invested);
+            document.getElementById('etf-de-interest').innerText = formatEuro(simDe.interest);
+            document.getElementById('etf-de-total').innerText = formatEuro(simDe.total);
+            document.getElementById('etf-de-rent').innerText = formatEuro(simDe.monthlyRent) + ' / Mon.';
+
+            // UI Zuweisung Szenario C (TH Gesamt)
+            document.getElementById('etf-th-invested').innerText = formatEuro(simTh.invested);
+            document.getElementById('etf-th-interest').innerText = formatEuro(simTh.interest);
+            document.getElementById('etf-th-total').innerText = formatEuro(simTh.total);
+            document.getElementById('etf-th-rent').innerText = formatEuro(simTh.monthlyRent) + ' / Mon.';
         }
 
         loadSavedValues();

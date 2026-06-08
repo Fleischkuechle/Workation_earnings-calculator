@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freiberufler Brutto-Netto & ETF-Renten-Rechner</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
         :root {
             --bg-color: #121214;
@@ -117,6 +121,26 @@
             font-size: 1rem;
             font-weight: bold;
             min-width: 20px;
+        }
+
+        .btn-pdf {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: opacity 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-pdf:hover {
+            opacity: 0.9;
         }
 
         .side-by-side-grid {
@@ -381,15 +405,14 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" id="capture-area">
         <h1>Detaillierter Sparpotenzial-Vergleich</h1>
 
-        <div class="info-box">
-            <strong>Granulare Kostenaufteilung:</strong> Fixkosten wie Netflix, Spotify oder Handyverträge sind oft in
-            lokalen Währungen (wie THB) günstiger oder fallen durch andere Lebensgewohnheiten ganz anders aus.
+        <div class="info-box" data-html2canvas-ignore="true">
+            <strong>Präzise Energie-Aufteilung:</strong> Posten wie Gas, Wasser und der Holzofen sind nun für
+            Deutschland einzeln aufgeführt, um saisonale Heizkosten realitätsnah abzubilden.
         </div>
 
-        <!-- 1. INCOME & STARTING CAPITAL PANEL -->
         <div class="panel">
             <h2>1. Einnahmen & Startkapital</h2>
             <div class="input-group">
@@ -420,18 +443,19 @@
                 <div class="input-wrapper"><input type="number" id="intl-kv-input" value="80" step="5"
                         oninput="calculate()"><span>€</span></div>
             </div>
+
+            <button class="btn-pdf" data-html2canvas-ignore="true" onclick="exportToPDF()">💾 PDF-Bericht
+                herunterladen</button>
         </div>
 
-        <!-- 2. COST OF LIVING PANEL -->
         <div class="panel">
             <h2>2. Aufgedröselte Lebenshaltungskosten (Monatlich)</h2>
 
             <div class="side-by-side-grid">
-                <!-- DEUTSCHLAND BUDGET -->
                 <div class="budget-section de">
                     <h3>Modell 1: Deutschland</h3>
 
-                    <div class="category-title">Wohnen & Energie</div>
+                    <div class="category-title">Wohnen & Energie (Detailliert)</div>
                     <div class="col-grid"><label for="de-rent">Kaltmiete / Basiswohnung:</label>
                         <div class="input-wrapper"><input type="number" id="de-rent" value="800"
                                 oninput="calculate()"><span>€</span></div>
@@ -440,8 +464,16 @@
                         <div class="input-wrapper"><input type="number" id="de-strom" value="90"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="de-gas">Heizung / Gas / Wasser:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gas" value="120"
+                    <div class="col-grid"><label for="de-gas">Gas (Heizung):</label>
+                        <div class="input-wrapper"><input type="number" id="de-gas" value="85"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid"><label for="de-wasser">Wasser & Abwasser:</label>
+                        <div class="input-wrapper"><input type="number" id="de-wasser" value="35"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid"><label for="de-holz">Holzofen (Brennholz / Pellets):</label>
+                        <div class="input-wrapper"><input type="number" id="de-holz" value="40"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gez">GEZ / Rundfunkbeitrag:</label>
@@ -491,7 +523,8 @@
                                 oninput="calculate()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gastro">Restaurants, Cafés & Lieferdienste:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gastro"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-gastro" value="120"
+                                oninput="calculate()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-leisure">Freizeit, Kino, Bar, Ausflüge:</label>
                         <div class="input-wrapper"><input type="number" id="de-leisure" value="130"
@@ -505,7 +538,6 @@
                     <div class="total-expenses-box">Kosten DE gesamt: <span id="de-total-display">0,00 €</span></div>
                 </div>
 
-                <!-- THAILAND BUDGET -->
                 <div class="budget-section th">
                     <h3>Modell 2: Thailand</h3>
 
@@ -518,8 +550,16 @@
                         <div class="input-wrapper"><input type="number" id="th-strom" value="65"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-gas">Wasser / Nebenkosten:</label>
-                        <div class="input-wrapper"><input type="number" id="th-gas" value="8"
+                    <div class="col-grid"><label for="th-gas">Gas (in TH meist unüblich/0):</label>
+                        <div class="input-wrapper"><input type="number" id="th-gas" value="0"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid"><label for="th-wasser">Wasser / Nebenkosten:</label>
+                        <div class="input-wrapper"><input type="number" id="th-wasser" value="8"
+                                oninput="calculate()"><span>€</span></div>
+                    </div>
+                    <div class="col-grid"><label for="th-holz">Holzofen (entfällt komplett/0):</label>
+                        <div class="input-wrapper"><input type="number" id="th-holz" value="0"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-gez">Rundfunkgebühren / Sonstiges:</label>
@@ -586,7 +626,6 @@
             </div>
         </div>
 
-        <!-- 3. COMPARISON RESULTS -->
         <div class="side-by-side-grid" style="margin-top: 20px;">
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
@@ -657,7 +696,6 @@
             </div>
         </div>
 
-        <!-- STICKY RESULT BAR -->
         <div class="sticky-result">
             <div class="result-bar-container">
                 <div id="result-fill" class="result-bar"></div>
@@ -665,7 +703,6 @@
             <div id="comparison-text" class="bar-label">Berechne...</div>
         </div>
 
-        <!-- 4. ETF-SIMULATION -->
         <div class="panel" style="margin-top: 25px;">
             <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
@@ -746,7 +783,8 @@
     </div>
 
     <script>
-        const allKeys = ['rent', 'strom', 'gas', 'gez', 'internet', 'mobil', 'netflix', 'disney', 'music', 'gym', 'software', 'food', 'car', 'gastro', 'leisure', 'vers', 'visa'];
+        // Alle Eingabeschlüssel für die Formulare (inklusive der neuen Felder)
+        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'disney', 'music', 'gym', 'software', 'food', 'car', 'gastro', 'leisure', 'vers', 'visa'];
 
         function formatEuro(amount) {
             return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
@@ -823,7 +861,7 @@
 
             let brutto = stundensatz * stunden;
 
-            // DE Calculation
+            // DE Berechnung
             const minGrenz = 1318.33, maxGrenz = 5812.50;
             let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
             let gkvKv = brutto === 0 ? minGrenz * 0.169 : beitragsBasis * 0.169;
@@ -832,12 +870,12 @@
             let gkvNetto = brutto - gkvKv - gkvPv - gkvTax;
             let gkvSavings = gkvNetto - totalDeCoL;
 
-            // TH Calculation
+            // TH Berechnung
             let intlTax = estimateTax(Math.max(0, brutto - intlKv) * 12);
             let intlNetto = brutto - intlKv - intlTax;
             let intlSavings = intlNetto - totalThCoL;
 
-            // UI Main Tables
+            // UI Tabellen befüllen
             document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
             document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
             document.getElementById('gkv-pv').innerText = formatEuro(gkvPv);
@@ -853,7 +891,7 @@
             document.getElementById('intl-applied-col').innerText = `- ${formatEuro(totalThCoL)}`;
             document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
-            // Progress Bar
+            // Fortschrittsbalken Logik
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -875,7 +913,7 @@
                 compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
             }
 
-            // ETF Logic
+            // ETF Logik
             let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
             let deRate = Math.max(0, gkvSavings);
             let thRate = Math.max(0, intlSavings);
@@ -888,13 +926,46 @@
             let simDe = simulateETFWithStart(startkapital, deRate, 5, 0.07);
             let simTh = simulateETFWithStart(startkapital, thRate, 5, 0.07);
 
-            // Render ETF Panel
             ['diff', 'de', 'th'].forEach(s => {
                 let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : simTh);
                 document.getElementById(`etf-${s}-invested`).innerText = formatEuro(sim.invested);
                 document.getElementById(`etf-${s}-interest`).innerText = formatEuro(sim.interest);
                 document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
                 document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / Mon.';
+            });
+        }
+
+        // PDF Export-Funktion
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const targetElement = document.getElementById('capture-area');
+
+            const options = {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#121214'
+            };
+
+            html2canvas(targetElement, options).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save('Finanzvergleich_Deutschland_Thailand.pdf');
             });
         }
 

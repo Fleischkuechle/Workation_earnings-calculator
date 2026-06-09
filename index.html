@@ -20,6 +20,7 @@
             --primary-red: #ff4d4d;
             --accent-blue: #3498db;
             --accent-purple: #9b59b6;
+            --accent-orange: #e67e22;
         }
 
         * {
@@ -37,7 +38,7 @@
         }
 
         .container {
-            max-width: 550px;
+            max-width: 1200px;
             margin: 0 auto;
             padding-bottom: 40px;
         }
@@ -144,9 +145,9 @@
             opacity: 0.9;
         }
 
-        .side-by-side-grid {
-            display: flex;
-            flex-direction: column;
+        .three-column-grid {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 20px;
         }
 
@@ -155,7 +156,6 @@
             background: #19191d;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            flex: 1;
         }
 
         .budget-section.de {
@@ -164,6 +164,10 @@
 
         .budget-section.th {
             border-top: 4px solid var(--primary-green);
+        }
+
+        .budget-section.th-house {
+            border-top: 4px solid var(--accent-orange);
         }
 
         .col-grid {
@@ -210,13 +214,16 @@
             color: var(--primary-green);
         }
 
+        .th-house .total-expenses-box {
+            color: var(--accent-orange);
+        }
+
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 16px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            flex: 1;
         }
 
         .card.gkv {
@@ -225,6 +232,10 @@
 
         .card.intl {
             border-top: 4px solid var(--primary-green);
+        }
+
+        .card.th-house-card {
+            border-top: 4px solid var(--accent-orange);
         }
 
         table {
@@ -265,6 +276,10 @@
             background-color: #1b2e24;
         }
 
+        .th-house-card .savings-row {
+            background-color: #382415;
+        }
+
         .savings-row td {
             font-size: 1.1rem;
             padding: 14px 8px !important;
@@ -280,12 +295,21 @@
             color: var(--primary-green);
         }
 
+        .th-house-card .savings-amount {
+            color: var(--accent-orange);
+        }
+
+        .etf-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
         .etf-card {
             background: #19191d;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 15px;
-            margin-bottom: 15px;
         }
 
         .etf-card.diff {
@@ -298,6 +322,10 @@
 
         .etf-card.th-full {
             border-left: 4px solid var(--primary-green);
+        }
+
+        .etf-card.th-house-full {
+            border-left: 4px solid var(--accent-orange);
         }
 
         .etf-card h4 {
@@ -325,6 +353,10 @@
 
         .th-full .monthly-badge {
             color: var(--primary-green);
+        }
+
+        .th-house-full .monthly-badge {
+            color: var(--accent-orange);
         }
 
         .etf-table td {
@@ -391,94 +423,93 @@
         }
 
         body.clean-pdf-mode h1 {
-            font-size: 1.3rem !important;
-            margin: 0 0 10px 0 !important;
+            font-size: 1.2rem !important;
+            margin: 0 0 8px 0 !important;
         }
 
         body.clean-pdf-mode h2 {
-            font-size: 1rem !important;
-            margin-bottom: 6px !important;
+            font-size: 0.95rem !important;
+            margin-bottom: 4px !important;
         }
 
         body.clean-pdf-mode h3 {
-            font-size: 0.85rem !important;
+            font-size: 0.8rem !important;
             margin: 2px 0 !important;
         }
 
         body.clean-pdf-mode .panel {
-            padding: 8px 12px !important;
-            margin-bottom: 8px !important;
+            padding: 6px 10px !important;
+            margin-bottom: 6px !important;
         }
 
         body.clean-pdf-mode .budget-section {
-            padding: 6px 10px !important;
+            padding: 5px 8px !important;
         }
 
         body.clean-pdf-mode .card {
-            padding: 8px !important;
-        }
-
-        body.clean-pdf-mode .etf-card {
-            padding: 6px 10px !important;
-        }
-
-        body.clean-pdf-mode .col-grid {
-            margin-bottom: 2px !important;
-            gap: 4px !important;
-            grid-template-columns: 1fr 125px !important;
-        }
-
-        body.clean-pdf-mode table td {
-            padding: 3px 0 !important;
-            font-size: 0.78rem !important;
-        }
-
-        body.clean-pdf-mode .category-title {
-            margin: 4px 0 2px 0 !important;
-            font-size: 0.68rem !important;
-        }
-
-        body.clean-pdf-mode .total-expenses-box {
-            margin-top: 6px !important;
-            padding: 4px !important;
-            font-size: 0.8rem !important;
-        }
-
-        body.clean-pdf-mode .sticky-result {
-            margin-top: 8px !important;
             padding: 6px !important;
         }
 
+        body.clean-pdf-mode .etf-card {
+            padding: 5px 8px !important;
+        }
+
+        body.clean-pdf-mode .col-grid {
+            margin-bottom: 1px !important;
+            gap: 4px !important;
+            grid-template-columns: 1fr 100px !important;
+        }
+
+        body.clean-pdf-mode table td {
+            padding: 2px 0 !important;
+            font-size: 0.72rem !important;
+        }
+
+        body.clean-pdf-mode .category-title {
+            margin: 3px 0 1px 0 !important;
+            font-size: 0.65rem !important;
+        }
+
+        body.clean-pdf-mode .total-expenses-box {
+            margin-top: 4px !important;
+            padding: 3px !important;
+            font-size: 0.75rem !important;
+        }
+
+        body.clean-pdf-mode .sticky-result {
+            margin-top: 6px !important;
+            padding: 4px !important;
+        }
+
         body.clean-pdf-mode .result-bar-container {
-            height: 8px !important;
+            height: 6px !important;
             margin-bottom: 2px !important;
         }
 
         body.clean-pdf-mode .bar-label {
-            font-size: 0.8rem !important;
+            font-size: 0.75rem !important;
         }
 
-        /* ABSCHNEIDEN BEHOBEN: Punkte entfernt, line-height normalisiert und Padding erhöht */
+        /* ABSCHNEIDEN BEHOBEN: Keine Rahmen, Linien oder Punkte im PDF */
         body.clean-pdf-mode input,
         body.clean-pdf-mode select {
-            font-size: 0.78rem !important;
+            font-size: 0.72rem !important;
             line-height: 1.4 !important;
-            padding-bottom: 2px !important;
+            padding-bottom: 1px !important;
             border: none !important;
             border-bottom: 1px solid transparent !important;
-            /* Punkte komplett weg */
         }
 
-        body.clean-pdf-mode .side-by-side-grid {
-            flex-direction: row !important;
-            display: flex !important;
-            gap: 15px !important;
-        }
-
-        body.clean-pdf-mode .etf-flex-grid {
-            display: flex !important;
-            flex-direction: row !important;
+        body.clean-pdf-mode .three-column-grid {
+            grid-template-columns: 1fr 1fr 1fr !important;
+            display: grid !important;
             gap: 10px !important;
+        }
+
+        body.clean-pdf-mode .etf-grid {
+            grid-template-columns: 1fr 1fr 1fr 1fr !important;
+            display: grid !important;
+            gap: 8px !important;
         }
 
         body.clean-pdf-mode .panel,
@@ -548,26 +579,16 @@
         }
 
         @media (min-width: 992px) {
-            .container {
-                max-width: 1100px;
-            }
-
             h1 {
                 font-size: 2rem;
             }
 
-            .side-by-side-grid {
-                flex-direction: row;
+            .three-column-grid {
+                grid-template-columns: 1fr 1fr 1fr;
             }
 
-            .etf-flex-grid {
-                display: flex;
-                gap: 15px;
-            }
-
-            .etf-card {
-                flex: 1;
-                margin-bottom: 0;
+            .etf-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
             }
         }
     </style>
@@ -579,9 +600,9 @@
         <h1>Finanz- und Lebenshaltungskostenvergleich</h1>
 
         <div class="info-box" data-html2canvas-ignore="true">
-            <strong>PDF-Fehler behoben:</strong> Die gepunkteten Linien unter den Zahlen wurden im PDF-Export komplett
-            entfernt. Dadurch stehen die Zahlen jetzt absolut frei und werden an der Unterkante nicht mehr
-            abgeschnitten.
+            <strong>Modell 3 hinzugefügt:</strong> Ein Szenario für Thailand, bei dem die Fixkosten des Hauses aus
+            Deutschland (Wohnen & Energie) eins zu eins weiterlaufen. Alle Punkte wurden im PDF entfernt, um
+            abgeschnittene Zahlen zu verhindern.
         </div>
 
         <div class="panel">
@@ -593,7 +614,7 @@
                             oninput="calculate()"><span>€</span></div>
                 </div>
                 <div class="input-group" style="margin-bottom:0;">
-                    <label for="intl-kv-input">Auslands-KV / Monat (Modell 2):</label>
+                    <label for="intl-kv-input">Auslands-KV / Monat (Modell 2 & 3):</label>
                     <div class="input-wrapper"><input type="number" id="intl-kv-input" value="80" step="5"
                             oninput="calculate()"><span>€</span></div>
                 </div>
@@ -625,12 +646,12 @@
         <div class="panel">
             <h2>2. Detaillierte Lebenshaltungskosten (Monatlich)</h2>
 
-            <div class="side-by-side-grid">
+            <div class="three-column-grid">
                 <div class="budget-section de">
                     <h3>Modell 1: Deutschland</h3>
 
-                    <div class="category-title">Wohnen & Energie</div>
-                    <div class="col-grid"><label for="de-rent">Miete:</label>
+                    <div class="category-title">Wohnen & Energie (Haus)</div>
+                    <div class="col-grid"><label for="de-rent">Miete / Haus-Kredit:</label>
                         <div class="input-wrapper"><input type="number" id="de-rent" value="800"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
@@ -761,10 +782,43 @@
 
                     <div class="total-expenses-box">Kosten TH gesamt: <span id="th-total-display">0,00 €</span></div>
                 </div>
+
+                <div class="budget-section th-house">
+                    <h3>Modell 3: TH + Haus DE</h3>
+
+                    <div class="category-title">Übernommene Hauskosten DE</div>
+                    <div class="col-grid"><label>Haus-Fixkosten (automatisch):</label>
+                        <div class="input-wrapper"><input type="text" id="th-house-de-cost" value="0 €" disabled
+                                style="color:var(--text-muted);"></div>
+                    </div>
+
+                    <div class="category-title">Wohnen & Leben Thailand</div>
+                    <div class="col-grid"><label>TH Condo & Energie:</label>
+                        <div class="input-wrapper"><input type="text" id="th-house-th-housing" value="0 €" disabled
+                                style="color:var(--text-muted);"></div>
+                    </div>
+                    <div class="col-grid"><label>TH Freizeit & Medien:</label>
+                        <div class="input-wrapper"><input type="text" id="th-house-th-media" value="0 €" disabled
+                                style="color:var(--text-muted);"></div>
+                    </div>
+                    <div class="col-grid"><label>TH Alltag & Visum:</label>
+                        <div class="input-wrapper"><input type="text" id="th-house-th-alltag" value="0 €" disabled
+                                style="color:var(--text-muted);"></div>
+                    </div>
+
+                    <div style="margin-top: 45px;" class="info-box-sub">
+                        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3;">Dieses Modell addiert
+                            automatisch alle Wohnkosten aus Deutschland zu den Lebenshaltungskosten in Thailand (z.B.
+                            bei Leerstand oder Zweitwohnsitz).</p>
+                    </div>
+
+                    <div class="total-expenses-box" style="margin-top: 80px;">Kosten Kombi gesamt: <span
+                            id="th-house-total-display">0,00 €</span></div>
+                </div>
             </div>
         </div>
 
-        <div class="side-by-side-grid">
+        <div class="three-column-grid">
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
                 <table>
@@ -816,6 +870,32 @@
                     </tr>
                 </table>
             </div>
+
+            <div class="card th-house-card">
+                <h2>Ergebnis Modell 3: TH + Haus</h2>
+                <table>
+                    <tr>
+                        <td>Errechnetes Brutto</td>
+                        <td><span id="th-house-brutto">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>- Auslands-KV</td>
+                        <td><span id="th-house-kv-display">0,00 €</span></td>
+                    </tr>
+                    <tr>
+                        <td>Einkommensteuer (ca.)</td>
+                        <td><span id="th-house-tax">0,00 €</span></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Netto verbleibend</td>
+                        <td><span id="th-house-netto">0,00 €</span></td>
+                    </tr>
+                    <tr class="savings-row">
+                        <td>Reales Sparpotenzial</td>
+                        <td id="th-house-savings" class="savings-amount">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <div class="sticky-result">
@@ -827,10 +907,10 @@
 
         <div class="panel">
             <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
-            <div class="etf-flex-grid">
+            <div class="etf-grid">
                 <div class="etf-card diff">
-                    <h4><span>A: Startkapital + Diff.</span><span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
-                    </h4>
+                    <h4><span>A: Startkapital + Diff. (TH/DE)</span><span class="monthly-badge" id="etf-diff-rate">0
+                            €/M</span></h4>
                     <table class="etf-table">
                         <tr class="total-etf-row">
                             <td>Endvermögen:</td>
@@ -869,6 +949,21 @@
                         <tr class="rente-row">
                             <td>Monatsrente:</td>
                             <td id="etf-th-rent">0,00 €</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="etf-card th-house-full">
+                    <h4><span>D: Startkapital + Spar. TH+Haus</span><span class="monthly-badge" id="etf-th-house-rate">0
+                            €/M</span></h4>
+                    <table class="etf-table">
+                        <tr class="total-etf-row">
+                            <td>Endvermögen:</td>
+                            <td id="etf-th-house-total">0,00 €</td>
+                        </tr>
+                        <tr class="rente-row">
+                            <td>Monatsrente:</td>
+                            <td id="etf-th-house-rent">0,00 €</td>
                         </tr>
                     </table>
                 </div>
@@ -931,25 +1026,51 @@
             let totalDeCoL = 0;
             let totalThCoL = 0;
 
+            // Teilsummen für die automatische Anzeige im Modell 3
+            let deHousingSum = 0;
+            let thHousingSum = 0;
+            let thMediaSum = 0;
+            let thAlltagSum = 0;
+
             allKeys.forEach(key => {
                 let elDE = document.getElementById('de-' + key);
                 if (elDE) {
                     let val = parseFloat(elDE.value) || 0;
                     localStorage.setItem('c_de_' + key, val);
                     totalDeCoL += val;
+
+                    // Wohnen & Energie DE extrahieren
+                    if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) {
+                        deHousingSum += val;
+                    }
                 }
                 let elTH = document.getElementById('th-' + key) || document.getElementById('th-software');
                 if (elTH && elTH.id.startsWith('th-' + key)) {
                     let val = parseFloat(elTH.value) || 0;
                     localStorage.setItem('c_th_' + key, val);
                     totalThCoL += val;
+
+                    if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) thHousingSum += val;
+                    if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
+                    if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
                 }
             });
             let swVal = parseFloat(document.getElementById('th-software').value) || 0;
             totalThCoL += swVal;
+            thMediaSum += swVal;
+
+            // Modell 3 Kosten aggregieren
+            let totalThHouseCoL = totalThCoL + deHousingSum;
+
+            // Werte in Spalte 3 spiegeln
+            document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
+            document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
+            document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
+            document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
 
             document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
             document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+            document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
 
             let brutto = stundensatz * stunden;
 
@@ -966,6 +1087,9 @@
             let intlNetto = brutto - intlKv - intlTax;
             let intlSavings = intlNetto - totalThCoL;
 
+            // TH + Haus Berechnung
+            let thHouseSavings = intlNetto - totalThHouseCoL;
+
             document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
             document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
             document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
@@ -978,6 +1102,13 @@
             document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
             document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
+            document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
+            document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
+            document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
+            document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
+            document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
+
+            // Progress Bar Logik (Vergleich DE vs TH Standard)
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -992,7 +1123,7 @@
             if (intlSavings > gkvSavings) {
                 fill.style.width = displayPercent + '%';
                 fill.style.backgroundColor = 'var(--primary-green)';
-                compText.innerHTML = `Monatliche Mehr-Ersparnis in Thailand: <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
+                compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
             } else {
                 fill.style.width = displayPercent + '%';
                 fill.style.backgroundColor = 'var(--primary-red)';
@@ -1002,17 +1133,20 @@
             let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
             let deRate = Math.max(0, gkvSavings);
             let thRate = Math.max(0, intlSavings);
+            let thHouseRate = Math.max(0, thHouseSavings);
 
             document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
             document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
             document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
+            document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
 
             let simDiff = simulateETFWithStart(startkapital, diffRate, 5, 0.07);
             let simDe = simulateETFWithStart(startkapital, deRate, 5, 0.07);
             let simTh = simulateETFWithStart(startkapital, thRate, 5, 0.07);
+            let simThHouse = simulateETFWithStart(startkapital, thHouseRate, 5, 0.07);
 
-            ['diff', 'de', 'th'].forEach(s => {
-                let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : simTh);
+            ['diff', 'de', 'th', 'th-house'].forEach(s => {
+                let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
                 document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
                 document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
             });
@@ -1037,9 +1171,9 @@
                     const pdfWidth = 297;
                     const pdfHeight = 210;
 
-                    const marginX = 12;
-                    const marginTop = 14;
-                    const marginBottom = 12;
+                    const marginX = 10;
+                    const marginTop = 12;
+                    const marginBottom = 10;
 
                     const usableWidth = pdfWidth - (marginX * 2);
                     const usableHeight = pdfHeight - marginTop - marginBottom;
@@ -1051,21 +1185,21 @@
                     pdf.setFont('Helvetica', 'normal');
                     pdf.setFontSize(8);
                     pdf.setTextColor(110, 110, 110);
-                    pdf.text('Persönlicher Finanz- & Standortvergleich', marginX, marginTop - 5);
+                    pdf.text('Umfassender Dreifach-Standortvergleich', marginX, marginTop - 4);
 
                     const dateStr = new Date().toLocaleDateString('de-DE');
-                    pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 5, { align: 'right' });
+                    pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 4, { align: 'right' });
 
                     pdf.setDrawColor(210, 210, 210);
                     pdf.setLineWidth(0.2);
-                    pdf.line(marginX, marginTop - 3, pdfWidth - marginX, marginTop - 3);
+                    pdf.line(marginX, marginTop - 2, pdfWidth - marginX, marginTop - 2);
 
                     // Fußzeile
-                    pdf.line(marginX, pdfHeight - marginBottom + 3, pdfWidth - marginX, pdfHeight - marginBottom + 3);
-                    pdf.text('Alle Steuerberechnungen basieren auf Schätzwerten. Keine Finanzberatung.', marginX, pdfHeight - marginBottom + 7);
-                    pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 7, { align: 'right' });
+                    pdf.line(marginX, pdfHeight - marginBottom + 2, pdfWidth - marginX, pdfHeight - marginBottom + 2);
+                    pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
+                    pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
 
-                    pdf.save('Finanzbericht_Professional.pdf');
+                    pdf.save('Finanzbericht_Modell3_Professional.pdf');
                     document.body.classList.remove('clean-pdf-mode');
                 });
             }, 150);

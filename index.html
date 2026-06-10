@@ -457,7 +457,7 @@
         body.clean-pdf-mode .col-grid {
             margin-bottom: 1px !important;
             gap: 4px !important;
-            grid-template-columns: 1fr 100px !important;
+            grid-template-columns: 1fr 125px !important;
         }
 
         body.clean-pdf-mode table td {
@@ -490,7 +490,6 @@
             font-size: 0.75rem !important;
         }
 
-        /* ABSCHNEIDEN BEHOBEN: Keine Rahmen, Linien oder Punkte im PDF */
         body.clean-pdf-mode input,
         body.clean-pdf-mode select {
             font-size: 0.72rem !important;
@@ -600,9 +599,9 @@
         <h1>Finanz- und Lebenshaltungskostenvergleich</h1>
 
         <div class="info-box" data-html2canvas-ignore="true">
-            <strong>Modell 3 hinzugefügt:</strong> Ein Szenario für Thailand, bei dem die Fixkosten des Hauses aus
-            Deutschland (Wohnen & Energie) eins zu eins weiterlaufen. Alle Punkte wurden im PDF entfernt, um
-            abgeschnittene Zahlen zu verhindern.
+            <strong>Anwartschaftsversicherung integriert:</strong> Der gesetzliche Mindestbeitrag zur GKV-Anwartschaft
+            (2026: 83,06 € basierend auf der Bezugsgröße von 395,50 €) wurde als fixer Bestandteil für Thailand in
+            Spalte 2 und 3 ergänzt.
         </div>
 
         <div class="panel">
@@ -735,12 +734,12 @@
                         <div class="input-wrapper"><input type="number" id="th-wasser" value="8"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-holz">Holzofen (entfällt):</label>
-                        <div class="input-wrapper"><input type="number" id="th-holz" value="0"
+                    <div class="col-grid"><label for="th-anwartschaft">GKV-Anwartschaft (D):</label>
+                        <div class="input-wrapper"><input type="number" id="th-anwartschaft" value="83.06" step="1"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
-                    <div class="col-grid"><label for="th-gez">Rundfunk (entfällt):</label>
-                        <div class="input-wrapper"><input type="number" id="th-gez" value="0"
+                    <div class="col-grid"><label for="th-holz">Holzofen / Sonstiges:</label>
+                        <div class="input-wrapper"><input type="number" id="th-holz" value="0"
                                 oninput="calculate()"><span>€</span></div>
                     </div>
 
@@ -793,7 +792,7 @@
                     </div>
 
                     <div class="category-title">Wohnen & Leben Thailand</div>
-                    <div class="col-grid"><label>TH Condo & Energie:</label>
+                    <div class="col-grid"><label>TH Condo, Energie & Anwart.:</label>
                         <div class="input-wrapper"><input type="text" id="th-house-th-housing" value="0 €" disabled
                                 style="color:var(--text-muted);"></div>
                     </div>
@@ -808,8 +807,8 @@
 
                     <div style="margin-top: 45px;" class="info-box-sub">
                         <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3;">Dieses Modell addiert
-                            automatisch alle Wohnkosten aus Deutschland zu den Lebenshaltungskosten in Thailand (z.B.
-                            bei Leerstand oder Zweitwohnsitz).</p>
+                            automatisch alle Wohnkosten aus Deutschland zu den Lebenshaltungskosten in Thailand
+                            (inklusive der Anwartschaft für ein lückenloses Backup-System).</p>
                     </div>
 
                     <div class="total-expenses-box" style="margin-top: 80px;">Kosten Kombi gesamt: <span
@@ -972,7 +971,7 @@
     </div>
 
     <script>
-        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
+        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
 
         function formatEuro(amount) {
             return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
@@ -1026,7 +1025,6 @@
             let totalDeCoL = 0;
             let totalThCoL = 0;
 
-            // Teilsummen für die automatische Anzeige im Modell 3
             let deHousingSum = 0;
             let thHousingSum = 0;
             let thMediaSum = 0;
@@ -1039,7 +1037,6 @@
                     localStorage.setItem('c_de_' + key, val);
                     totalDeCoL += val;
 
-                    // Wohnen & Energie DE extrahieren
                     if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) {
                         deHousingSum += val;
                     }
@@ -1050,7 +1047,7 @@
                     localStorage.setItem('c_th_' + key, val);
                     totalThCoL += val;
 
-                    if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) thHousingSum += val;
+                    if (['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez'].includes(key)) thHousingSum += val;
                     if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
                     if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
                 }
@@ -1059,10 +1056,8 @@
             totalThCoL += swVal;
             thMediaSum += swVal;
 
-            // Modell 3 Kosten aggregieren
             let totalThHouseCoL = totalThCoL + deHousingSum;
 
-            // Werte in Spalte 3 spiegeln
             document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
             document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
             document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
@@ -1108,7 +1103,6 @@
             document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
             document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
 
-            // Progress Bar Logik (Vergleich DE vs TH Standard)
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
             if (gkvSavings !== intlSavings) {
@@ -1199,7 +1193,7 @@
                     pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
                     pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
 
-                    pdf.save('Finanzbericht_Modell3_Professional.pdf');
+                    pdf.save('Finanzbericht_Standortvergleich.pdf');
                     document.body.classList.remove('clean-pdf-mode');
                 });
             }, 150);

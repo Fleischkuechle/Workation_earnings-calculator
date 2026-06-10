@@ -642,8 +642,8 @@
         <h1>Finanz- und Lebenshaltungskostenvergleich</h1>
 
         <div class="info-box" data-html2canvas-ignore="true">
-            <strong>Dynamischer Variantenvergleich:</strong> Die untere Übersicht schlüsselt nun alle Szenarien (A bis
-            D) Jahr für Jahr detailliert inklusive monatlicher Sparrate und kumulierten Eigenanteilen auf.
+            <strong>Komfort-Update:</strong> Klicke auf ein beliebiges Eingabefeld, um den darin enthaltenen Wert sofort
+            automatisch auszuwählen. Du kannst direkt losschreiben, ohne alten Text löschen zu müssen.
         </div>
 
         <div class="panel">
@@ -652,19 +652,19 @@
                 <div class="input-group" style="margin-bottom:0;">
                     <label for="startkapital">Startkapital:</label>
                     <div class="input-wrapper"><input type="number" id="startkapital" value="150000" step="5000"
-                            oninput="calculate()"><span>€</span></div>
+                            oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                 </div>
                 <div class="input-group" style="margin-bottom:0;">
                     <label for="intl-kv-input">Auslands-KV / Monat (Modell 2 & 3):</label>
                     <div class="input-wrapper"><input type="number" id="intl-kv-input" value="80" step="5"
-                            oninput="calculate()"><span>€</span></div>
+                            oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                 </div>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
                 <div class="input-group" style="margin-bottom:0;">
                     <label for="stundensatz">Stundensatz (Netto):</label>
                     <div class="input-wrapper"><input type="number" id="stundensatz" value="85" step="5"
-                            oninput="calculate()"><span>€</span></div>
+                            oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                 </div>
                 <div class="input-group" style="margin-bottom:0;">
                     <label for="stunden">Fakturierbare Stunden:</label>
@@ -688,145 +688,142 @@
             <h2>2. Detaillierte Lebenshaltungskosten (Monatlich)</h2>
 
             <div class="three-column-grid">
-                <!-- DEUTSCHLAND BUDGET -->
                 <div class="budget-section de">
                     <h3>Modell 1: Deutschland</h3>
 
                     <div class="category-title">Wohnen & Energie (Haus)</div>
                     <div class="col-grid"><label for="de-rent">Miete / Haus-Kredit:</label>
-                        <div class="input-wrapper"><input type="number" id="de-rent" value="800"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-rent" value="800" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-strom">Strom einzeln:</label>
-                        <div class="input-wrapper"><input type="number" id="de-strom" value="90"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-strom" value="90" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gas">Gas (Heizung):</label>
-                        <div class="input-wrapper"><input type="number" id="de-gas" value="85"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-gas" value="85" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-wasser">Wasser / Abwasser:</label>
-                        <div class="input-wrapper"><input type="number" id="de-wasser" value="35"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-wasser" value="35" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-holz">Holzofen (Pellets):</label>
-                        <div class="input-wrapper"><input type="number" id="de-holz" value="40"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-holz" value="40" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gez">GEZ Gebühr:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gez" value="18"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-gez" value="18" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Medien, Abos & Freizeit</div>
                     <div class="col-grid"><label for="de-internet">Festnetz-Internet:</label>
                         <div class="input-wrapper"><input type="number" id="de-internet" value="35"
-                                oninput="calculate()"><span>€</span></div>
+                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-mobil">Mobilfunk-Vertrag:</label>
-                        <div class="input-wrapper"><input type="number" id="de-mobil" value="25"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-mobil" value="25" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-netflix">Netflix / Disney+ / Spotify:</label>
-                        <div class="input-wrapper"><input type="number" id="de-netflix" value="40"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-netflix" value="40" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gym">Gym & Software-Abos:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gym" value="60"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-gym" value="60" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Alltag & Mobilität</div>
                     <div class="col-grid"><label for="de-food">Supermarkt & Drogerie:</label>
-                        <div class="input-wrapper"><input type="number" id="de-food" value="350"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-food" value="350" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-car">Auto / Transportkosten:</label>
-                        <div class="input-wrapper"><input type="number" id="de-car" value="160"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-car" value="160" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-gastro">Gastro & Ausgehen:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gastro" value="250"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-gastro" value="250" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="de-vers">Versicherungen:</label>
-                        <div class="input-wrapper"><input type="number" id="de-vers" value="25"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="de-vers" value="25" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="total-expenses-box">Kosten DE gesamt: <span id="de-total-display">0,00 €</span></div>
                 </div>
 
-                <!-- THAILAND BUDGET -->
                 <div class="budget-section th">
                     <h3>Modell 2: Thailand</h3>
 
                     <div class="category-title">Wohnen & Energie</div>
                     <div class="col-grid"><label for="th-rent">Condo Miete (Pool/Gym):</label>
-                        <div class="input-wrapper"><input type="number" id="th-rent" value="450"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-rent" value="450" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-strom">Strom (Klimaanlage):</label>
-                        <div class="input-wrapper"><input type="number" id="th-strom" value="65"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-strom" value="65" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-gas">Gas (in TH unüblich):</label>
-                        <div class="input-wrapper"><input type="number" id="th-gas" value="0"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-gas" value="0" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-wasser">Wasser / Nebenkosten:</label>
-                        <div class="input-wrapper"><input type="number" id="th-wasser" value="8"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-wasser" value="8" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-anwartschaft">GKV-Anwartschaft (D):</label>
                         <div class="input-wrapper"><input type="number" id="th-anwartschaft" value="83.06"
-                                oninput="calculate()"><span>€</span></div>
+                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-holz">Holzofen / Sonstiges:</label>
-                        <div class="input-wrapper"><input type="number" id="th-holz" value="0"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-holz" value="0" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Medien, Abos & Freizeit</div>
                     <div class="col-grid"><label for="th-internet">Faser-Internet:</label>
                         <div class="input-wrapper"><input type="number" id="th-internet" value="15"
-                                oninput="calculate()"><span>€</span></div>
+                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-mobil">Mobilfunk (Unlimited):</label>
-                        <div class="input-wrapper"><input type="number" id="th-mobil" value="12"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-mobil" value="12" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-netflix">Netflix / Disney+ / Spotify:</label>
-                        <div class="input-wrapper"><input type="number" id="th-netflix" value="24"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-netflix" value="24" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-software">Sonstige Software-Abos:</label>
                         <div class="input-wrapper"><input type="number" id="th-software" value="15"
-                                oninput="calculate()"><span>€</span></div>
+                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="category-title">Alltag & Mobilität</div>
                     <div class="col-grid"><label for="th-food">Lebensmittel / Märkte:</label>
-                        <div class="input-wrapper"><input type="number" id="th-food" value="150"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-food" value="150" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-car">Roller-Miete + Benzin:</label>
-                        <div class="input-wrapper"><input type="number" id="th-car" value="50"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-car" value="50" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-gastro">Streetfood, Gastro & Coffee:</label>
-                        <div class="input-wrapper"><input type="number" id="th-gastro" value="370"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-gastro" value="370" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
                     <div class="col-grid"><label for="th-visa">Visumskosten (umgelegt):</label>
-                        <div class="input-wrapper"><input type="number" id="th-visa" value="35"
-                                oninput="calculate()"><span>€</span></div>
+                        <div class="input-wrapper"><input type="number" id="th-visa" value="35" oninput="calculate()"
+                                onfocus="this.select()"><span>€</span></div>
                     </div>
 
                     <div class="total-expenses-box">Kosten TH gesamt: <span id="th-total-display">0,00 €</span></div>
                 </div>
 
-                <!-- THAILAND BUDGET WITH HOUSE -->
                 <div class="budget-section th-house">
                     <h3>Modell 3: TH + Haus DE</h3>
 
@@ -861,7 +858,6 @@
             </div>
         </div>
 
-        <!-- COMPARISON RESULTS -->
         <div class="three-column-grid">
             <div class="card gkv">
                 <h2>Ergebnis Modell 1: Deutschland</h2>
@@ -942,7 +938,6 @@
             </div>
         </div>
 
-        <!-- STICKY RESULT BAR -->
         <div class="sticky-result">
             <div class="result-bar-container">
                 <div id="result-fill" class="result-bar"></div>
@@ -950,7 +945,6 @@
             <div id="comparison-text" class="bar-label">Berechne...</div>
         </div>
 
-        <!-- ETF-SIMULATION -->
         <div class="panel">
             <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
             <div class="etf-grid" style="margin-bottom: 25px;">
@@ -1015,7 +1009,6 @@
                 </div>
             </div>
 
-            <!-- JÄHRLICHE AUFSCHLÜSSELUNG FÜR ALLE VARIANTEN (A BIS D) -->
             <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
                 <h3 style="color: var(--primary-green); margin-bottom: 5px;">📊 Dynamischer Jahresverlauf aller
                     Sparvarianten</h3>
@@ -1035,7 +1028,6 @@
                             </tr>
                         </thead>
                         <tbody id="etf-detail-table-body">
-                            <!-- Wird dynamisch befüllt -->
                         </tbody>
                     </table>
                 </div>
@@ -1194,7 +1186,7 @@
             document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
             document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
             document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
-            document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
+            document.getElementById('th-house-netto').innerText = formatEuro(thHouseSavings);
             document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
 
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));

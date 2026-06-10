@@ -2,7 +2,9 @@
 
 Ein interaktiver Brutto-Netto-Rechner für deutsche Freiberufler (Selbstständige), die den Schritt ins Nicht-EU-Ausland (z. B. Thailand) wagen oder planen. Das Tool vergleicht die steuerlichen und abgabentechnischen Auswirkungen der gesetzlichen Krankenversicherung (GKV) in Deutschland mit den Kosten einer Auslands-Krankenversicherung inkl. GKV-Anwartschaft.
 
-![Interface Preview](https://via.placeholder.com/800x400.png?text=Interaktiver+Rechner+Vorschau) *(Optional: Ersetze dies später durch einen echten Screenshot deiner App)*
+### 🔗 Live-Demo
+Probiere den Rechner direkt im Browser aus:  
+👉 **[https://fleischkuechle.github.io/Workation_earnings-calculator/](https://fleischkuechle.github.io/Workation_earnings-calculator/)**
 
 ---
 
@@ -46,10 +48,10 @@ Das Projekt ist als **Single-Page-Application (SPA)** konzipiert, benötigt kein
 
 ---
 
-## 💻 Installation & Nutzung
+## 💻 Lokale Installation & Nutzung
 
-Da es sich um eine reine Frontend-Anwendung handelt, ist keine Installation notwendig.
+Da es sich um eine reine Frontend-Anwendung handelt, kannst du das Tool entweder über die Live-Demo nutzen oder lokal ausführen:
 
 1. Repository klonen:
 ```bash
-   git clone [https://github.com/DEIN-BENUTZERNAME/freelancer-geo-calculator.git](https://github.com/DEIN-BENUTZERNAME/freelancer-geo-calculator.git)
+   git clone [https://github.com/fleischkuechle/Workation_earnings-calculator.git](https://github.com/fleischkuechle/Workation_earnings-calculator.git)

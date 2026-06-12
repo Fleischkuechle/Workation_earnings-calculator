@@ -1250,11 +1250,14 @@
             if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
             if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
 
-            // ÄNDERUNG: Abzüge mindern exklusiv das deutsche Modell (Modell 1)
-            totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
+            // // ÄNDERUNG: Abzüge mindern exklusiv das deutsche Modell (Modell 1)
+            // totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
+            // totalThCoL = Math.max(0, totalThCoL);
+            // totalThHouseCoL = Math.max(0, totalThHouseCoL);
+            // ÄNDERUNG: Zuschuss wird NUR NOCH vom deutschen Modell (Modell 1) abgezogen
+            totalDeCoL = Math.max(0, totalDeCoL - gesamtZuschuss);
             totalThCoL = Math.max(0, totalThCoL);
             totalThHouseCoL = Math.max(0, totalThHouseCoL);
-
             if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
             if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
             if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;

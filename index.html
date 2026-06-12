@@ -1371,6 +1371,216 @@
         //         });
         //     }
         // }
+        // function calculate() {
+        //     let startkapital = parseFloat(document.getElementById('startkapital').value) || 0;
+        //     let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
+        //     let stunden = parseFloat(document.getElementById('stunden').value) || 0;
+        //     let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
+
+        //     let zuschussP1 = parseFloat(document.getElementById('zuschuss-p1').value) || 0;
+        //     let zuschussP2 = parseFloat(document.getElementById('zuschuss-p2').value) || 0;
+        //     let vermietungAirbnb = parseFloat(document.getElementById('vermietung-airbnb').value) || 0;
+
+        //     // Aufteilung für die detaillierte Anzeige und die Gesamtrechnung
+        //     let gesamtZuschuss = zuschussP1 + zuschussP2;
+        //     let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
+
+        //     localStorage.setItem('f_startkapital', startkapital);
+        //     localStorage.setItem('f_stundensatz', stundensatz);
+        //     localStorage.setItem('f_stunden', stunden);
+        //     localStorage.setItem('f_intl_kv', intlKv);
+        //     localStorage.setItem('f_zuschuss_p1', zuschussP1);
+        //     localStorage.setItem('f_zuschuss_p2', zuschussP2);
+        //     localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
+
+        //     let totalDeCoL = 0;
+        //     let totalThCoL = 0;
+        //     let deHousingSum = 0;
+        //     let thHousingSum = 0;
+        //     let thMediaSum = 0;
+        //     let thAlltagSum = 0;
+
+        //     allKeys.forEach(key => {
+        //         let elDE = document.getElementById('de-' + key);
+        //         if (elDE) {
+        //             let val = parseFloat(elDE.value) || 0;
+        //             localStorage.setItem('c_de_' + key, val);
+        //             totalDeCoL += val;
+        //             if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) deHousingSum += val;
+        //         }
+        //         let elTH = document.getElementById('th-' + key) || document.getElementById('th-software');
+        //         if (elTH && elTH.id.startsWith('th-' + key)) {
+        //             let val = parseFloat(elTH.value) || 0;
+        //             localStorage.setItem('c_th_' + key, val);
+        //             totalThCoL += val;
+
+        //             if (['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez'].includes(key)) thHousingSum += val;
+        //             if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
+        //             if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
+        //         }
+        //     });
+        //     let swVal = parseFloat(document.getElementById('th-software').value) || 0;
+        //     totalThCoL += swVal;
+        //     thMediaSum += swVal;
+
+        //     // Vorbereiten der Basis für Modell 3
+        //     let totalThHouseCoL = totalThCoL + deHousingSum;
+
+        //     // NEU: Werte live in die Detail-Anzeige über "Kosten DE gesamt" schreiben
+        //     if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
+        //     if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
+        //     if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
+
+        //     // ÄNDERUNG: Abzüge mindern exklusiv das deutsche Modell (Modell 1)
+        //     totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
+        //     totalThCoL = Math.max(0, totalThCoL);
+        //     totalThHouseCoL = Math.max(0, totalThHouseCoL);
+
+        //     if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-alltag')) document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
+
+        //     if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
+        //     if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+        //     if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
+
+        //     let brutto = stundensatz * stunden;
+
+        //     // DE Berechnung
+        //     const minGrenz = 1318.33, maxGrenz = 5812.50;
+        //     let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
+        //     let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
+        //     let gkvTax = estimateTax(Math.max(0, brutto - gkvKv) * 12);
+        //     let gkvNetto = brutto - gkvKv - gkvTax;
+        //     let gkvSavings = gkvNetto - totalDeCoL;
+
+        //     // TH Berechnung
+        //     let intlTax = estimateTax(Math.max(0, brutto - intlKv) * 12);
+        //     let intlNetto = brutto - intlKv - intlTax;
+        //     let intlSavings = intlNetto - totalThCoL;
+
+        //     // TH + Haus Berechnung
+        //     let thHouseSavings = intlNetto - totalThHouseCoL;
+
+        //     document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
+        //     document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
+        //     document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
+        //     document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
+
+        //     document.getElementById('intl-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
+        //     document.getElementById('intl-tax').innerText = formatEuro(intlTax);
+        //     document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
+        //     document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
+
+        //     document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
+        //     document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
+        //     document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
+        //     document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
+
+        //     let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
+        //     let displayPercent = 50;
+        //     if (gkvSavings !== intlSavings) {
+        //         displayPercent = 50 + ((intlSavings - gkvSavings) / totalSavingsSum) * 50;
+        //         displayPercent = Math.max(10, Math.min(90, displayPercent));
+        //     }
+
+        //     let fill = document.getElementById('result-fill');
+        //     let compText = document.getElementById('comparison-text');
+        //     let savingsDifference = Math.abs(intlSavings - gkvSavings);
+
+        //     if (intlSavings > gkvSavings) {
+        //         fill.style.width = displayPercent + '%';
+        //         fill.style.backgroundColor = 'var(--primary-green)';
+        //         compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
+        //     } else {
+        //         fill.style.width = displayPercent + '%';
+        //         fill.style.backgroundColor = 'var(--primary-red)';
+        //         compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+        //     }
+
+        //     let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
+        //     let deRate = Math.max(0, gkvSavings);
+        //     let thRate = Math.max(0, intlSavings);
+        //     let thHouseRate = Math.max(0, thHouseSavings);
+
+        //     document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
+        //     document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
+        //     document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
+        //     document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
+
+        //     let simDiff = { total: 0, monthlyRent: 0 };
+        //     let simDe = { total: 0, monthlyRent: 0 };
+        //     let simTh = { total: 0, monthlyRent: 0 };
+        //     let simThHouse = { total: 0, monthlyRent: 0 };
+
+        //     let monthlyReturn = Math.pow(1 + 0.07, 1 / 12) - 1;
+
+        //     let runningDiff = 0;
+        //     let runningDe = startkapital;
+        //     let runningTh = startkapital;
+        //     let runningThHouse = startkapital;
+
+        //     for (let m = 1; m <= 5 * 12; m++) {
+        //         runningDiff = (runningDiff + diffRate) * (1 + monthlyReturn);
+        //         runningDe = (runningDe + deRate) * (1 + monthlyReturn);
+        //         runningTh = (runningTh + thRate) * (1 + monthlyReturn);
+        //         runningThHouse = (runningThHouse + thHouseRate) * (1 + monthlyReturn);
+        //     }
+
+        //     simDiff.total = Math.max(0, runningDiff);
+        //     simDiff.monthlyRent = (simDiff.total * 0.04) / 12;
+
+        //     simDe.total = Math.max(0, runningDe);
+        //     simDe.monthlyRent = (simDe.total * 0.04) / 12;
+
+        //     simTh.total = Math.max(0, runningTh);
+        //     simTh.monthlyRent = (simTh.total * 0.04) / 12;
+
+        //     simThHouse.total = Math.max(0, runningThHouse);
+        //     simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
+
+        //     ['diff', 'de', 'th', 'th-house'].forEach(s => {
+        //         let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
+        //         document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
+        //         document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
+        //     });
+
+        //     const detailTableBody = document.getElementById('etf-detail-table-body');
+        //     if (detailTableBody) {
+        //         detailTableBody.innerHTML = '';
+        //         const variants = [
+        //             { id: 'A', name: 'Szenario A: Startkapital + Überschuss-Differenz (TH vs. DE)', rate: diffRate, color: 'var(--accent-purple)' },
+        //             { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
+        //             { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
+        //             { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
+        //         ];
+
+        //         variants.forEach(v => {
+        //             let headerRow = document.createElement('tr');
+        //             headerRow.className = 'variant-section-head';
+        //             headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
+        //             detailTableBody.appendChild(headerRow);
+
+        //             let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
+        //             timeline.forEach(row => {
+        //                 let tr = document.createElement('tr');
+        //                 tr.innerHTML = `
+        //             <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
+        //             <td>${formatEuro(row.rate)} / M.</td>
+        //             <td>${formatEuro(row.contributions)}</td>
+        //             <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
+        //             <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
+        //         `;
+        //                 detailTableBody.appendChild(tr);
+        //             });
+        //         });
+        //     }
+        // }
+
         function calculate() {
             let startkapital = parseFloat(document.getElementById('startkapital').value) || 0;
             let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
@@ -1419,14 +1629,16 @@
                     if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
                 }
             });
-            let swVal = parseFloat(document.getElementById('th-software').value) || 0;
+
+            let thSoftwareEl = document.getElementById('th-software');
+            let swVal = thSoftwareEl ? (parseFloat(thSoftwareEl.value) || 0) : 0;
             totalThCoL += swVal;
             thMediaSum += swVal;
 
             // Vorbereiten der Basis für Modell 3
             let totalThHouseCoL = totalThCoL + deHousingSum;
 
-            // NEU: Werte live in die Detail-Anzeige über "Kosten DE gesamt" schreiben
+            // Werte live in die Detail-Anzeige über "Kosten DE gesamt" schreiben
             if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
             if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
             if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
@@ -1444,6 +1656,25 @@
             if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
             if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
             if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
+
+            // Live-Anzeige der neuen Kategorie-Summen unter den Eingabefeldern (HIER WURDE DER FEHLER BEHOBEN)
+            if (document.getElementById('de-sub-housing')) document.getElementById('de-sub-housing').innerText = formatEuro(deHousingSum);
+
+            if (document.getElementById('de-sub-media')) {
+                let elInt = document.getElementById('de-internet'), elMob = document.getElementById('de-mobil'), elNet = document.getElementById('de-netflix'), elGym = document.getElementById('de-gym');
+                let deMedia = (elInt ? parseFloat(elInt.value) || 0 : 0) + (elMob ? parseFloat(elMob.value) || 0 : 0) + (elNet ? parseFloat(elNet.value) || 0 : 0) + (elGym ? parseFloat(elGym.value) || 0 : 0);
+                document.getElementById('de-sub-media').innerText = formatEuro(deMedia);
+            }
+
+            if (document.getElementById('de-sub-alltag')) {
+                let elFoo = document.getElementById('de-food'), elCar = document.getElementById('de-car'), elGas = document.getElementById('de-gastro'), elVer = document.getElementById('de-vers');
+                let deAlltag = (elFoo ? parseFloat(elFoo.value) || 0 : 0) + (elCar ? parseFloat(elCar.value) || 0 : 0) + (elGas ? parseFloat(elGas.value) || 0 : 0) + (elVer ? parseFloat(elVer.value) || 0 : 0);
+                document.getElementById('de-sub-alltag').innerText = formatEuro(deAlltag);
+            }
+
+            if (document.getElementById('th-sub-housing')) document.getElementById('th-sub-housing').innerText = formatEuro(thHousingSum);
+            if (document.getElementById('th-sub-media')) document.getElementById('th-sub-media').innerText = formatEuro(thMediaSum);
+            if (document.getElementById('th-sub-alltag')) document.getElementById('th-sub-alltag').innerText = formatEuro(thAlltagSum);
 
             let brutto = stundensatz * stunden;
 
@@ -1463,23 +1694,23 @@
             // TH + Haus Berechnung
             let thHouseSavings = intlNetto - totalThHouseCoL;
 
-            document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
-            document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
-            document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
-            document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
-            document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
+            if (document.getElementById('gkv-brutto')) document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('gkv-kv')) document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
+            if (document.getElementById('gkv-tax')) document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
+            if (document.getElementById('gkv-netto')) document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
+            if (document.getElementById('gkv-savings')) document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
 
-            document.getElementById('intl-brutto').innerText = formatEuro(brutto);
-            document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
-            document.getElementById('intl-tax').innerText = formatEuro(intlTax);
-            document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
-            document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
+            if (document.getElementById('intl-brutto')) document.getElementById('intl-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('intl-kv-display')) document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
+            if (document.getElementById('intl-tax')) document.getElementById('intl-tax').innerText = formatEuro(intlTax);
+            if (document.getElementById('intl-netto')) document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
+            if (document.getElementById('intl-savings')) document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
 
-            document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
-            document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
-            document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
-            document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
-            document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
+            if (document.getElementById('th-house-brutto')) document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('th-house-kv-display')) document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
+            if (document.getElementById('th-house-tax')) document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
+            if (document.getElementById('th-house-netto')) document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
+            if (document.getElementById('th-house-savings')) document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
 
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
             let displayPercent = 50;
@@ -1492,14 +1723,16 @@
             let compText = document.getElementById('comparison-text');
             let savingsDifference = Math.abs(intlSavings - gkvSavings);
 
-            if (intlSavings > gkvSavings) {
-                fill.style.width = displayPercent + '%';
-                fill.style.backgroundColor = 'var(--primary-green)';
-                compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
-            } else {
-                fill.style.width = displayPercent + '%';
-                fill.style.backgroundColor = 'var(--primary-red)';
-                compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+            if (fill && compText) {
+                if (intlSavings > gkvSavings) {
+                    fill.style.width = displayPercent + '%';
+                    fill.style.backgroundColor = 'var(--primary-green)';
+                    compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
+                } else {
+                    fill.style.width = displayPercent + '%';
+                    fill.style.backgroundColor = 'var(--primary-red)';
+                    compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+                }
             }
 
             let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
@@ -1507,10 +1740,10 @@
             let thRate = Math.max(0, intlSavings);
             let thHouseRate = Math.max(0, thHouseSavings);
 
-            document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
-            document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
-            document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
-            document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
+            if (document.getElementById('etf-diff-rate')) document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
+            if (document.getElementById('etf-de-rate')) document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
+            if (document.getElementById('etf-th-rate')) document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
+            if (document.getElementById('etf-th-house-rate')) document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
 
             let simDiff = { total: 0, monthlyRent: 0 };
             let simDe = { total: 0, monthlyRent: 0 };
@@ -1545,8 +1778,10 @@
 
             ['diff', 'de', 'th', 'th-house'].forEach(s => {
                 let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
-                document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
-                document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
+                let elTot = document.getElementById(`etf-${s}-total`);
+                let elRent = document.getElementById(`etf-${s}-rent`);
+                if (elTot) elTot.innerText = formatEuro(sim.total);
+                if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
             });
 
             const detailTableBody = document.getElementById('etf-detail-table-body');
@@ -1565,21 +1800,26 @@
                     headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
                     detailTableBody.appendChild(headerRow);
 
-                    let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
-                    timeline.forEach(row => {
-                        let tr = document.createElement('tr');
-                        tr.innerHTML = `
-                    <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
-                    <td>${formatEuro(row.rate)} / M.</td>
-                    <td>${formatEuro(row.contributions)}</td>
-                    <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
-                    <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
-                `;
-                        detailTableBody.appendChild(tr);
-                    });
+                    if (typeof generateTimelineData === 'function') {
+                        let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
+                        timeline.forEach(row => {
+                            let tr = document.createElement('tr');
+                            tr.innerHTML = `
+                        <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
+                        <td>${formatEuro(row.rate)} / M.</td>
+                        <td>${formatEuro(row.contributions)}</td>
+                        <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
+                        <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
+                    `;
+                            detailTableBody.appendChild(tr);
+                        });
+                    }
                 });
             }
         }
+
+
+
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const targetElement = document.getElementById('capture-area');

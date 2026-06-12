@@ -660,6 +660,18 @@
                             oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                 </div>
             </div>
+            <!-- <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px;"
+                class="grid-3">
+                <div>
+                    <label>Zuschuss Person 1 (€ / Monat):</label>
+                    <input type="number" id="zuschuss-p1" value="0">
+                </div>
+                <div>
+                    <label>Zuschuss Person 2 (€ / Monat):</label>
+                    <input type="number" id="zuschuss-p2" value="0">
+                </div>
+                <div></div>
+            </div> -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
                 <div class="input-group" style="margin-bottom:0;">
                     <label for="stundensatz">Stundensatz (Netto):</label>
@@ -680,361 +692,407 @@
                 </div>
             </div>
 
-            <button class="btn-pdf" data-html2canvas-ignore="true" onclick="exportToPDF()">💾 PDF-Bericht
-                generieren</button>
-        </div>
-
-        <div class="panel">
-            <h2>2. Detaillierte Lebenshaltungskosten (Monatlich)</h2>
-
-            <div class="three-column-grid">
-                <div class="budget-section de">
-                    <h3>Modell 1: Deutschland</h3>
-
-                    <div class="category-title">Wohnen & Energie (Haus)</div>
-                    <div class="col-grid"><label for="de-rent">Miete / Haus-Kredit:</label>
-                        <div class="input-wrapper"><input type="number" id="de-rent" value="800" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
+            <div
+                style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="input-group">
+                    <label>Zuschuss Person 1 (€ / Monat):</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="zuschuss-p1" value="0" oninput="calculate()">
+                        <span>€</span>
                     </div>
-                    <div class="col-grid"><label for="de-strom">Strom einzeln:</label>
-                        <div class="input-wrapper"><input type="number" id="de-strom" value="90" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-gas">Gas (Heizung):</label>
-                        <div class="input-wrapper"><input type="number" id="de-gas" value="85" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-wasser">Wasser / Abwasser:</label>
-                        <div class="input-wrapper"><input type="number" id="de-wasser" value="35" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-holz">Holzofen (Pellets):</label>
-                        <div class="input-wrapper"><input type="number" id="de-holz" value="40" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-gez">GEZ Gebühr:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gez" value="18" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="category-title">Medien, Abos & Freizeit</div>
-                    <div class="col-grid"><label for="de-internet">Festnetz-Internet:</label>
-                        <div class="input-wrapper"><input type="number" id="de-internet" value="35"
-                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-mobil">Mobilfunk-Vertrag:</label>
-                        <div class="input-wrapper"><input type="number" id="de-mobil" value="25" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-netflix">Netflix / Disney+ / Spotify:</label>
-                        <div class="input-wrapper"><input type="number" id="de-netflix" value="40" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-gym">Gym & Software-Abos:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gym" value="60" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="category-title">Alltag & Mobilität</div>
-                    <div class="col-grid"><label for="de-food">Supermarkt & Drogerie:</label>
-                        <div class="input-wrapper"><input type="number" id="de-food" value="350" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-car">Auto / Transportkosten:</label>
-                        <div class="input-wrapper"><input type="number" id="de-car" value="160" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-gastro">Gastro & Ausgehen:</label>
-                        <div class="input-wrapper"><input type="number" id="de-gastro" value="250" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="de-vers">Versicherungen:</label>
-                        <div class="input-wrapper"><input type="number" id="de-vers" value="25" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="total-expenses-box">Kosten DE gesamt: <span id="de-total-display">0,00 €</span></div>
                 </div>
-
-                <div class="budget-section th">
-                    <h3>Modell 2: Thailand</h3>
-
-                    <div class="category-title">Wohnen & Energie</div>
-                    <div class="col-grid"><label for="th-rent">Condo Miete (Pool/Gym):</label>
-                        <div class="input-wrapper"><input type="number" id="th-rent" value="450" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
+                <div class="input-group">
+                    <label>Zuschuss Person 2 (€ / Monat):</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="zuschuss-p2" value="0" oninput="calculate()">
+                        <span>€</span>
                     </div>
-                    <div class="col-grid"><label for="th-strom">Strom (Klimaanlage):</label>
-                        <div class="input-wrapper"><input type="number" id="th-strom" value="65" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-gas">Gas (in TH unüblich):</label>
-                        <div class="input-wrapper"><input type="number" id="th-gas" value="0" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-wasser">Wasser / Nebenkosten:</label>
-                        <div class="input-wrapper"><input type="number" id="th-wasser" value="8" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-anwartschaft">GKV-Anwartschaft (D):</label>
-                        <div class="input-wrapper"><input type="number" id="th-anwartschaft" value="83.06"
-                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-holz">Holzofen / Sonstiges:</label>
-                        <div class="input-wrapper"><input type="number" id="th-holz" value="0" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="category-title">Medien, Abos & Freizeit</div>
-                    <div class="col-grid"><label for="th-internet">Faser-Internet:</label>
-                        <div class="input-wrapper"><input type="number" id="th-internet" value="15"
-                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-mobil">Mobilfunk (Unlimited):</label>
-                        <div class="input-wrapper"><input type="number" id="th-mobil" value="12" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-netflix">Netflix / Disney+ / Spotify:</label>
-                        <div class="input-wrapper"><input type="number" id="th-netflix" value="24" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-software">Sonstige Software-Abos:</label>
-                        <div class="input-wrapper"><input type="number" id="th-software" value="15"
-                                oninput="calculate()" onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="category-title">Alltag & Mobilität</div>
-                    <div class="col-grid"><label for="th-food">Lebensmittel / Märkte:</label>
-                        <div class="input-wrapper"><input type="number" id="th-food" value="150" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-car">Roller-Miete + Benzin:</label>
-                        <div class="input-wrapper"><input type="number" id="th-car" value="50" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-gastro">Streetfood, Gastro & Coffee:</label>
-                        <div class="input-wrapper"><input type="number" id="th-gastro" value="370" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-                    <div class="col-grid"><label for="th-visa">Visumskosten (umgelegt):</label>
-                        <div class="input-wrapper"><input type="number" id="th-visa" value="35" oninput="calculate()"
-                                onfocus="this.select()"><span>€</span></div>
-                    </div>
-
-                    <div class="total-expenses-box">Kosten TH gesamt: <span id="th-total-display">0,00 €</span></div>
                 </div>
-
-                <div class="budget-section th-house">
-                    <h3>Modell 3: TH + Haus DE</h3>
-
-                    <div class="category-title">Übernommene Hauskosten DE</div>
-                    <div class="col-grid"><label>Haus-Fixkosten (automatisch):</label>
-                        <div class="input-wrapper"><input type="text" id="th-house-de-cost" value="0 €" disabled
-                                style="color:var(--text-muted);"></div>
+                <div class="input-group">
+                    <label>Vermietung (Airbnb) (€ / Monat):</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="vermietung-airbnb" value="0" oninput="calculate()">
+                        <span>€</span>
                     </div>
-
-                    <div class="category-title">Wohnen & Leben Thailand</div>
-                    <div class="col-grid"><label>TH Condo, Energie & Anwart.:</label>
-                        <div class="input-wrapper"><input type="text" id="th-house-th-housing" value="0 €" disabled
-                                style="color:var(--text-muted);"></div>
-                    </div>
-                    <div class="col-grid"><label>TH Freizeit & Medien:</label>
-                        <div class="input-wrapper"><input type="text" id="th-house-th-media" value="0 €" disabled
-                                style="color:var(--text-muted);"></div>
-                    </div>
-                    <div class="col-grid"><label>TH Alltag & Visum:</label>
-                        <div class="input-wrapper"><input type="text" id="th-house-th-alltag" value="0 €" disabled
-                                style="color:var(--text-muted);"></div>
-                    </div>
-
-                    <div style="margin-top: 45px;" class="info-box-sub">
-                        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3;">Dieses Modell addiert
-                            automatisch alle Wohnkosten aus Deutschland zu den Lebenshaltungskosten in Thailand.</p>
-                    </div>
-
-                    <div class="total-expenses-box" style="margin-top: 80px;">Kosten Kombi gesamt: <span
-                            id="th-house-total-display">0,00 €</span></div>
                 </div>
             </div>
         </div>
+
+
+        <button class="btn-pdf" data-html2canvas-ignore="true" onclick="exportToPDF()">💾 PDF-Bericht
+            generieren</button>
+    </div>
+
+    <div class="panel">
+        <h2>2. Detaillierte Lebenshaltungskosten (Monatlich)</h2>
 
         <div class="three-column-grid">
-            <div class="card gkv">
-                <h2>Ergebnis Modell 1: Deutschland</h2>
-                <table>
-                    <tr>
-                        <td>Errechnetes Brutto</td>
-                        <td><span id="gkv-brutto">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- GKV / Pflege (21,1%)</td>
-                        <td><span id="gkv-kv">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>Einkommensteuer (ca.)</td>
-                        <td><span id="gkv-tax">0,00 €</span></td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>Netto verbleibend</td>
-                        <td><span id="gkv-netto">0,00 €</span></td>
-                    </tr>
-                    <tr class="savings-row">
-                        <td>Reales Sparpotenzial</td>
-                        <td id="gkv-savings" class="savings-amount">0,00 €</td>
-                    </tr>
-                </table>
-            </div>
+            <div class="budget-section de">
+                <h3>Modell 1: Deutschland</h3>
 
-            <div class="card intl">
-                <h2>Ergebnis Modell 2: Thailand</h2>
-                <table>
-                    <tr>
-                        <td>Errechnetes Brutto</td>
-                        <td><span id="intl-brutto">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- Auslands-KV</td>
-                        <td><span id="intl-kv-display">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>Einkommensteuer (ca.)</td>
-                        <td><span id="intl-tax">0,00 €</span></td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>Netto verbleibend</td>
-                        <td><span id="intl-netto">0,00 €</span></td>
-                    </tr>
-                    <tr class="savings-row">
-                        <td>Reales Sparpotenzial</td>
-                        <td id="intl-savings" class="savings-amount">0,00 €</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="card th-house-card">
-                <h2>Ergebnis Modell 3: TH + Haus</h2>
-                <table>
-                    <tr>
-                        <td>Errechnetes Brutto</td>
-                        <td><span id="th-house-brutto">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>- Auslands-KV</td>
-                        <td><span id="th-house-kv-display">0,00 €</span></td>
-                    </tr>
-                    <tr>
-                        <td>Einkommensteuer (ca.)</td>
-                        <td><span id="th-house-tax">0,00 €</span></td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td>Netto verbleibend</td>
-                        <td><span id="th-house-netto">0,00 €</span></td>
-                    </tr>
-                    <tr class="savings-row">
-                        <td>Reales Sparpotenzial</td>
-                        <td id="th-house-savings" class="savings-amount">0,00 €</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="sticky-result">
-            <div class="result-bar-container">
-                <div id="result-fill" class="result-bar"></div>
-            </div>
-            <div id="comparison-text" class="bar-label">Berechne...</div>
-        </div>
-
-        <div class="panel">
-            <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
-            <div class="etf-grid" style="margin-bottom: 25px;">
-                <div class="etf-card diff">
-                    <h4><span>A: Startkapital + Diff. (TH/DE)</span><span class="monthly-badge" id="etf-diff-rate">0
-                            €/M</span></h4>
-                    <table class="etf-table">
-                        <tr class="total-etf-row">
-                            <td>Endvermögen:</td>
-                            <td id="etf-diff-total">0,00 €</td>
-                        </tr>
-                        <tr class="rente-row">
-                            <td>Monatsrente:</td>
-                            <td id="etf-diff-rent">0,00 €</td>
-                        </tr>
-                    </table>
+                <div class="category-title">Wohnen & Energie (Haus)</div>
+                <div class="col-grid"><label for="de-rent">Miete / Haus-Kredit /Instanhaltungsrücklagen bei
+                        Eigenheim:</label>
+                    <div class="input-wrapper"><input type="number" id="de-rent" value="800" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-strom">Strom einzeln:</label>
+                    <div class="input-wrapper"><input type="number" id="de-strom" value="90" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-gas">Gas (Heizung):</label>
+                    <div class="input-wrapper"><input type="number" id="de-gas" value="85" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-wasser">Wasser / Abwasser:</label>
+                    <div class="input-wrapper"><input type="number" id="de-wasser" value="35" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-holz">Holzofen (Pellets):</label>
+                    <div class="input-wrapper"><input type="number" id="de-holz" value="40" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-gez">GEZ Gebühr:</label>
+                    <div class="input-wrapper"><input type="number" id="de-gez" value="18" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
                 </div>
 
-                <div class="etf-card de-full">
-                    <h4><span>B: Startkapital + Spar. DE</span><span class="monthly-badge" id="etf-de-rate">0 €/M</span>
-                    </h4>
-                    <table class="etf-table">
-                        <tr class="total-etf-row">
-                            <td>Endvermögen:</td>
-                            <td id="etf-de-total">0,00 €</td>
-                        </tr>
-                        <tr class="rente-row">
-                            <td>Monatsrente:</td>
-                            <td id="etf-de-rent">0,00 €</td>
-                        </tr>
-                    </table>
+                <div class="category-title">Medien, Abos & Freizeit</div>
+                <div class="col-grid"><label for="de-internet">Festnetz-Internet:</label>
+                    <div class="input-wrapper"><input type="number" id="de-internet" value="35" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-mobil">Mobilfunk-Vertrag:</label>
+                    <div class="input-wrapper"><input type="number" id="de-mobil" value="25" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-netflix">Netflix / Disney+ / Spotify:</label>
+                    <div class="input-wrapper"><input type="number" id="de-netflix" value="40" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-gym">Gym & Software-Abos:</label>
+                    <div class="input-wrapper"><input type="number" id="de-gym" value="60" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
                 </div>
 
-                <div class="etf-card th-full">
-                    <h4><span>C: Startkapital + Spar. TH</span><span class="monthly-badge" id="etf-th-rate">0 €/M</span>
-                    </h4>
-                    <table class="etf-table">
-                        <tr class="total-etf-row">
-                            <td>Endvermögen:</td>
-                            <td id="etf-th-total">0,00 €</td>
-                        </tr>
-                        <tr class="rente-row">
-                            <td>Monatsrente:</td>
-                            <td id="etf-th-rent">0,00 €</td>
-                        </tr>
-                    </table>
+                <div class="category-title">Alltag & Mobilität</div>
+                <div class="col-grid"><label for="de-food">Supermarkt & Drogerie:</label>
+                    <div class="input-wrapper"><input type="number" id="de-food" value="350" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-car">Auto / Transportkosten:</label>
+                    <div class="input-wrapper"><input type="number" id="de-car" value="160" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-gastro">Gastro & Ausgehen:</label>
+                    <div class="input-wrapper"><input type="number" id="de-gastro" value="250" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="de-vers">Versicherungen:</label>
+                    <div class="input-wrapper"><input type="number" id="de-vers" value="25" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
                 </div>
 
-                <div class="etf-card th-house-full">
-                    <h4><span>D: Startkapital + Spar. TH+Haus</span><span class="monthly-badge" id="etf-th-house-rate">0
-                            €/M</span></h4>
-                    <table class="etf-table">
-                        <tr class="total-etf-row">
-                            <td>Endvermögen:</td>
-                            <td id="etf-th-house-total">0,00 €</td>
-                        </tr>
-                        <tr class="rente-row">
-                            <td>Monatsrente:</td>
-                            <td id="etf-th-house-rent">0,00 €</td>
-                        </tr>
-                    </table>
+                <!-- <div class="total-expenses-box">Kosten DE gesamt: <span id="de-total-display">0,00 €</span></div> -->
+                <!-- NEU: Detaillierte Aufschlüsselung der Abzüge direkt über dem Gesamtergebnis -->
+                <div
+                    style="margin-top: 15px; padding: 10px; border-radius: 6px; background-color: rgba(255,255,255,0.03); font-size: 0.9em; display: flex; flex-direction: column; gap: 5px;">
+                    <div style="display: flex; justify-content: space-between; color: #aaa;">
+                        <span>Lebenshaltungskosten (Brutto):</span>
+                        <span id="de-brutto-costs-display">0,00 €</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--primary-red);">
+                        <span>- Abzug Personen (Zuschuss 1 + 2):</span>
+                        <span id="de-zuschuss-display">0,00 €</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--primary-red);">
+                        <span>- Einnahmen Vermietung (Airbnb):</span>
+                        <span id="de-airbnb-display">0,00 €</span>
+                    </div>
                 </div>
+
+                <div class="total-expenses-box">Kosten DE gesamt: <span id="de-total-display">0,00 €</span></div>
+
             </div>
 
-            <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
-                <h3 style="color: var(--primary-green); margin-bottom: 5px;">📊 Dynamischer Jahresverlauf aller
-                    Sparvarianten</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-                    Detaillierte Entwicklung über 5 Jahre basierend auf dem eingestellten Startkapital und der
-                    jeweiligen monatlichen Sparrate.
-                </p>
-                <div class="detail-table-wrapper">
-                    <table class="detail-table">
-                        <thead>
-                            <tr>
-                                <th>Jahr</th>
-                                <th>Monatliche Sparrate</th>
-                                <th>Einzahlungen kumuliert</th>
-                                <th>Reine Zinsen (Zinseszins)</th>
-                                <th>Gesamtvermögen</th>
-                            </tr>
-                        </thead>
-                        <tbody id="etf-detail-table-body">
-                        </tbody>
-                    </table>
+            <div class="budget-section th">
+                <h3>Modell 2: Thailand</h3>
+
+                <div class="category-title">Wohnen & Energie</div>
+                <div class="col-grid"><label for="th-rent">Condo Miete (Pool/Gym):</label>
+                    <div class="input-wrapper"><input type="number" id="th-rent" value="450" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
                 </div>
+                <div class="col-grid"><label for="th-strom">Strom (Klimaanlage):</label>
+                    <div class="input-wrapper"><input type="number" id="th-strom" value="65" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-gas">Gas (in TH unüblich):</label>
+                    <div class="input-wrapper"><input type="number" id="th-gas" value="0" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-wasser">Wasser / Nebenkosten:</label>
+                    <div class="input-wrapper"><input type="number" id="th-wasser" value="8" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-anwartschaft">GKV-Anwartschaft (D):</label>
+                    <div class="input-wrapper"><input type="number" id="th-anwartschaft" value="83.06"
+                            oninput="calculate()" onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-holz">Holzofen / Sonstiges:</label>
+                    <div class="input-wrapper"><input type="number" id="th-holz" value="0" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+
+                <div class="category-title">Medien, Abos & Freizeit</div>
+                <div class="col-grid"><label for="th-internet">Faser-Internet:</label>
+                    <div class="input-wrapper"><input type="number" id="th-internet" value="15" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-mobil">Mobilfunk (Unlimited):</label>
+                    <div class="input-wrapper"><input type="number" id="th-mobil" value="12" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-netflix">Netflix / Disney+ / Spotify:</label>
+                    <div class="input-wrapper"><input type="number" id="th-netflix" value="24" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-software">Sonstige Software-Abos:</label>
+                    <div class="input-wrapper"><input type="number" id="th-software" value="15" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+
+                <div class="category-title">Alltag & Mobilität</div>
+                <div class="col-grid"><label for="th-food">Lebensmittel / Märkte:</label>
+                    <div class="input-wrapper"><input type="number" id="th-food" value="150" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-car">Roller-Miete + Benzin:</label>
+                    <div class="input-wrapper"><input type="number" id="th-car" value="50" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-gastro">Streetfood, Gastro & Coffee:</label>
+                    <div class="input-wrapper"><input type="number" id="th-gastro" value="370" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+                <div class="col-grid"><label for="th-visa">Visumskosten (umgelegt):</label>
+                    <div class="input-wrapper"><input type="number" id="th-visa" value="35" oninput="calculate()"
+                            onfocus="this.select()"><span>€</span></div>
+                </div>
+
+                <div class="total-expenses-box">Kosten TH gesamt: <span id="th-total-display">0,00 €</span></div>
+            </div>
+
+            <div class="budget-section th-house">
+                <h3>Modell 3: TH + Haus DE</h3>
+
+                <div class="category-title">Übernommene Hauskosten DE</div>
+                <div class="col-grid"><label>Haus-Fixkosten (automatisch):</label>
+                    <div class="input-wrapper"><input type="text" id="th-house-de-cost" value="0 €" disabled
+                            style="color:var(--text-muted);"></div>
+                </div>
+
+                <div class="category-title">Wohnen & Leben Thailand</div>
+                <div class="col-grid"><label>TH Condo, Energie & Anwart.:</label>
+                    <div class="input-wrapper"><input type="text" id="th-house-th-housing" value="0 €" disabled
+                            style="color:var(--text-muted);"></div>
+                </div>
+                <div class="col-grid"><label>TH Freizeit & Medien:</label>
+                    <div class="input-wrapper"><input type="text" id="th-house-th-media" value="0 €" disabled
+                            style="color:var(--text-muted);"></div>
+                </div>
+                <div class="col-grid"><label>TH Alltag & Visum:</label>
+                    <div class="input-wrapper"><input type="text" id="th-house-th-alltag" value="0 €" disabled
+                            style="color:var(--text-muted);"></div>
+                </div>
+
+                <div style="margin-top: 45px;" class="info-box-sub">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3;">Dieses Modell addiert
+                        automatisch alle Wohnkosten aus Deutschland zu den Lebenshaltungskosten in Thailand.</p>
+                </div>
+
+                <div class="total-expenses-box" style="margin-top: 80px;">Kosten Kombi gesamt: <span
+                        id="th-house-total-display">0,00 €</span></div>
             </div>
         </div>
     </div>
 
+    <div class="three-column-grid">
+        <div class="card gkv">
+            <h2>Ergebnis Modell 1: Deutschland</h2>
+            <table>
+                <tr>
+                    <td>Errechnetes Brutto</td>
+                    <td><span id="gkv-brutto">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>- GKV / Pflege (21,1%)</td>
+                    <td><span id="gkv-kv">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>Einkommensteuer (ca.)</td>
+                    <td><span id="gkv-tax">0,00 €</span></td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Netto verbleibend</td>
+                    <td><span id="gkv-netto">0,00 €</span></td>
+                </tr>
+                <tr class="savings-row">
+                    <td>Reales Sparpotenzial</td>
+                    <td id="gkv-savings" class="savings-amount">0,00 €</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card intl">
+            <h2>Ergebnis Modell 2: Thailand</h2>
+            <table>
+                <tr>
+                    <td>Errechnetes Brutto</td>
+                    <td><span id="intl-brutto">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>- Auslands-KV</td>
+                    <td><span id="intl-kv-display">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>Einkommensteuer (ca.)</td>
+                    <td><span id="intl-tax">0,00 €</span></td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Netto verbleibend</td>
+                    <td><span id="intl-netto">0,00 €</span></td>
+                </tr>
+                <tr class="savings-row">
+                    <td>Reales Sparpotenzial</td>
+                    <td id="intl-savings" class="savings-amount">0,00 €</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card th-house-card">
+            <h2>Ergebnis Modell 3: TH + Haus</h2>
+            <table>
+                <tr>
+                    <td>Errechnetes Brutto</td>
+                    <td><span id="th-house-brutto">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>- Auslands-KV</td>
+                    <td><span id="th-house-kv-display">0,00 €</span></td>
+                </tr>
+                <tr>
+                    <td>Einkommensteuer (ca.)</td>
+                    <td><span id="th-house-tax">0,00 €</span></td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Netto verbleibend</td>
+                    <td><span id="th-house-netto">0,00 €</span></td>
+                </tr>
+                <tr class="savings-row">
+                    <td>Reales Sparpotenzial</td>
+                    <td id="th-house-savings" class="savings-amount">0,00 €</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="sticky-result">
+        <div class="result-bar-container">
+            <div id="result-fill" class="result-bar"></div>
+        </div>
+        <div id="comparison-text" class="bar-label">Berechne...</div>
+    </div>
+
+    <div class="panel">
+        <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
+        <div class="etf-grid" style="margin-bottom: 25px;">
+            <div class="etf-card diff">
+                <h4><span>A: Startkapital + Diff. (TH/DE)</span><span class="monthly-badge" id="etf-diff-rate">0
+                        €/M</span></h4>
+                <table class="etf-table">
+                    <tr class="total-etf-row">
+                        <td>Endvermögen:</td>
+                        <td id="etf-diff-total">0,00 €</td>
+                    </tr>
+                    <tr class="rente-row">
+                        <td>Monatsrente:</td>
+                        <td id="etf-diff-rent">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="etf-card de-full">
+                <h4><span>B: Startkapital + Spar. DE</span><span class="monthly-badge" id="etf-de-rate">0 €/M</span>
+                </h4>
+                <table class="etf-table">
+                    <tr class="total-etf-row">
+                        <td>Endvermögen:</td>
+                        <td id="etf-de-total">0,00 €</td>
+                    </tr>
+                    <tr class="rente-row">
+                        <td>Monatsrente:</td>
+                        <td id="etf-de-rent">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="etf-card th-full">
+                <h4><span>C: Startkapital + Spar. TH</span><span class="monthly-badge" id="etf-th-rate">0 €/M</span>
+                </h4>
+                <table class="etf-table">
+                    <tr class="total-etf-row">
+                        <td>Endvermögen:</td>
+                        <td id="etf-th-total">0,00 €</td>
+                    </tr>
+                    <tr class="rente-row">
+                        <td>Monatsrente:</td>
+                        <td id="etf-th-rent">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="etf-card th-house-full">
+                <h4><span>D: Startkapital + Spar. TH+Haus</span><span class="monthly-badge" id="etf-th-house-rate">0
+                        €/M</span></h4>
+                <table class="etf-table">
+                    <tr class="total-etf-row">
+                        <td>Endvermögen:</td>
+                        <td id="etf-th-house-total">0,00 €</td>
+                    </tr>
+                    <tr class="rente-row">
+                        <td>Monatsrente:</td>
+                        <td id="etf-th-house-rent">0,00 €</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
+            <h3 style="color: var(--primary-green); margin-bottom: 5px;">📊 Dynamischer Jahresverlauf aller
+                Sparvarianten</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Detaillierte Entwicklung über 5 Jahre basierend auf dem eingestellten Startkapital und der
+                jeweiligen monatlichen Sparrate.
+            </p>
+            <div class="detail-table-wrapper">
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Jahr</th>
+                            <th>Monatliche Sparrate</th>
+                            <th>Einzahlungen kumuliert</th>
+                            <th>Reine Zinsen (Zinseszins)</th>
+                            <th>Gesamtvermögen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="etf-detail-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
     <script>
         const allKeys = ['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
 
@@ -1092,6 +1150,9 @@
             if (localStorage.getItem('f_stundensatz') !== null) document.getElementById('stundensatz').value = localStorage.getItem('f_stundensatz');
             if (localStorage.getItem('f_stunden') !== null) document.getElementById('stunden').value = localStorage.getItem('f_stunden');
             if (localStorage.getItem('f_intl_kv') !== null) document.getElementById('intl-kv-input').value = localStorage.getItem('f_intl_kv');
+            if (localStorage.getItem('f_zuschuss_p1') !== null) document.getElementById('zuschuss-p1').value = localStorage.getItem('f_zuschuss_p1');
+            if (localStorage.getItem('f_zuschuss_p2') !== null) document.getElementById('zuschuss-p2').value = localStorage.getItem('f_zuschuss_p2');
+            if (localStorage.getItem('f_vermietung_airbnb') !== null) document.getElementById('vermietung-airbnb').value = localStorage.getItem('f_vermietung_airbnb');
 
             allKeys.forEach(key => {
                 const valDE = localStorage.getItem('c_de_' + key);
@@ -1099,18 +1160,238 @@
                 const valTH = localStorage.getItem('c_th_' + key);
                 if (valTH !== null && document.getElementById('th-' + key)) document.getElementById('th-' + key).value = valTH;
             });
+
+            // Berechnet alles exakt EINMAL nach dem Laden
+            calculate();
         }
 
+        // function calculate() {
+        //     let startkapital = parseFloat(document.getElementById('startkapital').value) || 0;
+        //     let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
+        //     let stunden = parseFloat(document.getElementById('stunden').value) || 0;
+        //     let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
+
+        //     let zuschussP1 = parseFloat(document.getElementById('zuschuss-p1').value) || 0;
+        //     let zuschussP2 = parseFloat(document.getElementById('zuschuss-p2').value) || 0;
+
+        //     let vermietungAirbnb = parseFloat(document.getElementById('vermietung-airbnb').value) || 0;
+        //     let gesamtZuschuss = zuschussP1 + zuschussP2 + vermietungAirbnb;
+
+        //     localStorage.setItem('f_startkapital', startkapital);
+        //     localStorage.setItem('f_stundensatz', stundensatz);
+        //     localStorage.setItem('f_stunden', stunden);
+        //     localStorage.setItem('f_intl_kv', intlKv);
+        //     localStorage.setItem('f_zuschuss_p1', zuschussP1);
+        //     localStorage.setItem('f_zuschuss_p2', zuschussP2);
+        //     localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
+        //     let totalDeCoL = 0;
+        //     let totalThCoL = 0;
+        //     let deHousingSum = 0;
+        //     let thHousingSum = 0;
+        //     let thMediaSum = 0;
+        //     let thAlltagSum = 0;
+
+        //     allKeys.forEach(key => {
+        //         let elDE = document.getElementById('de-' + key);
+        //         if (elDE) {
+        //             let val = parseFloat(elDE.value) || 0;
+        //             localStorage.setItem('c_de_' + key, val);
+        //             totalDeCoL += val;
+        //             if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) deHousingSum += val;
+        //         }
+        //         let elTH = document.getElementById('th-' + key) || document.getElementById('th-software');
+        //         if (elTH && elTH.id.startsWith('th-' + key)) {
+        //             let val = parseFloat(elTH.value) || 0;
+        //             localStorage.setItem('c_th_' + key, val);
+        //             totalThCoL += val;
+
+        //             if (['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez'].includes(key)) thHousingSum += val;
+        //             if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
+        //             if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
+        //         }
+        //     });
+        //     let swVal = parseFloat(document.getElementById('th-software').value) || 0;
+        //     totalThCoL += swVal;
+        //     thMediaSum += swVal;
+
+        //     // let totalThHouseCoL = totalThCoL + deHousingSum;
+
+        //     // totalDeCoL = Math.max(0, totalDeCoL - gesamtZuschuss);
+        //     // totalThCoL = Math.max(0, totalThCoL - gesamtZuschuss);
+        //     // totalThHouseCoL = Math.max(0, totalThHouseCoL - gesamtZuschuss);
+        //     // Vorbereiten der Basis für Modell 3
+        //     let totalThHouseCoL = totalThCoL + deHousingSum;
+
+        //     // ÄNDERUNG: Zuschuss wird NUR NOCH vom deutschen Modell (Modell 1) abgezogen
+        //     totalDeCoL = Math.max(0, totalDeCoL - gesamtZuschuss);
+        //     totalThCoL = Math.max(0, totalThCoL);
+        //     totalThHouseCoL = Math.max(0, totalThHouseCoL);
+
+        //     if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
+        //     if (document.getElementById('th-house-th-alltag')) document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
+
+        //     if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
+        //     if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+        //     if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
+
+        //     let brutto = stundensatz * stunden;
+
+        //     // DE Berechnung
+        //     const minGrenz = 1318.33, maxGrenz = 5812.50;
+        //     let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
+        //     let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
+        //     let gkvTax = estimateTax(Math.max(0, brutto - gkvKv) * 12);
+        //     let gkvNetto = brutto - gkvKv - gkvTax;
+        //     let gkvSavings = gkvNetto - totalDeCoL;
+
+        //     // TH Berechnung
+        //     let intlTax = estimateTax(Math.max(0, brutto - intlKv) * 12);
+        //     let intlNetto = brutto - intlKv - intlTax;
+        //     let intlSavings = intlNetto - totalThCoL;
+
+        //     // TH + Haus Berechnung
+        //     let thHouseSavings = intlNetto - totalThHouseCoL;
+
+        //     document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
+        //     document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
+        //     document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
+        //     document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
+
+        //     document.getElementById('intl-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
+        //     document.getElementById('intl-tax').innerText = formatEuro(intlTax);
+        //     document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
+        //     document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
+
+        //     document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
+        //     document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
+        //     document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
+        //     document.getElementById('th-house-netto').innerText = formatEuro(intlNetto); // KORREKTUR: Netto ist echtes Netto vor Lebenshaltungskosten
+        //     document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
+
+        //     let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
+        //     let displayPercent = 50;
+        //     if (gkvSavings !== intlSavings) {
+        //         displayPercent = 50 + ((intlSavings - gkvSavings) / totalSavingsSum) * 50;
+        //         displayPercent = Math.max(10, Math.min(90, displayPercent));
+        //     }
+
+        //     let fill = document.getElementById('result-fill');
+        //     let compText = document.getElementById('comparison-text');
+        //     let savingsDifference = Math.abs(intlSavings - gkvSavings);
+
+        //     if (intlSavings > gkvSavings) {
+        //         fill.style.width = displayPercent + '%';
+        //         fill.style.backgroundColor = 'var(--primary-green)';
+        //         compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
+        //     } else {
+        //         fill.style.width = displayPercent + '%';
+        //         fill.style.backgroundColor = 'var(--primary-red)';
+        //         compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+        //     }
+
+        //     let diffRate = intlSavings > gkvSavings ? (intlSavings - gkvSavings) : 0;
+        //     let deRate = Math.max(0, gkvSavings);
+        //     let thRate = Math.max(0, intlSavings);
+        //     let thHouseRate = Math.max(0, thHouseSavings);
+
+        //     document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
+        //     document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
+        //     document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
+        //     document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
+
+        //     let simDiff = { total: 0, monthlyRent: 0 };
+        //     let simDe = { total: 0, monthlyRent: 0 };
+        //     let simTh = { total: 0, monthlyRent: 0 };
+        //     let simThHouse = { total: 0, monthlyRent: 0 };
+
+        //     let monthlyReturn = Math.pow(1 + 0.07, 1 / 12) - 1;
+
+        //     let runningDiff = 0;
+        //     let runningDe = startkapital;
+        //     let runningTh = startkapital;
+        //     let runningThHouse = startkapital;
+
+        //     for (let m = 1; m <= 5 * 12; m++) {
+        //         runningDiff = (runningDiff + diffRate) * (1 + monthlyReturn);
+        //         runningDe = (runningDe + deRate) * (1 + monthlyReturn);
+        //         runningTh = (runningTh + thRate) * (1 + monthlyReturn);
+        //         runningThHouse = (runningThHouse + thHouseRate) * (1 + monthlyReturn);
+        //     }
+
+        //     simDiff.total = Math.max(0, runningDiff);
+        //     simDiff.monthlyRent = (simDiff.total * 0.04) / 12;
+
+        //     simDe.total = Math.max(0, runningDe);
+        //     simDe.monthlyRent = (simDe.total * 0.04) / 12;
+
+        //     simTh.total = Math.max(0, runningTh);
+        //     simTh.monthlyRent = (simTh.total * 0.04) / 12;
+
+        //     simThHouse.total = Math.max(0, runningThHouse);
+        //     simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
+
+        //     ['diff', 'de', 'th', 'th-house'].forEach(s => {
+        //         let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
+        //         document.getElementById(`etf-${s}-total`).innerText = formatEuro(sim.total);
+        //         document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
+        //     });
+
+        //     const detailTableBody = document.getElementById('etf-detail-table-body');
+        //     if (detailTableBody) {
+        //         detailTableBody.innerHTML = '';
+        //         const variants = [
+        //             { id: 'A', name: 'Szenario A: Startkapital + Überschuss-Differenz (TH vs. DE)', rate: diffRate, color: 'var(--accent-purple)' },
+        //             { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
+        //             { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
+        //             { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
+        //         ];
+
+        //         variants.forEach(v => {
+        //             let headerRow = document.createElement('tr');
+        //             headerRow.className = 'variant-section-head';
+        //             headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
+        //             detailTableBody.appendChild(headerRow);
+
+        //             let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
+        //             timeline.forEach(row => {
+        //                 let tr = document.createElement('tr');
+        //                 tr.innerHTML = `
+        //                 <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
+        //                 <td>${formatEuro(row.rate)} / M.</td>
+        //                 <td>${formatEuro(row.contributions)}</td>
+        //                 <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
+        //                 <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
+        //             `;
+        //                 detailTableBody.appendChild(tr);
+        //             });
+        //         });
+        //     }
+        // }
         function calculate() {
             let startkapital = parseFloat(document.getElementById('startkapital').value) || 0;
             let stundensatz = parseFloat(document.getElementById('stundensatz').value) || 0;
             let stunden = parseFloat(document.getElementById('stunden').value) || 0;
             let intlKv = parseFloat(document.getElementById('intl-kv-input').value) || 0;
 
+            let zuschussP1 = parseFloat(document.getElementById('zuschuss-p1').value) || 0;
+            let zuschussP2 = parseFloat(document.getElementById('zuschuss-p2').value) || 0;
+            let vermietungAirbnb = parseFloat(document.getElementById('vermietung-airbnb').value) || 0;
+
+            // Aufteilung für die detaillierte Anzeige und die Gesamtrechnung
+            let gesamtZuschuss = zuschussP1 + zuschussP2;
+            let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
+
             localStorage.setItem('f_startkapital', startkapital);
             localStorage.setItem('f_stundensatz', stundensatz);
             localStorage.setItem('f_stunden', stunden);
             localStorage.setItem('f_intl_kv', intlKv);
+            localStorage.setItem('f_zuschuss_p1', zuschussP1);
+            localStorage.setItem('f_zuschuss_p2', zuschussP2);
+            localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
 
             let totalDeCoL = 0;
             let totalThCoL = 0;
@@ -1142,16 +1423,27 @@
             totalThCoL += swVal;
             thMediaSum += swVal;
 
+            // Vorbereiten der Basis für Modell 3
             let totalThHouseCoL = totalThCoL + deHousingSum;
 
-            document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
-            document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
-            document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
-            document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
+            // NEU: Werte live in die Detail-Anzeige über "Kosten DE gesamt" schreiben
+            if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
+            if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
+            if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
 
-            document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
-            document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
-            document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
+            // ÄNDERUNG: Abzüge mindern exklusiv das deutsche Modell (Modell 1)
+            totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
+            totalThCoL = Math.max(0, totalThCoL);
+            totalThHouseCoL = Math.max(0, totalThHouseCoL);
+
+            if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-alltag')) document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
+
+            if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
+            if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+            if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
 
             let brutto = stundensatz * stunden;
 
@@ -1186,7 +1478,7 @@
             document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
             document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
             document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
-            document.getElementById('th-house-netto').innerText = formatEuro(thHouseSavings);
+            document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
             document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
 
             let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
@@ -1220,10 +1512,36 @@
             document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
             document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
 
-            let simDiff = simulateETFWithStart(startkapital, diffRate, 5, 0.07);
-            let simDe = simulateETFWithStart(startkapital, deRate, 5, 0.07);
-            let simTh = simulateETFWithStart(startkapital, thRate, 5, 0.07);
-            let simThHouse = simulateETFWithStart(startkapital, thHouseRate, 5, 0.07);
+            let simDiff = { total: 0, monthlyRent: 0 };
+            let simDe = { total: 0, monthlyRent: 0 };
+            let simTh = { total: 0, monthlyRent: 0 };
+            let simThHouse = { total: 0, monthlyRent: 0 };
+
+            let monthlyReturn = Math.pow(1 + 0.07, 1 / 12) - 1;
+
+            let runningDiff = 0;
+            let runningDe = startkapital;
+            let runningTh = startkapital;
+            let runningThHouse = startkapital;
+
+            for (let m = 1; m <= 5 * 12; m++) {
+                runningDiff = (runningDiff + diffRate) * (1 + monthlyReturn);
+                runningDe = (runningDe + deRate) * (1 + monthlyReturn);
+                runningTh = (runningTh + thRate) * (1 + monthlyReturn);
+                runningThHouse = (runningThHouse + thHouseRate) * (1 + monthlyReturn);
+            }
+
+            simDiff.total = Math.max(0, runningDiff);
+            simDiff.monthlyRent = (simDiff.total * 0.04) / 12;
+
+            simDe.total = Math.max(0, runningDe);
+            simDe.monthlyRent = (simDe.total * 0.04) / 12;
+
+            simTh.total = Math.max(0, runningTh);
+            simTh.monthlyRent = (simTh.total * 0.04) / 12;
+
+            simThHouse.total = Math.max(0, runningThHouse);
+            simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
 
             ['diff', 'de', 'th', 'th-house'].forEach(s => {
                 let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
@@ -1231,39 +1549,37 @@
                 document.getElementById(`etf-${s}-rent`).innerText = formatEuro(sim.monthlyRent) + ' / M.';
             });
 
-            // MULTI-VARIANTEN JAHRESTABELLE GENERIEREN (A, B, C, D)
             const detailTableBody = document.getElementById('etf-detail-table-body');
-            detailTableBody.innerHTML = '';
+            if (detailTableBody) {
+                detailTableBody.innerHTML = '';
+                const variants = [
+                    { id: 'A', name: 'Szenario A: Startkapital + Überschuss-Differenz (TH vs. DE)', rate: diffRate, color: 'var(--accent-purple)' },
+                    { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
+                    { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
+                    { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
+                ];
 
-            const variants = [
-                { id: 'A', name: 'Szenario A: Startkapital + Überschuss-Differenz (TH vs. DE)', rate: diffRate, color: 'var(--accent-purple)' },
-                { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
-                { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
-                { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
-            ];
+                variants.forEach(v => {
+                    let headerRow = document.createElement('tr');
+                    headerRow.className = 'variant-section-head';
+                    headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
+                    detailTableBody.appendChild(headerRow);
 
-            variants.forEach(v => {
-                // Sektions-Überschrift pro Variante
-                let headerRow = document.createElement('tr');
-                headerRow.className = 'variant-section-head';
-                headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
-                detailTableBody.appendChild(headerRow);
-
-                let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
-                timeline.forEach(row => {
-                    let tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
-                        <td>${formatEuro(row.rate)} / M.</td>
-                        <td>${formatEuro(row.contributions)}</td>
-                        <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
-                        <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
-                    `;
-                    detailTableBody.appendChild(tr);
+                    let timeline = generateTimelineData(startkapital, v.rate, 5, 0.07);
+                    timeline.forEach(row => {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `
+                    <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
+                    <td>${formatEuro(row.rate)} / M.</td>
+                    <td>${formatEuro(row.contributions)}</td>
+                    <td style="color: var(--primary-green);">+ ${formatEuro(row.interest)}</td>
+                    <td style="font-weight: bold; color: #fff;">${formatEuro(row.total)}</td>
+                `;
+                        detailTableBody.appendChild(tr);
+                    });
                 });
-            });
+            }
         }
-
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const targetElement = document.getElementById('capture-area');
@@ -1313,10 +1629,16 @@
             }, 150);
         }
 
-        loadSavedValues();
-        calculate();
-    </script>
+        // AUTOMATISCHE EVENT-LISTENER (Verhindert doppeltes OnInput im HTML)
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSavedValues();
 
+            // Überwacht alle Inputs im Dokument und rechnet live bei Änderungen
+            document.querySelectorAll("input").forEach(input => {
+                input.addEventListener("input", calculate);
+            });
+        });
+    </script>
 </body>
 
 </html>

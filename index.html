@@ -1022,7 +1022,124 @@
     </div>
 
     <div class="panel">
-        <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
+        <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
+            <div
+                style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
+                <h3 style="margin: 0;">
+                    3. Der 5-Jahres Vermögenseffekt (<span id="dynamic-interest-effect">7%</span> Rendite p.a.)
+                </h3>
+
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <label for="etf-interest-input" style="font-size: 0.85rem; color: var(--text-muted);">Rendite
+                        ändern:</label>
+                    <input type="number" id="etf-interest-input" value="7" step="0.5" min="0" max="30"
+                        oninput="calculate()"
+                        style="width: 70px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-color); background: #1a1a1a; color: #fff; font-weight: bold; text-align: center;">
+                </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; margin-top: 0;">
+                Detaillierte Entwicklung über 5 Jahre basierend auf dem eingestellten Startkapital und der jeweiligen
+                monatlichen Sparrate.
+            </p>
+
+            <div
+                style="background-color: rgba(0, 128, 255, 0.05); border-left: 3px solid #0080ff; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+                <div
+                    style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; background: rgba(0, 128, 255, 0.08); padding: 8px 12px; border-radius: 4px;">
+                    <label for="current-age-input" style="font-weight: bold; color: #fff;">Dein aktuelles Alter:</label>
+                    <input type="number" id="current-age-input" value="35" min="18" max="80" oninput="calculate()"
+                        style="width: 60px; padding: 3px 6px; border-radius: 4px; border: 1px solid #0080ff; background: #111; color: #fff; font-weight: bold; text-align: center;">
+                    <span style="color: var(--text-muted); font-size: 0.8rem;">(Berechnung der Verzehr-Rente startet
+                        nach +5 Jahren Ansparzeit bis Alter 85)</span>
+                </div>
+
+                ℹ️ <strong>Zwei Wege der Rentenberechnung nach den 5 Jahren:</strong><br>
+                1. <strong>4%-Regel (Substanzerhalt):</strong> Es werden jährlich nur 4% entnommen. Das Vermögen bleibt
+                quasi ewig erhalten.<br>
+                2. <strong>Kapitalverzehr (bis Alter 85):</strong> Das Vermögen wird inklusive 4% Restrendite im Alter
+                linear bis zu deinem 85. Lebensjahr auf exakt 0 € aufgebraucht.
+            </div>
+
+            <div class="detail-table-wrapper">
+                <div class="etf-grid" style="margin-bottom: 25px;">
+                    <div class="etf-card diff">
+                        <h4><span>A: Nur Startkapital</span><span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
+                        </h4>
+                        <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Endvermögen:</td>
+                                <td id="etf-diff-total">0,00 €</td>
+                            </tr>
+                            <tr class="rente-row">
+                                <td>Rente (4%-Regel):</td>
+                                <td id="etf-diff-rent">0,00 €</td>
+                            </tr>
+                            <tr class="rente-verzehr-row" style="color: var(--primary-green);">
+                                <td>Rente (bis 85 J.):</td>
+                                <td id="etf-diff-verzehr">0,00 €</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="etf-card de-full">
+                        <h4><span>B: Startkapital + Spar. DE</span><span class="monthly-badge" id="etf-de-rate">0
+                                €/M</span></h4>
+                        <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Endvermögen:</td>
+                                <td id="etf-de-total">0,00 €</td>
+                            </tr>
+                            <tr class="rente-row">
+                                <td>Rente (4%-Regel):</td>
+                                <td id="etf-de-rent">0,00 €</td>
+                            </tr>
+                            <tr class="rente-verzehr-row" style="color: var(--primary-green);">
+                                <td>Rente (bis 85 J.):</td>
+                                <td id="etf-de-rent-verzehr">0,00 €</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="etf-card th-full">
+                        <h4><span>C: Startkapital + Spar. TH</span><span class="monthly-badge" id="etf-th-rate">0
+                                €/M</span></h4>
+                        <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Endvermögen:</td>
+                                <td id="etf-th-total">0,00 €</td>
+                            </tr>
+                            <tr class="rente-row">
+                                <td>Rente (4%-Regel):</td>
+                                <td id="etf-th-rent">0,00 €</td>
+                            </tr>
+                            <tr class="rente-verzehr-row" style="color: var(--primary-green);">
+                                <td>Rente (bis 85 J.):</td>
+                                <td id="etf-th-rent-verzehr">0,00 €</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="etf-card th-house-full">
+                        <h4><span>D: Startkapital + Spar. TH+Haus</span><span class="monthly-badge"
+                                id="etf-th-house-rate">0 €/M</span></h4>
+                        <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Endvermögen:</td>
+                                <td id="etf-th-house-total">0,00 €</td>
+                            </tr>
+                            <tr class="rente-row">
+                                <td>Rente (4%-Regel):</td>
+                                <td id="etf-th-house-rent">0,00 €</td>
+                            </tr>
+                            <tr class="rente-verzehr-row" style="color: var(--primary-green);">
+                                <td>Rente (bis 85 J.):</td>
+                                <td id="etf-th-house-rent-verzehr">0,00 €</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- <h2>3. Der 5-Jahres Vermögenseffekt (7% Rendite p.a.)</h2>
         <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
             <div
                 style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; margin-bottom: 5px;">
@@ -1108,7 +1225,7 @@
                             </tr>
                         </table>
                     </div>
-                </div>
+                </div> -->
 
                 <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
                     <h3>3. Der 5-Jahres Vermögenseffekt (<span id="dynamic-interest-effect">7%</span> Rendite p.a.)</h3>
@@ -1962,15 +2079,50 @@
                 simThHouse.total = Math.max(0, runningThHouse);
                 simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
 
+                // ['diff', 'de', 'th', 'th-house'].forEach(s => {
+                //     let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
+                //     let elTot = document.getElementById(`etf-${s}-total`);
+                //     let elRent = document.getElementById(`etf-${s}-rent`) || document.getElementById(`etf-${s}-pension`);
+
+                //     if (elTot) elTot.innerText = formatEuro(sim.total);
+                //     if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
+                // });
+                // Sicherheits-Fix für die IDs der oberen Kacheln
+                // Sicherheits-Fix für die IDs der oberen Kacheln mit dynamischem Alter
                 ['diff', 'de', 'th', 'th-house'].forEach(s => {
                     let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
                     let elTot = document.getElementById(`etf-${s}-total`);
                     let elRent = document.getElementById(`etf-${s}-rent`) || document.getElementById(`etf-${s}-pension`);
+                    let elVerzehr = document.getElementById(`etf-${s}-verzehr`) || document.getElementById(`etf-${s}-rent-verzehr`);
 
                     if (elTot) elTot.innerText = formatEuro(sim.total);
                     if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
-                });
 
+                    // DYNAMISCHE Berechnung für den Kapitalverzehr bis 85 Jahre
+                    if (elVerzehr) {
+                        // Aktuelles Alter auslesen (Fallback auf 35, falls das Feld nicht exakt geladen wurde)
+                        let currentAgeEl = document.getElementById('current-age-input');
+                        let aktuellesAlter = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
+
+                        let alterBeiRentenbeginn = aktuellesAlter + 5; // Nach der 5-Jahres Simulation
+                        let jahreBis85 = 85 - alterBeiRentenbeginn;
+
+                        // Schutz vor logischen Fehlern (falls jemand im Rechner schon über 80 ist)
+                        if (jahreBis85 <= 0) jahreBis85 = 1;
+
+                        let monateGesamt = jahreBis85 * 12;
+                        let angenommenerZinsImAlter = 0.04; // 4% verbleibende Marktrendite in der Entnahmephase
+                        let zinsMonatlich = Math.pow(1 + angenommenerZinsImAlter, 1 / 12) - 1;
+
+                        let monatlicheVerzehrRente = 0;
+                        if (sim.total > 0) {
+                            // Finanzmathematische Rentenbarwertformel
+                            monatlicheVerzehrRente = sim.total * (zinsMonatlich / (1 - Math.pow(1 + zinsMonatlich, -monateGesamt)));
+                        }
+
+                        elVerzehr.innerText = formatEuro(monatlicheVerzehrRente) + ' / M.';
+                    }
+                });
                 const detailTableBody = document.getElementById('etf-detail-table-body');
                 if (detailTableBody) {
                     detailTableBody.innerHTML = '';

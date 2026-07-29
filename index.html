@@ -669,15 +669,13 @@
                             oninput="calculate()" onfocus="this.select()"><span>€</span></div>
                 </div>
                 <div class="input-group" style="margin-bottom:0;">
+
                     <label for="stunden">Fakturierbare Stunden:</label>
                     <div class="input-wrapper">
-                        <select id="stunden" onchange="calculate()" style="text-align: left;">
-                            <option value="80">80 Std.</option>
-                            <option value="100">100 Std.</option>
-                            <option value="120" selected>120 Std.</option>
-                            <option value="140">140 Std.</option>
-                            <option value="160">160 Std.</option>
-                        </select>
+                        <!-- Editierbares Input-Feld anstelle des Select-Menüs -->
+                        <input type="number" id="stunden" value="120" step="5" oninput="calculate()"
+                            onfocus="this.select()">
+                        <span>Std.</span>
                     </div>
                 </div>
             </div>

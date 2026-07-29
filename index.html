@@ -903,7 +903,15 @@
                     <div class="input-wrapper"><input type="text" id="th-house-de-cost" value="0 €" disabled
                             style="color:var(--text-muted);"></div>
                 </div>
-
+                <!-- NEW CHECKBOX FIELD -->
+                <div class="col-grid" style="margin-top: 10px; align-items: center;">
+                    <label for="deduct-airbnb-checkbox" style="font-size: 0.85rem; cursor: pointer;">
+                        AirBnB-Einnahmen verrechnen:
+                    </label>
+                    <div class="input-wrapper" style="display: flex; align-items: center; justify-content: flex-end;">
+                        <input type="checkbox" id="deduct-airbnb-checkbox" style="width: auto; cursor: pointer;">
+                    </div>
+                </div>
                 <div class="category-title" style="margin-top: 15px;">Wohnen & Leben Thailand</div>
                 <div class="col-grid"><label>TH Condo, Energie & Anwart.:</label>
                     <div class="input-wrapper"><input type="text" id="th-house-th-housing" value="0 €" disabled
@@ -1219,7 +1227,11 @@
                 if (localStorage.getItem('f_zuschuss_p1') !== null) document.getElementById('zuschuss-p1').value = localStorage.getItem('f_zuschuss_p1');
                 if (localStorage.getItem('f_zuschuss_p2') !== null) document.getElementById('zuschuss-p2').value = localStorage.getItem('f_zuschuss_p2');
                 if (localStorage.getItem('f_vermietung_airbnb') !== null) document.getElementById('vermietung-airbnb').value = localStorage.getItem('f_vermietung_airbnb');
-
+                // Add to loadSavedValues():
+                let savedCheckbox = localStorage.getItem('deduct-airbnb-checkbox');
+                if (savedCheckbox !== null) {
+                    document.getElementById('deduct-airbnb-checkbox').checked = (savedCheckbox === 'true');
+                }
                 allKeys.forEach(key => {
                     const valDE = localStorage.getItem('c_de_' + key);
                     if (valDE !== null && document.getElementById('de-' + key)) document.getElementById('de-' + key).value = valDE;
@@ -1231,8 +1243,8 @@
                 calculate();
             }
 
+
             function calculate() {
-                // Hilfsfunktion, um Werte sicher auszulesen (verhindert Abstürze bei fehlenden IDs)
                 const getVal = (id) => {
                     let el = document.getElementById(id);
                     return el ? (parseFloat(el.value) || 0) : 0;
@@ -1247,6 +1259,12 @@
                 let zuschussP2 = getVal('zuschuss-p2');
                 let vermietungAirbnb = getVal('vermietung-airbnb');
 
+                // 1. Read the checkbox state
+                let deductAirbnbCheckbox = document.getElementById('deduct-airbnb-checkbox');
+                let isDeductAirbnb = deductAirbnbCheckbox ? deductAirbnbCheckbox.checked : false;
+                // Save state
+                localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
+
                 let gesamtZuschuss = zuschussP1 + zuschussP2;
                 let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
 
@@ -1257,6 +1275,8 @@
                 localStorage.setItem('f_zuschuss_p1', zuschussP1);
                 localStorage.setItem('f_zuschuss_p2', zuschussP2);
                 localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
+                // Add to your saving function:
+                localStorage.setItem('deduct-airbnb-checkbox', document.getElementById('deduct-airbnb-checkbox').checked);
 
                 let totalDeCoL = 0;
                 let totalThCoL = 0;
@@ -1274,8 +1294,9 @@
                             totalDeCoL += val;
                             if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) deHousingSum += val;
                         }
-                        let elTH = document.getElementById('th-' + key) || document.getElementById('th-software');
-                        if (elTH && elTH.id.startsWith('th-' + key)) {
+
+                        let elTH = document.getElementById('th-' + key);
+                        if (elTH) {
                             let val = parseFloat(elTH.value) || 0;
                             localStorage.setItem('c_th_' + key, val);
                             totalThCoL += val;
@@ -1287,17 +1308,29 @@
                     });
                 }
 
-                let swVal = getVal('th-software');
-                totalThCoL += swVal;
-                thMediaSum += swVal;
+                // Add th-software if it's external to allKeys loop
+                if (typeof allKeys !== 'undefined' && !allKeys.includes('software')) {
+                    let swVal = getVal('th-software');
+                    totalThCoL += swVal;
+                    thMediaSum += swVal;
+                }
 
-                let totalThHouseCoL = totalThCoL + deHousingSum;
+                // let totalThHouseCoL = totalThCoL + deHousingSum;
+
+
+                // 2. Adjust totalThHouseCoL based on the checkbox toggle
+                let effectiveDeHousing = isDeductAirbnb
+                    ? Math.max(0, deHousingSum - vermietungAirbnb)
+                    : deHousingSum;
+
+                let totalThHouseCoL = totalThCoL + effectiveDeHousing;
+
 
                 if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
                 if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
                 if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
 
-                totalDeCoL = Math.max(0, totalDeCoL - gesamtZuschuss);
+                totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
                 totalThCoL = Math.max(0, totalThCoL);
                 totalThHouseCoL = Math.max(0, totalThHouseCoL);
 
@@ -1397,21 +1430,15 @@
                 let simTh = { total: 0, monthlyRent: 0 };
                 let simThHouse = { total: 0, monthlyRent: 0 };
 
-                // Holt die Rendite dynamisch aus dem Eingabefeld (Standard: 7%)
-                let annualReturnInput = parseFloat(document.getElementById('etf-interest-input').value);
+                let annualReturnInput = parseFloat(document.getElementById('etf-interest-input')?.value);
                 if (isNaN(annualReturnInput)) annualReturnInput = 7;
+                annualReturnInput = Math.max(-99, annualReturnInput);
 
-                // Erste Überschrift anpassen
                 let titleEl = document.getElementById('dynamic-interest-title');
-                if (titleEl) {
-                    titleEl.innerText = annualReturnInput + '%';
-                }
+                if (titleEl) titleEl.innerText = annualReturnInput + '%';
 
-                // Zweite Überschrift anpassen
                 let effectTitleEl = document.getElementById('dynamic-interest-effect');
-                if (effectTitleEl) {
-                    effectTitleEl.innerText = annualReturnInput + '%';
-                }
+                if (effectTitleEl) effectTitleEl.innerText = annualReturnInput + '%';
 
                 let interestRate = annualReturnInput / 100;
                 let monthlyReturn = Math.pow(1 + interestRate, 1 / 12) - 1;
@@ -1440,16 +1467,6 @@
                 simThHouse.total = Math.max(0, runningThHouse);
                 simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
 
-                // ['diff', 'de', 'th', 'th-house'].forEach(s => {
-                //     let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
-                //     let elTot = document.getElementById(`etf-${s}-total`);
-                //     let elRent = document.getElementById(`etf-${s}-rent`) || document.getElementById(`etf-${s}-pension`);
-
-                //     if (elTot) elTot.innerText = formatEuro(sim.total);
-                //     if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
-                // });
-                // Sicherheits-Fix für die IDs der oberen Kacheln
-                // Sicherheits-Fix für die IDs der oberen Kacheln mit dynamischem Alter
                 ['diff', 'de', 'th', 'th-house'].forEach(s => {
                     let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
                     let elTot = document.getElementById(`etf-${s}-total`);
@@ -1459,34 +1476,31 @@
                     if (elTot) elTot.innerText = formatEuro(sim.total);
                     if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
 
-                    // DYNAMISCHE Berechnung für den Kapitalverzehr bis 85 Jahre
                     if (elVerzehr) {
-                        // Aktuelles Alter auslesen (Fallback auf 35, falls das Feld nicht exakt geladen wurde)
                         let currentAgeEl = document.getElementById('current-age-input');
                         let aktuellesAlter = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
-
-                        let alterBeiRentenbeginn = aktuellesAlter + 5; // Nach der 5-Jahres Simulation
+                        let alterBeiRentenbeginn = aktuellesAlter + 5;
                         let jahreBis85 = 85 - alterBeiRentenbeginn;
 
-                        // Schutz vor logischen Fehlern (falls jemand im Rechner schon über 80 ist)
                         if (jahreBis85 <= 0) jahreBis85 = 1;
 
                         let monateGesamt = jahreBis85 * 12;
-                        let angenommenerZinsImAlter = 0.04; // 4% verbleibende Marktrendite in der Entnahmephase
+                        let angenommenerZinsImAlter = 0.04;
                         let zinsMonatlich = Math.pow(1 + angenommenerZinsImAlter, 1 / 12) - 1;
 
                         let monatlicheVerzehrRente = 0;
                         if (sim.total > 0) {
-                            // Finanzmathematische Rentenbarwertformel
                             monatlicheVerzehrRente = sim.total * (zinsMonatlich / (1 - Math.pow(1 + zinsMonatlich, -monateGesamt)));
                         }
 
                         elVerzehr.innerText = formatEuro(monatlicheVerzehrRente) + ' / M.';
                     }
                 });
+
                 const detailTableBody = document.getElementById('etf-detail-table-body');
                 if (detailTableBody) {
                     detailTableBody.innerHTML = '';
+                    const fragment = document.createDocumentFragment();
 
                     const variants = [
                         { id: 'A', name: 'Szenario A: Nur Startkapital (0 € Sparrate / Reiner Zinseszins)', rate: diffRate, color: 'var(--accent-purple)' },
@@ -1494,17 +1508,17 @@
                         { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
                         { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
                     ];
+
                     variants.forEach(v => {
                         let headerRow = document.createElement('tr');
                         headerRow.className = 'variant-section-head';
                         headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
-                        detailTableBody.appendChild(headerRow);
+                        fragment.appendChild(headerRow);
 
                         if (typeof generateTimelineData === 'function') {
                             let timeline = generateTimelineData(startkapital, v.rate, 5, interestRate);
                             timeline.forEach(row => {
                                 let tr = document.createElement('tr');
-
                                 let jahresSparrateGesamt = row.rate * 12;
                                 let eigenkapitalErklaerung = v.id === 'A'
                                     ? `Reines Startkapital (${formatEuro(startkapital)}). Da die monatliche Sparrate 0 € beträgt, bleibt dein eingesetztes Eigenkapital über alle Jahre unverändert.`
@@ -1525,12 +1539,16 @@
                             ${formatEuro(row.total)} ℹ️
                         </td>
                     `;
-                                detailTableBody.appendChild(tr);
+                                fragment.appendChild(tr);
                             });
                         }
                     });
+
+                    detailTableBody.appendChild(fragment);
                 }
             }
+
+
             function exportToPDF() {
                 const { jsPDF } = window.jspdf;
                 const targetElement = document.getElementById('capture-area');
@@ -1579,7 +1597,7 @@
                     });
                 }, 150);
             }
-
+            document.getElementById('deduct-airbnb-checkbox')?.addEventListener('change', calculate);
             // AUTOMATISCHE EVENT-LISTENER (Verhindert doppeltes OnInput im HTML)
             document.addEventListener("DOMContentLoaded", () => {
                 loadSavedValues();

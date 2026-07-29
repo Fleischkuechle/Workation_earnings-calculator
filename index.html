@@ -635,53 +635,211 @@
             }
         }
 
-        .card-timeline {
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* Tooltip Wrapper */
+        .tooltip-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            cursor: help;
+            margin-left: 4px;
         }
 
-        .timeline-bar {
+        /* Info Icon Styling */
+        .info-icon {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #a1a1aa;
+            border: 1px solid #52525b;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 14px;
+            font-style: normal;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-container:hover .info-icon {
+            background-color: var(--primary-green, #10b981);
+            color: #ffffff;
+            border-color: var(--primary-green, #10b981);
+        }
+
+        /* Tooltip Text Box */
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            width: 240px;
+            background-color: #1e1e24;
+            color: #e4e4e7;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px 12px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            /* Position above the icon */
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            border: 1px solid #3f3f46;
+            font-size: 11px;
+            line-height: 1.4;
+            font-weight: normal;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        /* Arrow pointer */
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e1e24 transparent transparent transparent;
+        }
+
+        /* Show Tooltip on Hover */
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .card-timeline-v2 {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Header badges showing phases */
+        .timeline-phase-badge {
             display: flex;
-            height: 8px;
-            background-color: #2a2a2e;
-            border-radius: 4px;
-            overflow: hidden;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
-        /* Farbliche Aufteilung der Phasen auf dem Balken */
-        .timeline-segment.phase-accumulation {
-            width: 15%;
-            /* 5 Jahre Ansparen */
-            background-color: #3b82f6;
-            /* Blau */
+        .badge-saving {
+            color: #60a5fa;
         }
 
-        .timeline-segment.phase-pension {
-            width: 60%;
-            /* Rente bis 85 */
-            background-color: var(--primary-green, #10b981);
-            /* Grün */
+        .badge-pension {
+            color: #34d399;
         }
 
-        .timeline-segment.phase-late {
+        /* The main bar container */
+        .timeline-bar-v2 {
+            position: relative;
+            display: flex;
+            height: 10px;
+            background-color: #27272a;
+            border-radius: 6px;
+            align-items: center;
+        }
+
+        .bar-saving {
             width: 25%;
-            /* Bis 110 */
-            background-color: #6b7280;
-            /* Grau */
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
         }
 
-        .timeline-labels {
+        .bar-pension {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .bar-late {
+            width: 25%;
+            height: 100%;
+            background-color: #4b5563;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        /* Pin marker at 5-Year mark */
+        .milestone-pin {
+            position: absolute;
+            left: 25%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .pin-dot {
+            display: block;
+            width: 14px;
+            height: 14px;
+            background-color: #fbbf24;
+            border: 2px solid #18181b;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
+        }
+
+        /* Date alignment under timeline */
+        .timeline-dates {
             display: flex;
             justify-content: space-between;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: #a1a1aa;
+            margin-top: 6px;
             text-align: center;
         }
 
-        .timeline-labels strong {
-            color: #fff;
+        .highlight-date strong {
+            color: #fbbf24;
+        }
+
+        /* Clear Money Outflow Callouts */
+        .payout-summary {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-left: 3px solid #10b981;
+        }
+
+        .payout-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+        }
+
+        .payout-label {
+            color: #d4d4d8;
+        }
+
+        .rule-4 strong {
+            color: #60a5fa;
+        }
+
+        .rule-verzehr strong {
+            color: #34d399;
+        }
+
+        :root {
+            /* Change this single value to resize all Brutto text everywhere */
+            --brutto-font-size: 0.6em;
+        }
+
+        /* Create a class for the Brutto values */
+        .brutto-text {
+            font-size: var(--brutto-font-size);
+            opacity: 0.85;
+            /* Optional: slightly softens the color to make Netto pop more */
         }
     </style>
 </head>
@@ -1112,10 +1270,11 @@
                 2. <strong>Kapitalverzehr (bis Alter 85):</strong> Das Vermögen wird inklusive 4% Restrendite im Alter
                 linear bis zu deinem 85. Lebensjahr auf exakt 0 € aufgebraucht.
             </div>
+
             <div class="detail-table-wrapper">
                 <div class="etf-grid" style="margin-bottom: 25px;">
 
-                    <!-- Card A -->
+                    <!-- CARD A -->
                     <div class="etf-card diff">
                         <h4><span>A: Nur Startkapital</span></h4>
                         <table class="etf-table">
@@ -1128,36 +1287,71 @@
                                 <td id="etf-diff-total">0,00 €</td>
                             </tr>
                             <tr class="rente-row">
-                                <td>Rente (4%-Regel):</td>
-                                <td id="etf-diff-rent">0,00 €</td>
+                                <td>
+                                    Rente (4%-Regel) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Steuerberechnung:</strong><br>
+                                            Effektiver Steuersatz ~18,46% (Abgeltungsteuer + Soli inkl. 30%
+                                            ETF-Teilfreistellung) auf die Erträge.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-diff-rent">0,00 € / 0,00 €</td>
                             </tr>
                             <tr class="rente-verzehr-row" style="color: var(--primary-green);">
-                                <td>Rente (bis 85 J.):</td>
-                                <td id="etf-diff-verzehr">0,00 €</td>
+                                <td>
+                                    Rente (bis 85 J.) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Verzehr-Steuer:</strong><br>
+                                            Monatlicher Abzug der Kapitalertragsteuer auf den Zins- und Gewinnanteil.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-diff-verzehr">0,00 € / 0,00 €</td>
                             </tr>
                         </table>
 
-                        <!-- Zeitstrahl -->
-                        <div class="card-timeline">
-                            <div class="timeline-bar">
-                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
-                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
-                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                        <div class="card-timeline-v2">
+                            <div class="timeline-phase-badge">
+                                <span class="badge-saving">📥 5 Jahre Ansparen</span>
+                                <span class="badge-pension">🌴 Entnahmephase (Rente)</span>
                             </div>
-                            <div class="timeline-labels">
-                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
-                                        class="age-now">35 J.</small></span>
-                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
-                                        class="age-5y">40 J.</small></span>
-                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                            <div class="timeline-bar-v2">
+                                <div class="bar-saving"></div>
+                                <div class="milestone-pin"><span class="pin-dot"></span></div>
+                                <div class="bar-pension"></div>
+                                <div class="bar-late"></div>
+                            </div>
+                            <div class="timeline-dates">
+                                <span><strong class="date-now">2026</strong><br><small class="age-now">39
                                         J.</small></span>
-                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
-                                        J.</small></span>
+                                <span class="highlight-date"><strong class="date-5y">2031</strong><br><small
+                                        class="age-5y">44 J.</small></span>
+                                <span><strong class="date-85y">2072</strong><br><small>85 J.</small></span>
+                                <span><strong class="date-110y">2097</strong><br><small>110 J.</small></span>
+                            </div>
+                            <div class="payout-summary">
+                                <div class="payout-item milestone-line">
+                                    <span class="payout-label">Depotstand nach 5 J.:</span>
+                                    <strong id="etf-diff-milestone-total" style="color: #fbbf24;">0,00 €</strong>
+                                </div>
+                                <div class="payout-item rule-4">
+                                    <span class="payout-label">4%-Regel (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-diff-payout-4pct">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
+                                <div class="payout-item rule-verzehr">
+                                    <span class="payout-label">Verzehr-Rente (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-diff-payout-verzehr">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card B -->
+                    <!-- CARD B -->
                     <div class="etf-card de-full">
                         <h4><span>B: Startkapital + Spar. DE</span></h4>
                         <table class="etf-table">
@@ -1170,36 +1364,71 @@
                                 <td id="etf-de-total">0,00 €</td>
                             </tr>
                             <tr class="rente-row">
-                                <td>Rente (4%-Regel):</td>
-                                <td id="etf-de-rent">0,00 €</td>
+                                <td>
+                                    Rente (4%-Regel) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Steuerberechnung:</strong><br>
+                                            Effektiver Steuersatz ~18,46% (Abgeltungsteuer + Soli inkl. 30%
+                                            ETF-Teilfreistellung) auf die Erträge.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-de-rent">0,00 € / 0,00 €</td>
                             </tr>
                             <tr class="rente-verzehr-row" style="color: var(--primary-green);">
-                                <td>Rente (bis 85 J.):</td>
-                                <td id="etf-de-rent-verzehr">0,00 €</td>
+                                <td>
+                                    Rente (bis 85 J.) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Verzehr-Steuer:</strong><br>
+                                            Monatlicher Abzug der Kapitalertragsteuer auf den Zins- und Gewinnanteil.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-de-rent-verzehr">0,00 € / 0,00 €</td>
                             </tr>
                         </table>
 
-                        <!-- Zeitstrahl -->
-                        <div class="card-timeline">
-                            <div class="timeline-bar">
-                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
-                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
-                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                        <div class="card-timeline-v2">
+                            <div class="timeline-phase-badge">
+                                <span class="badge-saving">📥 5 Jahre Ansparen</span>
+                                <span class="badge-pension">🌴 Entnahmephase (Rente)</span>
                             </div>
-                            <div class="timeline-labels">
-                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
-                                        class="age-now">35 J.</small></span>
-                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
-                                        class="age-5y">40 J.</small></span>
-                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                            <div class="timeline-bar-v2">
+                                <div class="bar-saving"></div>
+                                <div class="milestone-pin"><span class="pin-dot"></span></div>
+                                <div class="bar-pension"></div>
+                                <div class="bar-late"></div>
+                            </div>
+                            <div class="timeline-dates">
+                                <span><strong class="date-now">2026</strong><br><small class="age-now">39
                                         J.</small></span>
-                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
-                                        J.</small></span>
+                                <span class="highlight-date"><strong class="date-5y">2031</strong><br><small
+                                        class="age-5y">44 J.</small></span>
+                                <span><strong class="date-85y">2072</strong><br><small>85 J.</small></span>
+                                <span><strong class="date-110y">2097</strong><br><small>110 J.</small></span>
+                            </div>
+                            <div class="payout-summary">
+                                <div class="payout-item milestone-line">
+                                    <span class="payout-label">Depotstand nach 5 J.:</span>
+                                    <strong id="etf-de-milestone-total" style="color: #fbbf24;">0,00 €</strong>
+                                </div>
+                                <div class="payout-item rule-4">
+                                    <span class="payout-label">4%-Regel (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-de-payout-4pct">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
+                                <div class="payout-item rule-verzehr">
+                                    <span class="payout-label">Verzehr-Rente (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-de-payout-verzehr">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card C -->
+                    <!-- CARD C -->
                     <div class="etf-card th-full">
                         <h4><span>C: Startkapital + Spar. TH</span></h4>
                         <table class="etf-table">
@@ -1212,36 +1441,71 @@
                                 <td id="etf-th-total">0,00 €</td>
                             </tr>
                             <tr class="rente-row">
-                                <td>Rente (4%-Regel):</td>
-                                <td id="etf-th-rent">0,00 €</td>
+                                <td>
+                                    Rente (4%-Regel) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Steuerberechnung:</strong><br>
+                                            Effektiver Steuersatz ~18,46% (Abgeltungsteuer + Soli inkl. 30%
+                                            ETF-Teilfreistellung) auf die Erträge.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-th-rent">0,00 € / 0,00 €</td>
                             </tr>
                             <tr class="rente-verzehr-row" style="color: var(--primary-green);">
-                                <td>Rente (bis 85 J.):</td>
-                                <td id="etf-th-rent-verzehr">0,00 €</td>
+                                <td>
+                                    Rente (bis 85 J.) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Verzehr-Steuer:</strong><br>
+                                            Monatlicher Abzug der Kapitalertragsteuer auf den Zins- und Gewinnanteil.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-th-rent-verzehr">0,00 € / 0,00 €</td>
                             </tr>
                         </table>
 
-                        <!-- Zeitstrahl -->
-                        <div class="card-timeline">
-                            <div class="timeline-bar">
-                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
-                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
-                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                        <div class="card-timeline-v2">
+                            <div class="timeline-phase-badge">
+                                <span class="badge-saving">📥 5 Jahre Ansparen</span>
+                                <span class="badge-pension">🌴 Entnahmephase (Rente)</span>
                             </div>
-                            <div class="timeline-labels">
-                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
-                                        class="age-now">35 J.</small></span>
-                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
-                                        class="age-5y">40 J.</small></span>
-                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                            <div class="timeline-bar-v2">
+                                <div class="bar-saving"></div>
+                                <div class="milestone-pin"><span class="pin-dot"></span></div>
+                                <div class="bar-pension"></div>
+                                <div class="bar-late"></div>
+                            </div>
+                            <div class="timeline-dates">
+                                <span><strong class="date-now">2026</strong><br><small class="age-now">39
                                         J.</small></span>
-                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
-                                        J.</small></span>
+                                <span class="highlight-date"><strong class="date-5y">2031</strong><br><small
+                                        class="age-5y">44 J.</small></span>
+                                <span><strong class="date-85y">2072</strong><br><small>85 J.</small></span>
+                                <span><strong class="date-110y">2097</strong><br><small>110 J.</small></span>
+                            </div>
+                            <div class="payout-summary">
+                                <div class="payout-item milestone-line">
+                                    <span class="payout-label">Depotstand nach 5 J.:</span>
+                                    <strong id="etf-th-milestone-total" style="color: #fbbf24;">0,00 €</strong>
+                                </div>
+                                <div class="payout-item rule-4">
+                                    <span class="payout-label">4%-Regel (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-th-payout-4pct">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
+                                <div class="payout-item rule-verzehr">
+                                    <span class="payout-label">Verzehr-Rente (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-th-payout-verzehr">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card D -->
+                    <!-- CARD D -->
                     <div class="etf-card th-house-full">
                         <h4><span>D: Startkapital + Spar. TH+Haus</span></h4>
                         <table class="etf-table">
@@ -1254,31 +1518,66 @@
                                 <td id="etf-th-house-total">0,00 €</td>
                             </tr>
                             <tr class="rente-row">
-                                <td>Rente (4%-Regel):</td>
-                                <td id="etf-th-house-rent">0,00 €</td>
+                                <td>
+                                    Rente (4%-Regel) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Steuerberechnung:</strong><br>
+                                            Effektiver Steuersatz ~18,46% (Abgeltungsteuer + Soli inkl. 30%
+                                            ETF-Teilfreistellung) auf die Erträge.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-th-house-rent">0,00 € / 0,00 €</td>
                             </tr>
                             <tr class="rente-verzehr-row" style="color: var(--primary-green);">
-                                <td>Rente (bis 85 J.):</td>
-                                <td id="etf-th-house-rent-verzehr">0,00 €</td>
+                                <td>
+                                    Rente (bis 85 J.) Brutto / Netto:
+                                    <span class="tooltip-container">
+                                        <i class="info-icon">i</i>
+                                        <span class="tooltip-text">
+                                            <strong>Verzehr-Steuer:</strong><br>
+                                            Monatlicher Abzug der Kapitalertragsteuer auf den Zins- und Gewinnanteil.
+                                        </span>
+                                    </span>
+                                </td>
+                                <td id="etf-th-house-rent-verzehr">0,00 € / 0,00 €</td>
                             </tr>
                         </table>
 
-                        <!-- Zeitstrahl -->
-                        <div class="card-timeline">
-                            <div class="timeline-bar">
-                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
-                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
-                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                        <div class="card-timeline-v2">
+                            <div class="timeline-phase-badge">
+                                <span class="badge-saving">📥 5 Jahre Ansparen</span>
+                                <span class="badge-pension">🌴 Entnahmephase (Rente)</span>
                             </div>
-                            <div class="timeline-labels">
-                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
-                                        class="age-now">35 J.</small></span>
-                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
-                                        class="age-5y">40 J.</small></span>
-                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                            <div class="timeline-bar-v2">
+                                <div class="bar-saving"></div>
+                                <div class="milestone-pin"><span class="pin-dot"></span></div>
+                                <div class="bar-pension"></div>
+                                <div class="bar-late"></div>
+                            </div>
+                            <div class="timeline-dates">
+                                <span><strong class="date-now">2026</strong><br><small class="age-now">39
                                         J.</small></span>
-                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
-                                        J.</small></span>
+                                <span class="highlight-date"><strong class="date-5y">2031</strong><br><small
+                                        class="age-5y">44 J.</small></span>
+                                <span><strong class="date-85y">2072</strong><br><small>85 J.</small></span>
+                                <span><strong class="date-110y">2097</strong><br><small>110 J.</small></span>
+                            </div>
+                            <div class="payout-summary">
+                                <div class="payout-item milestone-line">
+                                    <span class="payout-label">Depotstand nach 5 J.:</span>
+                                    <strong id="etf-th-house-milestone-total" style="color: #fbbf24;">0,00 €</strong>
+                                </div>
+                                <div class="payout-item rule-4">
+                                    <span class="payout-label">4%-Regel (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-th-house-payout-4pct">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
+                                <div class="payout-item rule-verzehr">
+                                    <span class="payout-label">Verzehr-Rente (Brutto − Steuer = Netto):</span>
+                                    <strong id="etf-th-house-payout-verzehr">0,00 € − 0,00 € St. = 0,00 € / M.</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1286,374 +1585,401 @@
                 </div>
             </div>
 
+            <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
+
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                    Detaillierte Entwicklung über 5 Jahre basierend auf dem eingestellten Startkapital und der
+                    jeweiligen
+                    monatlichen Sparrate.
+                </p>
+                <div class="detail-table-wrapper">
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Jahr</th>
+                                <th>Monatliche Sparrate</th>
+                                <th>Einzahlungen kumuliert</th>
+                                <th>Reine Zinsen (Zinseszins)</th>
+                                <th>Gesamtvermögen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="etf-detail-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div style="width: 80%; max-width: 800px; margin: 40px auto;">
-            <h2 style="text-align: center;">Vergleich der Szenarien A bis D</h2>
-            <canvas id="szenarioChart"></canvas>
-        </div>
-        <script>
-            const allKeys = ['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
 
-            function formatEuro(amount) {
-                return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+    </div>
+    <div style="width: 80%; max-width: 800px; margin: 40px auto;">
+        <h2 style="text-align: center;">Vergleich der Szenarien A bis D</h2>
+        <canvas id="szenarioChart"></canvas>
+    </div>
+    <script>
+        const allKeys = ['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez', 'internet', 'mobil', 'netflix', 'software', 'food', 'car', 'gastro', 'vers', 'visa'];
+
+        function formatEuro(amount) {
+            return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+        }
+
+        function estimateTax(annualIncome) {
+            let taxable = annualIncome - 11784;
+            if (taxable <= 0) return 0;
+            let tax = 0;
+            if (taxable <= 50000) { tax = taxable * 0.20; }
+            else { tax = 50000 * 0.20 + (taxable - 50000) * 0.35; }
+            return tax / 12;
+        }
+
+        function simulateETFWithStart(startCapital, monthlyRate, years, annualReturn) {
+            let months = years * 12;
+            let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
+            let total = startCapital;
+            for (let i = 0; i < months; i++) {
+                total = (total * (1 + monthlyReturn)) + monthlyRate;
             }
+            let monthlyRent = (total * 0.04) / 12;
+            return { total: Math.max(0, total), monthlyRent: Math.max(0, monthlyRent) };
+        }
 
-            function estimateTax(annualIncome) {
-                let taxable = annualIncome - 11784;
-                if (taxable <= 0) return 0;
-                let tax = 0;
-                if (taxable <= 50000) { tax = taxable * 0.20; }
-                else { tax = 50000 * 0.20 + (taxable - 50000) * 0.35; }
-                return tax / 12;
-            }
+        function generateTimelineData(startCapital, monthlyRate, years, annualReturn) {
+            let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
+            let runningTotal = startCapital;
+            let runningContributions = startCapital;
+            let timeline = [];
 
-            function simulateETFWithStart(startCapital, monthlyRate, years, annualReturn) {
-                let months = years * 12;
-                let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
-                let total = startCapital;
-                for (let i = 0; i < months; i++) {
-                    total = (total * (1 + monthlyReturn)) + monthlyRate;
-                }
-                let monthlyRent = (total * 0.04) / 12;
-                return { total: Math.max(0, total), monthlyRent: Math.max(0, monthlyRent) };
-            }
+            for (let m = 1; m <= years * 12; m++) {
+                runningContributions += monthlyRate;
+                runningTotal += monthlyRate;
+                runningTotal = runningTotal * (1 + monthlyReturn);
 
-            function generateTimelineData(startCapital, monthlyRate, years, annualReturn) {
-                let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
-                let runningTotal = startCapital;
-                let runningContributions = startCapital;
-                let timeline = [];
-
-                for (let m = 1; m <= years * 12; m++) {
-                    runningContributions += monthlyRate;
-                    runningTotal += monthlyRate;
-                    runningTotal = runningTotal * (1 + monthlyReturn);
-
-                    if (m % 12 === 0) {
-                        let yearNum = m / 12;
-                        timeline.push({
-                            year: yearNum,
-                            rate: monthlyRate,
-                            contributions: runningContributions,
-                            interest: runningTotal - runningContributions,
-                            total: runningTotal
-                        });
-                    }
-                }
-                return timeline;
-            }
-
-            function loadSavedValues() {
-                if (localStorage.getItem('f_startkapital') !== null) document.getElementById('startkapital').value = localStorage.getItem('f_startkapital');
-                if (localStorage.getItem('f_stundensatz') !== null) document.getElementById('stundensatz').value = localStorage.getItem('f_stundensatz');
-                if (localStorage.getItem('f_stunden') !== null) document.getElementById('stunden').value = localStorage.getItem('f_stunden');
-                if (localStorage.getItem('f_intl_kv') !== null) document.getElementById('intl-kv-input').value = localStorage.getItem('f_intl_kv');
-                if (localStorage.getItem('f_zuschuss_p1') !== null) document.getElementById('zuschuss-p1').value = localStorage.getItem('f_zuschuss_p1');
-                if (localStorage.getItem('f_zuschuss_p2') !== null) document.getElementById('zuschuss-p2').value = localStorage.getItem('f_zuschuss_p2');
-                if (localStorage.getItem('f_vermietung_airbnb') !== null) document.getElementById('vermietung-airbnb').value = localStorage.getItem('f_vermietung_airbnb');
-                // Add to loadSavedValues():
-                let savedCheckbox = localStorage.getItem('deduct-airbnb-checkbox');
-                if (savedCheckbox !== null) {
-                    document.getElementById('deduct-airbnb-checkbox').checked = (savedCheckbox === 'true');
-                }
-                allKeys.forEach(key => {
-                    const valDE = localStorage.getItem('c_de_' + key);
-                    if (valDE !== null && document.getElementById('de-' + key)) document.getElementById('de-' + key).value = valDE;
-                    const valTH = localStorage.getItem('c_th_' + key);
-                    if (valTH !== null && document.getElementById('th-' + key)) document.getElementById('th-' + key).value = valTH;
-                });
-
-                // Berechnet alles exakt EINMAL nach dem Laden
-                calculate();
-            }
-
-
-            function calculate() {
-                const getVal = (id) => {
-                    let el = document.getElementById(id);
-                    return el ? (parseFloat(el.value) || 0) : 0;
-                };
-
-                let startkapital = getVal('startkapital');
-                let stundensatz = getVal('stundensatz');
-                let stunden = getVal('stunden');
-                let intlKv = getVal('intl-kv-input');
-
-                let zuschussP1 = getVal('zuschuss-p1');
-                let zuschussP2 = getVal('zuschuss-p2');
-                let vermietungAirbnb = getVal('vermietung-airbnb');
-
-                // 1. Read the checkbox state
-                let deductAirbnbCheckbox = document.getElementById('deduct-airbnb-checkbox');
-                let isDeductAirbnb = deductAirbnbCheckbox ? deductAirbnbCheckbox.checked : false;
-                // Save state
-                localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
-
-                let gesamtZuschuss = zuschussP1 + zuschussP2;
-                let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
-
-                localStorage.setItem('f_startkapital', startkapital);
-                localStorage.setItem('f_stundensatz', stundensatz);
-                localStorage.setItem('f_stunden', stunden);
-                localStorage.setItem('f_intl_kv', intlKv);
-                localStorage.setItem('f_zuschuss_p1', zuschussP1);
-                localStorage.setItem('f_zuschuss_p2', zuschussP2);
-                localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
-                localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
-
-                let totalDeCoL = 0;
-                let totalThCoL = 0;
-                let deHousingSum = 0;
-                let thHousingSum = 0;
-                let thMediaSum = 0;
-                let thAlltagSum = 0;
-
-                if (typeof allKeys !== 'undefined' && Array.isArray(allKeys)) {
-                    allKeys.forEach(key => {
-                        let elDE = document.getElementById('de-' + key);
-                        if (elDE) {
-                            let val = parseFloat(elDE.value) || 0;
-                            localStorage.setItem('c_de_' + key, val);
-                            totalDeCoL += val;
-                            if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) deHousingSum += val;
-                        }
-
-                        let elTH = document.getElementById('th-' + key);
-                        if (elTH) {
-                            let val = parseFloat(elTH.value) || 0;
-                            localStorage.setItem('c_th_' + key, val);
-                            totalThCoL += val;
-
-                            if (['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez'].includes(key)) thHousingSum += val;
-                            if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
-                            if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
-                        }
+                if (m % 12 === 0) {
+                    let yearNum = m / 12;
+                    timeline.push({
+                        year: yearNum,
+                        rate: monthlyRate,
+                        contributions: runningContributions,
+                        interest: runningTotal - runningContributions,
+                        total: runningTotal
                     });
                 }
+            }
+            return timeline;
+        }
 
-                // Add th-software if it's external to allKeys loop
-                if (typeof allKeys !== 'undefined' && !allKeys.includes('software')) {
-                    let swVal = getVal('th-software');
-                    totalThCoL += swVal;
-                    thMediaSum += swVal;
-                }
+        function loadSavedValues() {
+            if (localStorage.getItem('f_startkapital') !== null) document.getElementById('startkapital').value = localStorage.getItem('f_startkapital');
+            if (localStorage.getItem('f_stundensatz') !== null) document.getElementById('stundensatz').value = localStorage.getItem('f_stundensatz');
+            if (localStorage.getItem('f_stunden') !== null) document.getElementById('stunden').value = localStorage.getItem('f_stunden');
+            if (localStorage.getItem('f_intl_kv') !== null) document.getElementById('intl-kv-input').value = localStorage.getItem('f_intl_kv');
+            if (localStorage.getItem('f_zuschuss_p1') !== null) document.getElementById('zuschuss-p1').value = localStorage.getItem('f_zuschuss_p1');
+            if (localStorage.getItem('f_zuschuss_p2') !== null) document.getElementById('zuschuss-p2').value = localStorage.getItem('f_zuschuss_p2');
+            if (localStorage.getItem('f_vermietung_airbnb') !== null) document.getElementById('vermietung-airbnb').value = localStorage.getItem('f_vermietung_airbnb');
+            // Add to loadSavedValues():
+            let savedCheckbox = localStorage.getItem('deduct-airbnb-checkbox');
+            if (savedCheckbox !== null) {
+                document.getElementById('deduct-airbnb-checkbox').checked = (savedCheckbox === 'true');
+            }
+            allKeys.forEach(key => {
+                const valDE = localStorage.getItem('c_de_' + key);
+                if (valDE !== null && document.getElementById('de-' + key)) document.getElementById('de-' + key).value = valDE;
+                const valTH = localStorage.getItem('c_th_' + key);
+                if (valTH !== null && document.getElementById('th-' + key)) document.getElementById('th-' + key).value = valTH;
+            });
 
-                // 2. Adjust totalThHouseCoL based on the checkbox toggle
-                let effectiveDeHousing = isDeductAirbnb
-                    ? Math.max(0, deHousingSum - vermietungAirbnb)
-                    : deHousingSum;
+            // Berechnet alles exakt EINMAL nach dem Laden
+            calculate();
+        }
 
-                let totalThHouseCoL = totalThCoL + effectiveDeHousing;
 
-                if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
-                if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
-                if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
+        function calculate() {
+            const getVal = (id) => {
+                let el = document.getElementById(id);
+                return el ? (parseFloat(el.value) || 0) : 0;
+            };
+            // 1. Read the updated age
+            const ageInput = document.getElementById('current-age-input');
+            const currentAge = ageInput ? (parseInt(ageInput.value) || 35) : 35;
+            let startkapital = getVal('startkapital');
+            let stundensatz = getVal('stundensatz');
+            let stunden = getVal('stunden');
+            let intlKv = getVal('intl-kv-input');
 
-                totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
-                totalThCoL = Math.max(0, totalThCoL);
-                totalThHouseCoL = Math.max(0, totalThHouseCoL);
+            let zuschussP1 = getVal('zuschuss-p1');
+            let zuschussP2 = getVal('zuschuss-p2');
+            let vermietungAirbnb = getVal('vermietung-airbnb');
 
-                if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
-                if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
-                if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
-                if (document.getElementById('th-house-th-alltag')) document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
+            // 1. Read the checkbox state
+            let deductAirbnbCheckbox = document.getElementById('deduct-airbnb-checkbox');
+            let isDeductAirbnb = deductAirbnbCheckbox ? deductAirbnbCheckbox.checked : false;
+            // Save state
+            localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
 
-                if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
-                if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
-                if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
+            let gesamtZuschuss = zuschussP1 + zuschussP2;
+            let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
 
-                if (document.getElementById('de-sub-housing')) document.getElementById('de-sub-housing').innerText = formatEuro(deHousingSum);
+            localStorage.setItem('f_startkapital', startkapital);
+            localStorage.setItem('f_stundensatz', stundensatz);
+            localStorage.setItem('f_stunden', stunden);
+            localStorage.setItem('f_intl_kv', intlKv);
+            localStorage.setItem('f_zuschuss_p1', zuschussP1);
+            localStorage.setItem('f_zuschuss_p2', zuschussP2);
+            localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
+            localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
 
-                if (document.getElementById('de-sub-media')) {
-                    let deMedia = getVal('de-internet') + getVal('de-mobil') + getVal('de-netflix') + getVal('de-gym');
-                    document.getElementById('de-sub-media').innerText = formatEuro(deMedia);
-                }
+            let totalDeCoL = 0;
+            let totalThCoL = 0;
+            let deHousingSum = 0;
+            let thHousingSum = 0;
+            let thMediaSum = 0;
+            let thAlltagSum = 0;
 
-                if (document.getElementById('de-sub-alltag')) {
-                    let deAlltag = getVal('de-food') + getVal('de-car') + getVal('de-gastro') + getVal('de-vers');
-                    document.getElementById('de-sub-alltag').innerText = formatEuro(deAlltag);
-                }
-
-                if (document.getElementById('th-sub-housing')) document.getElementById('th-sub-housing').innerText = formatEuro(thHousingSum);
-                if (document.getElementById('th-sub-media')) document.getElementById('th-sub-media').innerText = formatEuro(thMediaSum);
-                if (document.getElementById('th-sub-alltag')) document.getElementById('th-sub-alltag').innerText = formatEuro(thAlltagSum);
-
-                let brutto = stundensatz * stunden;
-
-                const minGrenz = 1318.33, maxGrenz = 5812.50;
-                let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
-                let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
-                let gkvTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - gkvKv) * 12) : 0;
-                let gkvNetto = brutto - gkvKv - gkvTax;
-                let gkvSavings = gkvNetto - totalDeCoL;
-
-                let intlTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - intlKv) * 12) : 0;
-                let intlNetto = brutto - intlKv - intlTax;
-                let intlSavings = intlNetto - totalThCoL;
-
-                let thHouseSavings = intlNetto - totalThHouseCoL;
-
-                if (document.getElementById('gkv-brutto')) document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
-                if (document.getElementById('gkv-kv')) document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
-                if (document.getElementById('gkv-tax')) document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
-                if (document.getElementById('gkv-netto')) document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
-                if (document.getElementById('gkv-savings')) document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
-
-                if (document.getElementById('intl-brutto')) document.getElementById('intl-brutto').innerText = formatEuro(brutto);
-                if (document.getElementById('intl-kv-display')) document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
-                if (document.getElementById('intl-tax')) document.getElementById('intl-tax').innerText = formatEuro(intlTax);
-                if (document.getElementById('intl-netto')) document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
-                if (document.getElementById('intl-savings')) document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
-
-                if (document.getElementById('th-house-brutto')) document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
-                if (document.getElementById('th-house-kv-display')) document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
-                if (document.getElementById('th-house-tax')) document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
-                if (document.getElementById('th-house-netto')) document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
-                if (document.getElementById('th-house-savings')) document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
-
-                let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
-                let displayPercent = 50;
-                if (gkvSavings !== intlSavings) {
-                    displayPercent = 50 + ((intlSavings - gkvSavings) / totalSavingsSum) * 50;
-                    displayPercent = Math.max(10, Math.min(90, displayPercent));
-                }
-
-                let fill = document.getElementById('result-fill');
-                let compText = document.getElementById('comparison-text');
-                let savingsDifference = Math.abs(intlSavings - gkvSavings);
-
-                if (fill && compText) {
-                    if (intlSavings > gkvSavings) {
-                        fill.style.width = displayPercent + '%';
-                        fill.style.backgroundColor = 'var(--primary-green)';
-                        compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
-                    } else {
-                        fill.style.width = displayPercent + '%';
-                        fill.style.backgroundColor = 'var(--primary-red)';
-                        compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+            if (typeof allKeys !== 'undefined' && Array.isArray(allKeys)) {
+                allKeys.forEach(key => {
+                    let elDE = document.getElementById('de-' + key);
+                    if (elDE) {
+                        let val = parseFloat(elDE.value) || 0;
+                        localStorage.setItem('c_de_' + key, val);
+                        totalDeCoL += val;
+                        if (['rent', 'strom', 'gas', 'wasser', 'holz', 'gez'].includes(key)) deHousingSum += val;
                     }
-                }
 
-                let diffRate = 0;
-                let deRate = Math.max(0, gkvSavings);
-                let thRate = Math.max(0, intlSavings);
-                let thHouseRate = Math.max(0, thHouseSavings);
+                    let elTH = document.getElementById('th-' + key);
+                    if (elTH) {
+                        let val = parseFloat(elTH.value) || 0;
+                        localStorage.setItem('c_th_' + key, val);
+                        totalThCoL += val;
 
-                if (document.getElementById('etf-diff-rate')) document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
-                if (document.getElementById('etf-de-rate')) document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
-                if (document.getElementById('etf-th-rate')) document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
-                if (document.getElementById('etf-th-house-rate')) document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
-
-                let simDiff = { total: 0, monthlyRent: 0 };
-                let simDe = { total: 0, monthlyRent: 0 };
-                let simTh = { total: 0, monthlyRent: 0 };
-                let simThHouse = { total: 0, monthlyRent: 0 };
-
-                let annualReturnInput = parseFloat(document.getElementById('etf-interest-input')?.value);
-                if (isNaN(annualReturnInput)) annualReturnInput = 7;
-                annualReturnInput = Math.max(-99, annualReturnInput);
-
-                let titleEl = document.getElementById('dynamic-interest-title');
-                if (titleEl) titleEl.innerText = annualReturnInput + '%';
-
-                let effectTitleEl = document.getElementById('dynamic-interest-effect');
-                if (effectTitleEl) effectTitleEl.innerText = annualReturnInput + '%';
-
-                let interestRate = annualReturnInput / 100;
-                let monthlyReturn = Math.pow(1 + interestRate, 1 / 12) - 1;
-
-                let runningDiff = startkapital;
-                let runningDe = startkapital;
-                let runningTh = startkapital;
-                let runningThHouse = startkapital;
-
-                for (let m = 1; m <= 5 * 12; m++) {
-                    runningDiff = (runningDiff + diffRate) * (1 + monthlyReturn);
-                    runningDe = (runningDe + deRate) * (1 + monthlyReturn);
-                    runningTh = (runningTh + thRate) * (1 + monthlyReturn);
-                    runningThHouse = (runningThHouse + thHouseRate) * (1 + monthlyReturn);
-                }
-
-                simDiff.total = Math.max(0, runningDiff);
-                simDiff.monthlyRent = (simDiff.total * 0.04) / 12;
-
-                simDe.total = Math.max(0, runningDe);
-                simDe.monthlyRent = (simDe.total * 0.04) / 12;
-
-                simTh.total = Math.max(0, runningTh);
-                simTh.monthlyRent = (simTh.total * 0.04) / 12;
-
-                simThHouse.total = Math.max(0, runningThHouse);
-                simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
-
-                ['diff', 'de', 'th', 'th-house'].forEach(s => {
-                    let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
-                    let elTot = document.getElementById(`etf-${s}-total`);
-                    let elRent = document.getElementById(`etf-${s}-rent`) || document.getElementById(`etf-${s}-pension`);
-                    let elVerzehr = document.getElementById(`etf-${s}-verzehr`) || document.getElementById(`etf-${s}-rent-verzehr`);
-
-                    if (elTot) elTot.innerText = formatEuro(sim.total);
-                    if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
-
-                    if (elVerzehr) {
-                        let currentAgeEl = document.getElementById('current-age-input');
-                        let aktuellesAlter = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
-                        let alterBeiRentenbeginn = aktuellesAlter + 5;
-                        let jahreBis85 = 85 - alterBeiRentenbeginn;
-
-                        if (jahreBis85 <= 0) jahreBis85 = 1;
-
-                        let monateGesamt = jahreBis85 * 12;
-                        let angenommenerZinsImAlter = 0.04;
-                        let zinsMonatlich = Math.pow(1 + angenommenerZinsImAlter, 1 / 12) - 1;
-
-                        let monatlicheVerzehrRente = 0;
-                        if (sim.total > 0) {
-                            monatlicheVerzehrRente = sim.total * (zinsMonatlich / (1 - Math.pow(1 + zinsMonatlich, -monateGesamt)));
-                        }
-
-                        elVerzehr.innerText = formatEuro(monatlicheVerzehrRente) + ' / M.';
+                        if (['rent', 'strom', 'gas', 'wasser', 'anwartschaft', 'holz', 'gez'].includes(key)) thHousingSum += val;
+                        if (['internet', 'mobil', 'netflix', 'software'].includes(key)) thMediaSum += val;
+                        if (['food', 'car', 'gastro', 'vers', 'visa'].includes(key)) thAlltagSum += val;
                     }
                 });
+            }
 
-                const detailTableBody = document.getElementById('etf-detail-table-body');
-                if (detailTableBody) {
-                    detailTableBody.innerHTML = '';
-                    const fragment = document.createDocumentFragment();
+            // Add th-software if it's external to allKeys loop
+            if (typeof allKeys !== 'undefined' && !allKeys.includes('software')) {
+                let swVal = getVal('th-software');
+                totalThCoL += swVal;
+                thMediaSum += swVal;
+            }
 
-                    const variants = [
-                        { id: 'A', name: 'Szenario A: Nur Startkapital (0 € Sparrate / Reiner Zinseszins)', rate: diffRate, color: 'var(--accent-purple)' },
-                        { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
-                        { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
-                        { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
-                    ];
+            // 2. Adjust totalThHouseCoL based on the checkbox toggle
+            let effectiveDeHousing = isDeductAirbnb
+                ? Math.max(0, deHousingSum - vermietungAirbnb)
+                : deHousingSum;
 
-                    variants.forEach(v => {
-                        let headerRow = document.createElement('tr');
-                        headerRow.className = 'variant-section-head';
-                        headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
-                        fragment.appendChild(headerRow);
+            let totalThHouseCoL = totalThCoL + effectiveDeHousing;
 
-                        if (typeof generateTimelineData === 'function') {
-                            let timeline = generateTimelineData(startkapital, v.rate, 5, interestRate);
-                            timeline.forEach(row => {
-                                let tr = document.createElement('tr');
-                                let jahresSparrateGesamt = row.rate * 12;
-                                let monatsZinsProzent = ((Math.pow(1 + interestRate, 1 / 12) - 1) * 100).toFixed(3);
+            if (document.getElementById('de-brutto-costs-display')) document.getElementById('de-brutto-costs-display').innerText = formatEuro(totalDeCoL);
+            if (document.getElementById('de-zuschuss-display')) document.getElementById('de-zuschuss-display').innerText = formatEuro(gesamtZuschuss);
+            if (document.getElementById('de-airbnb-display')) document.getElementById('de-airbnb-display').innerText = formatEuro(vermietungAirbnb);
 
-                                let sparrateErklaerung = v.id === 'A'
-                                    ? `In Szenario A wird kein monatlicher ETF-Sparplan bespart (0 €/Monat).`
-                                    : `Diese monatliche Sparrate (${formatEuro(row.rate)}) wird an jedem Monatsanfang in deinen ETF eingezahlt. Aufs ganze Jahr hochgerechnet sind das ${formatEuro(jahresSparrateGesamt)}.`;
+            totalDeCoL = Math.max(0, totalDeCoL - gesamtAbzugDe);
+            totalThCoL = Math.max(0, totalThCoL);
+            totalThHouseCoL = Math.max(0, totalThHouseCoL);
 
-                                let eigenkapitalErklaerung = v.id === 'A'
-                                    ? `Reines Startkapital (${formatEuro(startkapital)}). Da die monatliche Sparrate 0 € beträgt, bleibt dein eingesetztes Eigenkapital über alle Jahre unverändert.`
-                                    : `Startkapital (${formatEuro(startkapital)}) + deine bisherigen monatlichen ETF-Einzahlungen bis Jahr ${row.year} (${formatEuro(row.contributions - startkapital)}).`;
+            if (document.getElementById('th-house-de-cost')) document.getElementById('th-house-de-cost').value = `${deHousingSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-housing')) document.getElementById('th-house-th-housing').value = `${thHousingSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-media')) document.getElementById('th-house-th-media').value = `${thMediaSum.toFixed(0)} €`;
+            if (document.getElementById('th-house-th-alltag')) document.getElementById('th-house-th-alltag').value = `${thAlltagSum.toFixed(0)} €`;
 
-                                let zinsErklaerung = `Der monatlich berechnete Zinseszins auf Basis von ${annualReturnInput}% p.a. (entspricht ca. ${monatsZinsProzent}% pro Monat). Jede deiner monatlichen Einzahlungen arbeitet ab dem ersten Tag direkt am Markt mit!`;
+            if (document.getElementById('de-total-display')) document.getElementById('de-total-display').innerText = formatEuro(totalDeCoL);
+            if (document.getElementById('th-total-display')) document.getElementById('th-total-display').innerText = formatEuro(totalThCoL);
+            if (document.getElementById('th-house-total-display')) document.getElementById('th-house-total-display').innerText = formatEuro(totalThHouseCoL);
 
-                                let gesamtErklaerung = `Dein Gesamtdepotwert am Ende von Jahr ${row.year}. Es setzt sich zusammen aus deinem eingezahlten Eigenkapital (${formatEuro(row.contributions)}) plus dem erwirtschafteten Zinseszins (${formatEuro(row.interest)}).`;
+            if (document.getElementById('de-sub-housing')) document.getElementById('de-sub-housing').innerText = formatEuro(deHousingSum);
 
-                                tr.innerHTML = `
+            if (document.getElementById('de-sub-media')) {
+                let deMedia = getVal('de-internet') + getVal('de-mobil') + getVal('de-netflix') + getVal('de-gym');
+                document.getElementById('de-sub-media').innerText = formatEuro(deMedia);
+            }
+
+            if (document.getElementById('de-sub-alltag')) {
+                let deAlltag = getVal('de-food') + getVal('de-car') + getVal('de-gastro') + getVal('de-vers');
+                document.getElementById('de-sub-alltag').innerText = formatEuro(deAlltag);
+            }
+
+            if (document.getElementById('th-sub-housing')) document.getElementById('th-sub-housing').innerText = formatEuro(thHousingSum);
+            if (document.getElementById('th-sub-media')) document.getElementById('th-sub-media').innerText = formatEuro(thMediaSum);
+            if (document.getElementById('th-sub-alltag')) document.getElementById('th-sub-alltag').innerText = formatEuro(thAlltagSum);
+
+            let brutto = stundensatz * stunden;
+
+            const minGrenz = 1318.33, maxGrenz = 5812.50;
+            let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
+            let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
+            let gkvTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - gkvKv) * 12) : 0;
+            let gkvNetto = brutto - gkvKv - gkvTax;
+            let gkvSavings = gkvNetto - totalDeCoL;
+
+            let intlTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - intlKv) * 12) : 0;
+            let intlNetto = brutto - intlKv - intlTax;
+            let intlSavings = intlNetto - totalThCoL;
+
+            let thHouseSavings = intlNetto - totalThHouseCoL;
+
+            if (document.getElementById('gkv-brutto')) document.getElementById('gkv-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('gkv-kv')) document.getElementById('gkv-kv').innerText = formatEuro(gkvKv);
+            if (document.getElementById('gkv-tax')) document.getElementById('gkv-tax').innerText = formatEuro(gkvTax);
+            if (document.getElementById('gkv-netto')) document.getElementById('gkv-netto').innerText = formatEuro(gkvNetto);
+            if (document.getElementById('gkv-savings')) document.getElementById('gkv-savings').innerText = formatEuro(gkvSavings);
+
+            if (document.getElementById('intl-brutto')) document.getElementById('intl-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('intl-kv-display')) document.getElementById('intl-kv-display').innerText = formatEuro(intlKv);
+            if (document.getElementById('intl-tax')) document.getElementById('intl-tax').innerText = formatEuro(intlTax);
+            if (document.getElementById('intl-netto')) document.getElementById('intl-netto').innerText = formatEuro(intlNetto);
+            if (document.getElementById('intl-savings')) document.getElementById('intl-savings').innerText = formatEuro(intlSavings);
+
+            if (document.getElementById('th-house-brutto')) document.getElementById('th-house-brutto').innerText = formatEuro(brutto);
+            if (document.getElementById('th-house-kv-display')) document.getElementById('th-house-kv-display').innerText = formatEuro(intlKv);
+            if (document.getElementById('th-house-tax')) document.getElementById('th-house-tax').innerText = formatEuro(intlTax);
+            if (document.getElementById('th-house-netto')) document.getElementById('th-house-netto').innerText = formatEuro(intlNetto);
+            if (document.getElementById('th-house-savings')) document.getElementById('th-house-savings').innerText = formatEuro(thHouseSavings);
+
+            let totalSavingsSum = Math.max(1, Math.abs(gkvSavings) + Math.abs(intlSavings));
+            let displayPercent = 50;
+            if (gkvSavings !== intlSavings) {
+                displayPercent = 50 + ((intlSavings - gkvSavings) / totalSavingsSum) * 50;
+                displayPercent = Math.max(10, Math.min(90, displayPercent));
+            }
+
+            let fill = document.getElementById('result-fill');
+            let compText = document.getElementById('comparison-text');
+            let savingsDifference = Math.abs(intlSavings - gkvSavings);
+
+            if (fill && compText) {
+                if (intlSavings > gkvSavings) {
+                    fill.style.width = displayPercent + '%';
+                    fill.style.backgroundColor = 'var(--primary-green)';
+                    compText.innerHTML = `Reines Spar-Plus in Thailand (ohne Haus): <span style="color:var(--primary-green)">+${formatEuro(savingsDifference)}</span>`;
+                } else {
+                    fill.style.width = displayPercent + '%';
+                    fill.style.backgroundColor = 'var(--primary-red)';
+                    compText.innerHTML = `Monatliche Mehr-Ersparnis in Deutschland: <span style="color:var(--primary-red)">+${formatEuro(savingsDifference)}</span>`;
+                }
+            }
+
+            let diffRate = 0;
+            let deRate = Math.max(0, gkvSavings);
+            let thRate = Math.max(0, intlSavings);
+            let thHouseRate = Math.max(0, thHouseSavings);
+
+            if (document.getElementById('etf-diff-rate')) document.getElementById('etf-diff-rate').innerText = `${Math.round(diffRate)} €/M`;
+            if (document.getElementById('etf-de-rate')) document.getElementById('etf-de-rate').innerText = `${Math.round(deRate)} €/M`;
+            if (document.getElementById('etf-th-rate')) document.getElementById('etf-th-rate').innerText = `${Math.round(thRate)} €/M`;
+            if (document.getElementById('etf-th-house-rate')) document.getElementById('etf-th-house-rate').innerText = `${Math.round(thHouseRate)} €/M`;
+
+            let simDiff = { total: 0, monthlyRent: 0 };
+            let simDe = { total: 0, monthlyRent: 0 };
+            let simTh = { total: 0, monthlyRent: 0 };
+            let simThHouse = { total: 0, monthlyRent: 0 };
+
+            let annualReturnInput = parseFloat(document.getElementById('etf-interest-input')?.value);
+            if (isNaN(annualReturnInput)) annualReturnInput = 7;
+            annualReturnInput = Math.max(-99, annualReturnInput);
+
+            let titleEl = document.getElementById('dynamic-interest-title');
+            if (titleEl) titleEl.innerText = annualReturnInput + '%';
+
+            let effectTitleEl = document.getElementById('dynamic-interest-effect');
+            if (effectTitleEl) effectTitleEl.innerText = annualReturnInput + '%';
+
+            let interestRate = annualReturnInput / 100;
+            let monthlyReturn = Math.pow(1 + interestRate, 1 / 12) - 1;
+
+            let runningDiff = startkapital;
+            let runningDe = startkapital;
+            let runningTh = startkapital;
+            let runningThHouse = startkapital;
+
+            for (let m = 1; m <= 5 * 12; m++) {
+                runningDiff = (runningDiff + diffRate) * (1 + monthlyReturn);
+                runningDe = (runningDe + deRate) * (1 + monthlyReturn);
+                runningTh = (runningTh + thRate) * (1 + monthlyReturn);
+                runningThHouse = (runningThHouse + thHouseRate) * (1 + monthlyReturn);
+            }
+
+            simDiff.total = Math.max(0, runningDiff);
+            simDiff.monthlyRent = (simDiff.total * 0.04) / 12;
+
+            simDe.total = Math.max(0, runningDe);
+            simDe.monthlyRent = (simDe.total * 0.04) / 12;
+
+            simTh.total = Math.max(0, runningTh);
+            simTh.monthlyRent = (simTh.total * 0.04) / 12;
+
+            simThHouse.total = Math.max(0, runningThHouse);
+            simThHouse.monthlyRent = (simThHouse.total * 0.04) / 12;
+
+            ['diff', 'de', 'th', 'th-house'].forEach(s => {
+                let sim = s === 'diff' ? simDiff : (s === 'de' ? simDe : (s === 'th' ? simTh : simThHouse));
+                let elTot = document.getElementById(`etf-${s}-total`);
+                let elRent = document.getElementById(`etf-${s}-rent`) || document.getElementById(`etf-${s}-pension`);
+                let elVerzehr = document.getElementById(`etf-${s}-verzehr`) || document.getElementById(`etf-${s}-rent-verzehr`);
+
+                if (elTot) elTot.innerText = formatEuro(sim.total);
+                if (elRent) elRent.innerText = formatEuro(sim.monthlyRent) + ' / M.';
+
+                if (elVerzehr) {
+                    let currentAgeEl = document.getElementById('current-age-input');
+                    let aktuellesAlter = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
+                    let alterBeiRentenbeginn = aktuellesAlter + 5;
+                    let jahreBis85 = 85 - alterBeiRentenbeginn;
+
+                    if (jahreBis85 <= 0) jahreBis85 = 1;
+
+                    let monateGesamt = jahreBis85 * 12;
+                    let angenommenerZinsImAlter = 0.04;
+                    let zinsMonatlich = Math.pow(1 + angenommenerZinsImAlter, 1 / 12) - 1;
+
+                    let monatlicheVerzehrRente = 0;
+                    if (sim.total > 0) {
+                        monatlicheVerzehrRente = sim.total * (zinsMonatlich / (1 - Math.pow(1 + zinsMonatlich, -monateGesamt)));
+                    }
+
+                    elVerzehr.innerText = formatEuro(monatlicheVerzehrRente) + ' / M.';
+                }
+            });
+
+            const detailTableBody = document.getElementById('etf-detail-table-body');
+            if (detailTableBody) {
+                detailTableBody.innerHTML = '';
+                const fragment = document.createDocumentFragment();
+
+                const variants = [
+                    { id: 'A', name: 'Szenario A: Nur Startkapital (0 € Sparrate / Reiner Zinseszins)', rate: diffRate, color: 'var(--accent-purple)' },
+                    { id: 'B', name: 'Szenario B: Startkapital + Volle Sparrate Deutschland', rate: deRate, color: 'var(--primary-red)' },
+                    { id: 'C', name: 'Szenario C: Startkapital + Volle Sparrate Thailand', rate: thRate, color: 'var(--primary-green)' },
+                    { id: 'D', name: 'Szenario D: Startkapital + Sparrate Thailand + Haus DE', rate: thHouseRate, color: 'var(--accent-orange)' }
+                ];
+
+                variants.forEach(v => {
+                    let headerRow = document.createElement('tr');
+                    headerRow.className = 'variant-section-head';
+                    headerRow.innerHTML = `<td colspan="5" style="color: ${v.color}; background-color: #17171a;">${v.name}</td>`;
+                    fragment.appendChild(headerRow);
+
+                    if (typeof generateTimelineData === 'function') {
+                        let timeline = generateTimelineData(startkapital, v.rate, 5, interestRate);
+                        timeline.forEach(row => {
+                            let tr = document.createElement('tr');
+                            let jahresSparrateGesamt = row.rate * 12;
+                            let monatsZinsProzent = ((Math.pow(1 + interestRate, 1 / 12) - 1) * 100).toFixed(3);
+
+                            let sparrateErklaerung = v.id === 'A'
+                                ? `In Szenario A wird kein monatlicher ETF-Sparplan bespart (0 €/Monat).`
+                                : `Diese monatliche Sparrate (${formatEuro(row.rate)}) wird an jedem Monatsanfang in deinen ETF eingezahlt. Aufs ganze Jahr hochgerechnet sind das ${formatEuro(jahresSparrateGesamt)}.`;
+
+                            let eigenkapitalErklaerung = v.id === 'A'
+                                ? `Reines Startkapital (${formatEuro(startkapital)}). Da die monatliche Sparrate 0 € beträgt, bleibt dein eingesetztes Eigenkapital über alle Jahre unverändert.`
+                                : `Startkapital (${formatEuro(startkapital)}) + deine bisherigen monatlichen ETF-Einzahlungen bis Jahr ${row.year} (${formatEuro(row.contributions - startkapital)}).`;
+
+                            let zinsErklaerung = `Der monatlich berechnete Zinseszins auf Basis von ${annualReturnInput}% p.a. (entspricht ca. ${monatsZinsProzent}% pro Monat). Jede deiner monatlichen Einzahlungen arbeitet ab dem ersten Tag direkt am Markt mit!`;
+
+                            let gesamtErklaerung = `Dein Gesamtdepotwert am Ende von Jahr ${row.year}. Es setzt sich zusammen aus deinem eingezahlten Eigenkapital (${formatEuro(row.contributions)}) plus dem erwirtschafteten Zinseszins (${formatEuro(row.interest)}).`;
+
+                            tr.innerHTML = `
                         <td style="padding-left: 15px; font-weight: 500;">Jahr ${row.year}</td>
                         <td title="${sparrateErklaerung}">
                             ${formatEuro(row.rate)} / M. ℹ️
@@ -1668,156 +1994,212 @@
                             ${formatEuro(row.total)} ℹ️
                         </td>
                     `;
-                                fragment.appendChild(tr);
-                            });
-                        }
-                    });
-
-                    detailTableBody.appendChild(fragment);
-                }
-                // >>> ADD THESE TWO LINES HERE <<<
-                // Use the newly calculated wealth totals for the graph
-                updateChart(simDiff.total, simDe.total, simTh.total, simThHouse.total);
-                updateCardTimelines();
-            }
-
-            function exportToPDF() {
-                const { jsPDF } = window.jspdf;
-                const targetElement = document.getElementById('capture-area');
-
-                document.body.classList.add('clean-pdf-mode');
-
-                const options = {
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff'
-                };
-
-                setTimeout(() => {
-                    html2canvas(targetElement, options).then(canvas => {
-                        const pdf = new jsPDF('l', 'mm', 'a4');
-                        const pdfWidth = 297;
-                        const pdfHeight = 210;
-                        const marginX = 10;
-                        const marginTop = 12;
-                        const marginBottom = 10;
-
-                        const usableWidth = pdfWidth - (marginX * 2);
-                        const usableHeight = pdfHeight - marginTop - marginBottom;
-
-                        const imgData = canvas.toDataURL('image/png');
-                        pdf.addImage(imgData, 'PNG', marginX, marginTop, usableWidth, usableHeight);
-
-                        pdf.setFont('Helvetica', 'normal');
-                        pdf.setFontSize(8);
-                        pdf.setTextColor(110, 110, 110);
-                        pdf.text('Umfassender Dreifach-Standortvergleich', marginX, marginTop - 4);
-
-                        const dateStr = new Date().toLocaleDateString('de-DE');
-                        pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 4, { align: 'right' });
-
-                        pdf.setDrawColor(210, 210, 210);
-                        pdf.setLineWidth(0.2);
-                        pdf.line(marginX, marginTop - 2, pdfWidth - marginX, marginTop - 2);
-
-                        pdf.line(marginX, pdfHeight - marginBottom + 2, pdfWidth - marginX, pdfHeight - marginBottom + 2);
-                        pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
-                        pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
-
-                        pdf.save('Finanzbericht_Standortvergleich.pdf');
-                        document.body.classList.remove('clean-pdf-mode');
-                    });
-                }, 150);
-            }
-
-
-            document.getElementById('deduct-airbnb-checkbox')?.addEventListener('change', calculate);
-            // AUTOMATISCHE EVENT-LISTENER (Verhindert doppeltes OnInput im HTML)
-            document.addEventListener("DOMContentLoaded", () => {
-                loadSavedValues();
-
-                // Überwacht alle Inputs im Dokument und rechnet live bei Änderungen
-                document.querySelectorAll("input").forEach(input => {
-                    input.addEventListener("input", calculate);
+                            fragment.appendChild(tr);
+                        });
+                    }
                 });
+
+                detailTableBody.appendChild(fragment);
+            }
+            // >>> ADD THESE TWO LINES HERE <<<
+            // Use the newly calculated wealth totals for the graph
+            updateChart(simDiff.total, simDe.total, simTh.total, simThHouse.total);
+            // 3. Update the cards and timeline labels
+            updateScenarioCards([
+                { key: 'diff', sim: simDiff },
+                { key: 'de', sim: simDe },
+                { key: 'th', sim: simTh },
+                { key: 'th-house', sim: simThHouse }
+            ]);
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const targetElement = document.getElementById('capture-area');
+
+            document.body.classList.add('clean-pdf-mode');
+
+            const options = {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            };
+
+            setTimeout(() => {
+                html2canvas(targetElement, options).then(canvas => {
+                    const pdf = new jsPDF('l', 'mm', 'a4');
+                    const pdfWidth = 297;
+                    const pdfHeight = 210;
+                    const marginX = 10;
+                    const marginTop = 12;
+                    const marginBottom = 10;
+
+                    const usableWidth = pdfWidth - (marginX * 2);
+                    const usableHeight = pdfHeight - marginTop - marginBottom;
+
+                    const imgData = canvas.toDataURL('image/png');
+                    pdf.addImage(imgData, 'PNG', marginX, marginTop, usableWidth, usableHeight);
+
+                    pdf.setFont('Helvetica', 'normal');
+                    pdf.setFontSize(8);
+                    pdf.setTextColor(110, 110, 110);
+                    pdf.text('Umfassender Dreifach-Standortvergleich', marginX, marginTop - 4);
+
+                    const dateStr = new Date().toLocaleDateString('de-DE');
+                    pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 4, { align: 'right' });
+
+                    pdf.setDrawColor(210, 210, 210);
+                    pdf.setLineWidth(0.2);
+                    pdf.line(marginX, marginTop - 2, pdfWidth - marginX, marginTop - 2);
+
+                    pdf.line(marginX, pdfHeight - marginBottom + 2, pdfWidth - marginX, pdfHeight - marginBottom + 2);
+                    pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
+                    pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
+
+                    pdf.save('Finanzbericht_Standortvergleich.pdf');
+                    document.body.classList.remove('clean-pdf-mode');
+                });
+            }, 150);
+        }
+
+
+        document.getElementById('deduct-airbnb-checkbox')?.addEventListener('change', calculate);
+        // AUTOMATISCHE EVENT-LISTENER (Verhindert doppeltes OnInput im HTML)
+        document.addEventListener("DOMContentLoaded", () => {
+            loadSavedValues();
+
+            // Überwacht alle Inputs im Dokument und rechnet live bei Änderungen
+            document.querySelectorAll("input").forEach(input => {
+                input.addEventListener("input", calculate);
             });
+        });
 
-            // Daten für das Diagramm definieren (Passe die Werte an deine genauen Ergebnisse an)
-            const ctx = document.getElementById('szenarioChart').getContext('2d');
+        // Daten für das Diagramm definieren (Passe die Werte an deine genauen Ergebnisse an)
+        const ctx = document.getElementById('szenarioChart').getContext('2d');
 
-            const szenarioChart = new Chart(ctx, {
-                type: 'bar', // Alternativ: 'line' für ein Liniendiagramm
-                data: {
-                    labels: ['Szenario A', 'Szenario B', 'Szenario C', 'Szenario D'],
-                    datasets: [{
-                        label: 'Ergebnis / Wert',
-                        data: [12, 19, 8, 15], // Hier deine berechneten Werte für A, B, C und D eintragen
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
-                            'rgba(255, 99, 132, 0.6)'
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+        const szenarioChart = new Chart(ctx, {
+            type: 'bar', // Alternativ: 'line' für ein Liniendiagramm
+            data: {
+                labels: ['Szenario A', 'Szenario B', 'Szenario C', 'Szenario D'],
+                datasets: [{
+                    label: 'Ergebnis / Wert',
+                    data: [12, 19, 8, 15], // Hier deine berechneten Werte für A, B, C und D eintragen
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        }
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
                     }
                 }
+            }
+        });
+
+        function updateChart(wertA, wertB, wertC, wertD) {
+            szenarioChart.data.datasets[0].data = [wertA, wertB, wertC, wertD];
+            szenarioChart.update();
+        }
+
+
+        function updateScenarioCards(scenarios) {
+            const ageInput = document.getElementById('current-age-input');
+            const currentAge = ageInput ? (parseInt(ageInput.value) || 35) : 35;
+
+            const currentYear = new Date().getFullYear();
+            const targetYear5 = currentYear + 5;
+            const year85 = currentYear + Math.max(0, 85 - currentAge);
+            const year110 = currentYear + Math.max(0, 110 - currentAge);
+            const targetAge5 = currentAge + 5;
+
+            const monateGesamt = Math.max(1, 85 - targetAge5) * 12;
+            const zinsMonatlich = Math.pow(1 + 0.04, 1 / 12) - 1;
+
+            // Effective tax rate (~18.463% assuming 26.375% tax on 70% taxable ETF gains)
+            const taxRate = 0.18463;
+
+            // Update Dates Across Timelines
+            document.querySelectorAll('.card-timeline-v2').forEach(timeline => {
+                const elNow = timeline.querySelector('.date-now');
+                const elAgeNow = timeline.querySelector('.age-now');
+                const el5y = timeline.querySelector('.date-5y');
+                const elAge5y = timeline.querySelector('.age-5y');
+                const el85y = timeline.querySelector('.date-85y');
+                const el110y = timeline.querySelector('.date-110y');
+
+                if (elNow) elNow.innerText = currentYear;
+                if (elAgeNow) elAgeNow.innerText = `${currentAge} J.`;
+                if (el5y) el5y.innerText = targetYear5;
+                if (elAge5y) elAge5y.innerText = `${targetAge5} J.`;
+                if (el85y) el85y.innerText = year85;
+                if (el110y) el110y.innerText = year110;
             });
 
-            function updateChart(wertA, wertB, wertC, wertD) {
-                szenarioChart.data.datasets[0].data = [wertA, wertB, wertC, wertD];
-                szenarioChart.update();
-            }
-            function updateCardTimelines() {
-                const currentAgeEl = document.getElementById('current-age-input');
-                const currentAge = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
+            // Populate Cards
+            scenarios.forEach(({ key, sim }) => {
+                // 1. Calculate Brutto Values
+                const brutto4Pct = sim.monthlyRent || 0;
+                let bruttoVerzehr = 0;
+                if (sim.total > 0) {
+                    bruttoVerzehr = sim.total * (zinsMonatlich / (1 - Math.pow(1 + zinsMonatlich, -monateGesamt)));
+                }
 
-                const now = new Date();
-                const currentYear = now.getFullYear(); // z.B. 2026
+                // 2. Calculate Tax Values in €
+                const tax4Pct = sim.tax4PctInEuro !== undefined ? sim.tax4PctInEuro : (brutto4Pct * taxRate);
+                const taxVerzehr = sim.taxVerzehrInEuro !== undefined ? sim.taxVerzehrInEuro : (bruttoVerzehr * taxRate);
 
-                const year5 = currentYear + 5;
-                const year85 = currentYear + (85 - currentAge);
-                const year110 = currentYear + (110 - currentAge);
+                // 3. Calculate Netto Values
+                const netto4Pct = sim.monthlyRentNetto !== undefined ? sim.monthlyRentNetto : (brutto4Pct - tax4Pct);
+                const nettoVerzehr = sim.verzehrNetto !== undefined ? sim.verzehrNetto : (bruttoVerzehr - taxVerzehr);
 
-                // Alle Karten-Timeline-Labels aktualisieren
-                document.querySelectorAll('.card-timeline').forEach(timeline => {
-                    const elNow = timeline.querySelector('.date-now');
-                    const elAgeNow = timeline.querySelector('.age-now');
-                    const el5y = timeline.querySelector('.date-5y');
-                    const elAge5y = timeline.querySelector('.age-5y');
-                    const el85y = timeline.querySelector('.date-85y');
-                    const el110y = timeline.querySelector('.date-110y');
+                // Update Card Table Elements
+                const elTot = document.getElementById(`etf-${key}-total`);
+                const elRent = document.getElementById(`etf-${key}-rent`);
+                const elVerzehr = document.getElementById(`etf-${key}-verzehr`) || document.getElementById(`etf-${key}-rent-verzehr`);
 
-                    if (elNow) elNow.innerText = currentYear;
-                    if (elAgeNow) elAgeNow.innerText = `${currentAge} J.`;
+                if (elTot) elTot.innerText = formatEuro(sim.total);
+                if (elRent) {
+                    elRent.innerHTML = `<span class="brutto-text">${formatEuro(brutto4Pct)}</span> / ${formatEuro(netto4Pct)}`;
+                }
+                if (elVerzehr) {
+                    elVerzehr.innerHTML = `<span class="brutto-text">${formatEuro(bruttoVerzehr)}</span> / ${formatEuro(nettoVerzehr)}`;
+                }
 
-                    if (el5y) el5y.innerText = year5;
-                    if (elAge5y) elAge5y.innerText = `${currentAge + 5} J.`;
+                // Update Payout Summary Box
+                const elMilestone = document.getElementById(`etf-${key}-milestone-total`);
+                const elPayout4 = document.getElementById(`etf-${key}-payout-4pct`);
+                const elPayoutVerzehr = document.getElementById(`etf-${key}-payout-verzehr`);
 
-                    if (el85y) el85y.innerText = year85;
-                    if (el110y) el110y.innerText = year110;
-                });
-            }
-        </script>
+                if (elMilestone) elMilestone.innerText = formatEuro(sim.total);
+                if (elPayout4) {
+                    elPayout4.innerHTML = `<span class="brutto-text">${formatEuro(brutto4Pct)}</span> <span style="color: #ef4444; font-weight: normal;">− ${formatEuro(tax4Pct)} St.</span> = ${formatEuro(netto4Pct)} / M.`;
+                }
+                if (elPayoutVerzehr) {
+                    elPayoutVerzehr.innerHTML = `<span class="brutto-text">${formatEuro(bruttoVerzehr)}</span> <span style="color: #ef4444; font-weight: normal;">− ${formatEuro(taxVerzehr)} St.</span> = ${formatEuro(nettoVerzehr)} / M.`;
+                }
+            });
+        }
+
+    </script>
 </body>
 
 </html>

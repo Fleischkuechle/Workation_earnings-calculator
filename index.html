@@ -634,6 +634,55 @@
                 grid-template-columns: 1fr 1fr 1fr 1fr;
             }
         }
+
+        .card-timeline {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-bar {
+            display: flex;
+            height: 8px;
+            background-color: #2a2a2e;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        /* Farbliche Aufteilung der Phasen auf dem Balken */
+        .timeline-segment.phase-accumulation {
+            width: 15%;
+            /* 5 Jahre Ansparen */
+            background-color: #3b82f6;
+            /* Blau */
+        }
+
+        .timeline-segment.phase-pension {
+            width: 60%;
+            /* Rente bis 85 */
+            background-color: var(--primary-green, #10b981);
+            /* Grün */
+        }
+
+        .timeline-segment.phase-late {
+            width: 25%;
+            /* Bis 110 */
+            background-color: #6b7280;
+            /* Grau */
+        }
+
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: #a1a1aa;
+            text-align: center;
+        }
+
+        .timeline-labels strong {
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -1063,13 +1112,17 @@
                 2. <strong>Kapitalverzehr (bis Alter 85):</strong> Das Vermögen wird inklusive 4% Restrendite im Alter
                 linear bis zu deinem 85. Lebensjahr auf exakt 0 € aufgebraucht.
             </div>
-
             <div class="detail-table-wrapper">
                 <div class="etf-grid" style="margin-bottom: 25px;">
+
+                    <!-- Card A -->
                     <div class="etf-card diff">
-                        <h4><span>A: Nur Startkapital</span><span class="monthly-badge" id="etf-diff-rate">0 €/M</span>
-                        </h4>
+                        <h4><span>A: Nur Startkapital</span></h4>
                         <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Sparrate:</td>
+                                <td id="etf-diff-rate">0,00 €</td>
+                            </tr>
                             <tr class="total-etf-row">
                                 <td>Endvermögen:</td>
                                 <td id="etf-diff-total">0,00 €</td>
@@ -1083,8 +1136,28 @@
                                 <td id="etf-diff-verzehr">0,00 €</td>
                             </tr>
                         </table>
+
+                        <!-- Zeitstrahl -->
+                        <div class="card-timeline">
+                            <div class="timeline-bar">
+                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
+                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
+                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                            </div>
+                            <div class="timeline-labels">
+                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
+                                        class="age-now">35 J.</small></span>
+                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
+                                        class="age-5y">40 J.</small></span>
+                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                                        J.</small></span>
+                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
+                                        J.</small></span>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Card B -->
                     <div class="etf-card de-full">
                         <h4><span>B: Startkapital + Spar. DE</span></h4>
                         <table class="etf-table">
@@ -1105,12 +1178,35 @@
                                 <td id="etf-de-rent-verzehr">0,00 €</td>
                             </tr>
                         </table>
+
+                        <!-- Zeitstrahl -->
+                        <div class="card-timeline">
+                            <div class="timeline-bar">
+                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
+                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
+                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                            </div>
+                            <div class="timeline-labels">
+                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
+                                        class="age-now">35 J.</small></span>
+                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
+                                        class="age-5y">40 J.</small></span>
+                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                                        J.</small></span>
+                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
+                                        J.</small></span>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Card C -->
                     <div class="etf-card th-full">
-                        <h4><span>C: Startkapital + Spar. TH</span><span class="monthly-badge" id="etf-th-rate">0
-                                €/M</span></h4>
+                        <h4><span>C: Startkapital + Spar. TH</span></h4>
                         <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Sparrate:</td>
+                                <td id="etf-th-rate">0,00 €</td>
+                            </tr>
                             <tr class="total-etf-row">
                                 <td>Endvermögen:</td>
                                 <td id="etf-th-total">0,00 €</td>
@@ -1124,12 +1220,35 @@
                                 <td id="etf-th-rent-verzehr">0,00 €</td>
                             </tr>
                         </table>
+
+                        <!-- Zeitstrahl -->
+                        <div class="card-timeline">
+                            <div class="timeline-bar">
+                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
+                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
+                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                            </div>
+                            <div class="timeline-labels">
+                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
+                                        class="age-now">35 J.</small></span>
+                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
+                                        class="age-5y">40 J.</small></span>
+                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                                        J.</small></span>
+                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
+                                        J.</small></span>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Card D -->
                     <div class="etf-card th-house-full">
-                        <h4><span>D: Startkapital + Spar. TH+Haus</span><span class="monthly-badge"
-                                id="etf-th-house-rate">0 €/M</span></h4>
+                        <h4><span>D: Startkapital + Spar. TH+Haus</span></h4>
                         <table class="etf-table">
+                            <tr class="total-etf-row">
+                                <td>Sparrate:</td>
+                                <td id="etf-th-house-rate">0,00 €</td>
+                            </tr>
                             <tr class="total-etf-row">
                                 <td>Endvermögen:</td>
                                 <td id="etf-th-house-total">0,00 €</td>
@@ -1143,31 +1262,27 @@
                                 <td id="etf-th-house-rent-verzehr">0,00 €</td>
                             </tr>
                         </table>
-                    </div>
-                </div>
 
-                <div style="border-top: 1px dashed var(--border-color); padding-top: 20px;">
-
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-                        Detaillierte Entwicklung über 5 Jahre basierend auf dem eingestellten Startkapital und der
-                        jeweiligen
-                        monatlichen Sparrate.
-                    </p>
-                    <div class="detail-table-wrapper">
-                        <table class="detail-table">
-                            <thead>
-                                <tr>
-                                    <th>Jahr</th>
-                                    <th>Monatliche Sparrate</th>
-                                    <th>Einzahlungen kumuliert</th>
-                                    <th>Reine Zinsen (Zinseszins)</th>
-                                    <th>Gesamtvermögen</th>
-                                </tr>
-                            </thead>
-                            <tbody id="etf-detail-table-body">
-                            </tbody>
-                        </table>
+                        <!-- Zeitstrahl -->
+                        <div class="card-timeline">
+                            <div class="timeline-bar">
+                                <div class="timeline-segment phase-accumulation" title="5 Jahre Ansparphase"></div>
+                                <div class="timeline-segment phase-pension" title="Entnahmephase bis 85 J."></div>
+                                <div class="timeline-segment phase-late" title="Phase bis 110 J."></div>
+                            </div>
+                            <div class="timeline-labels">
+                                <span class="label-now"><strong class="date-now">Heute</strong><br><small
+                                        class="age-now">35 J.</small></span>
+                                <span class="label-5y"><strong class="date-5y">+5 J.</strong><br><small
+                                        class="age-5y">40 J.</small></span>
+                                <span class="label-85y"><strong class="date-85y">+50 J.</strong><br><small>85
+                                        J.</small></span>
+                                <span class="label-110y"><strong class="date-110y">+75 J.</strong><br><small>110
+                                        J.</small></span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -1563,6 +1678,7 @@
                 // >>> ADD THESE TWO LINES HERE <<<
                 // Use the newly calculated wealth totals for the graph
                 updateChart(simDiff.total, simDe.total, simTh.total, simThHouse.total);
+                updateCardTimelines();
             }
 
             function exportToPDF() {
@@ -1670,6 +1786,36 @@
             function updateChart(wertA, wertB, wertC, wertD) {
                 szenarioChart.data.datasets[0].data = [wertA, wertB, wertC, wertD];
                 szenarioChart.update();
+            }
+            function updateCardTimelines() {
+                const currentAgeEl = document.getElementById('current-age-input');
+                const currentAge = currentAgeEl ? (parseInt(currentAgeEl.value) || 35) : 35;
+
+                const now = new Date();
+                const currentYear = now.getFullYear(); // z.B. 2026
+
+                const year5 = currentYear + 5;
+                const year85 = currentYear + (85 - currentAge);
+                const year110 = currentYear + (110 - currentAge);
+
+                // Alle Karten-Timeline-Labels aktualisieren
+                document.querySelectorAll('.card-timeline').forEach(timeline => {
+                    const elNow = timeline.querySelector('.date-now');
+                    const elAgeNow = timeline.querySelector('.age-now');
+                    const el5y = timeline.querySelector('.date-5y');
+                    const elAge5y = timeline.querySelector('.age-5y');
+                    const el85y = timeline.querySelector('.date-85y');
+                    const el110y = timeline.querySelector('.date-110y');
+
+                    if (elNow) elNow.innerText = currentYear;
+                    if (elAgeNow) elAgeNow.innerText = `${currentAge} J.`;
+
+                    if (el5y) el5y.innerText = year5;
+                    if (elAge5y) elAge5y.innerText = `${currentAge + 5} J.`;
+
+                    if (el85y) el85y.innerText = year85;
+                    if (el110y) el110y.innerText = year110;
+                });
             }
         </script>
 </body>

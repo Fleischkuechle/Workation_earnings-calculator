@@ -841,6 +841,26 @@
             opacity: 0.85;
             /* Optional: slightly softens the color to make Netto pop more */
         }
+
+        body.clean-pdf-mode #capture-area {
+            width: 1100px !important;
+            /* Forces fixed rendering width for crisp canvas conversion */
+            margin: 0 auto !important;
+            background: #ffffff !important;
+        }
+
+        /* Elements you want to hide in the PDF */
+        body.clean-pdf-mode .no-print,
+        body.clean-pdf-mode button,
+        body.clean-pdf-mode nav {
+            display: none !important;
+        }
+
+        /* Force body background and full visibility during export */
+        body.clean-pdf-mode {
+            background: #ffffff !important;
+            overflow: visible !important;
+        }
     </style>
 </head>
 
@@ -2015,21 +2035,30 @@
 
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
-            const targetElement = document.getElementById('capture-area');
 
+            // Enable PDF print mode for styling tweaks
             document.body.classList.add('clean-pdf-mode');
 
+            // Select the full scrollable page document
+            const targetElement = document.documentElement;
+
             const options = {
-                scale: 2,
+                scale: 2, // High resolution output
                 useCORS: true,
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                // Force rendering at full page scroll width and height
+                width: targetElement.scrollWidth,
+                height: targetElement.scrollHeight,
+                windowWidth: targetElement.scrollWidth,
+                windowHeight: targetElement.scrollHeight
             };
 
+            // Small delay to ensure any layout changes settle
             setTimeout(() => {
-                html2canvas(targetElement, options).then(canvas => {
-                    const pdf = new jsPDF('l', 'mm', 'a4');
-                    const pdfWidth = 297;
-                    const pdfHeight = 210;
+                html2canvas(document.body, options).then(canvas => {
+                    const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait mode ('p') for full page exports
+                    const pdfWidth = 210;
+                    const pdfHeight = 297;
                     const marginX = 10;
                     const marginTop = 12;
                     const marginBottom = 10;
@@ -2037,32 +2066,60 @@
                     const usableWidth = pdfWidth - (marginX * 2);
                     const usableHeight = pdfHeight - marginTop - marginBottom;
 
+                    // Calculate scaled height proportionally based on canvas aspect ratio
+                    const imgWidth = usableWidth;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
                     const imgData = canvas.toDataURL('image/png');
-                    pdf.addImage(imgData, 'PNG', marginX, marginTop, usableWidth, usableHeight);
 
-                    pdf.setFont('Helvetica', 'normal');
-                    pdf.setFontSize(8);
-                    pdf.setTextColor(110, 110, 110);
-                    pdf.text('Umfassender Dreifach-Standortvergleich', marginX, marginTop - 4);
+                    let heightLeft = imgHeight;
+                    let position = marginTop;
+                    let pageNum = 1;
+                    const totalPages = Math.ceil(imgHeight / usableHeight);
 
-                    const dateStr = new Date().toLocaleDateString('de-DE');
-                    pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 4, { align: 'right' });
+                    // Helper to render header and footer on every page
+                    const addHeaderFooter = (currentPage, totalPages) => {
+                        pdf.setFont('Helvetica', 'normal');
+                        pdf.setFontSize(8);
+                        pdf.setTextColor(110, 110, 110);
 
-                    pdf.setDrawColor(210, 210, 210);
-                    pdf.setLineWidth(0.2);
-                    pdf.line(marginX, marginTop - 2, pdfWidth - marginX, marginTop - 2);
+                        // Header
+                        pdf.text('Umfassender Finanz- und Standortvergleich', marginX, marginTop - 4);
+                        const dateStr = new Date().toLocaleDateString('de-DE');
+                        pdf.text(`Erstellt am: ${dateStr}`, pdfWidth - marginX, marginTop - 4, { align: 'right' });
 
-                    pdf.line(marginX, pdfHeight - marginBottom + 2, pdfWidth - marginX, pdfHeight - marginBottom + 2);
-                    pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
-                    pdf.text('Seite 1 von 1', pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
+                        pdf.setDrawColor(210, 210, 210);
+                        pdf.setLineWidth(0.2);
+                        pdf.line(marginX, marginTop - 2, pdfWidth - marginX, marginTop - 2);
 
-                    pdf.save('Finanzbericht_Standortvergleich.pdf');
+                        // Footer
+                        pdf.line(marginX, pdfHeight - marginBottom + 2, pdfWidth - marginX, pdfHeight - marginBottom + 2);
+                        pdf.text('Alle Berechnungen basieren auf Benutzereingaben und Schätzungen.', marginX, pdfHeight - marginBottom + 6);
+                        pdf.text(`Seite ${currentPage} von ${totalPages}`, pdfWidth - marginX, pdfHeight - marginBottom + 6, { align: 'right' });
+                    };
+
+                    // First Page
+                    pdf.addImage(imgData, 'PNG', marginX, position, imgWidth, imgHeight);
+                    addHeaderFooter(pageNum, totalPages);
+                    heightLeft -= usableHeight;
+
+                    // Multi-page handling: Slice canvas vertically across subsequent pages
+                    while (heightLeft > 0) {
+                        position = marginTop - (imgHeight - heightLeft);
+                        pdf.addPage('a4', 'p');
+                        pageNum++;
+                        pdf.addImage(imgData, 'PNG', marginX, position, imgWidth, imgHeight);
+                        addHeaderFooter(pageNum, totalPages);
+                        heightLeft -= usableHeight;
+                    }
+
+                    pdf.save('Finanzbericht_Gesamte_Seite.pdf');
+
+                    // Clean up print class
                     document.body.classList.remove('clean-pdf-mode');
                 });
-            }, 150);
+            }, 200);
         }
-
-
         document.getElementById('deduct-airbnb-checkbox')?.addEventListener('change', calculate);
         // AUTOMATISCHE EVENT-LISTENER (Verhindert doppeltes OnInput im HTML)
         document.addEventListener("DOMContentLoaded", () => {

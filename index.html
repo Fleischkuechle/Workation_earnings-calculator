@@ -873,6 +873,32 @@
             background: #ffffff !important;
             overflow: visible !important;
         }
+
+        /* Toggle Switch Slider Styling */
+        .switch input:checked+.slider {
+            background-color: #319795;
+            /* Accent color when active */
+        }
+
+        .switch input:focus+.slider {
+            box-shadow: 0 0 1px #319795;
+        }
+
+        .switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        .switch input:checked+.slider:before {
+            transform: translateX(24px);
+        }
     </style>
 </head>
 
@@ -1175,7 +1201,35 @@
             </div>
         </div>
     </div>
+    <!-- TAX STATUS TOGGLE SWITCH WITH LIVE IMPACT BADGE -->
+    <div class="tax-status-toggle-container"
+        style="margin: 20px 0; display: flex; flex-direction: column; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.05); padding: 14px 20px; border-radius: 8px;">
 
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <span id="label-single-tax"
+                style="font-weight: bold; color: var(--text-muted, #ccc); transition: color 0.3s;">
+                Einzelveranlagung EKST: <span id="rate-single-display" style="font-size: 0.85em; opacity: 0.8;"></span>
+            </span>
+
+            <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+                <input type="checkbox" id="joint-tax-toggle" onchange="calculate()"
+                    style="opacity: 0; width: 0; height: 0;">
+                <span class="slider"
+                    style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4a5568; transition: .4s; border-radius: 34px;"></span>
+            </label>
+
+            <span id="label-joint-tax" style="font-weight: bold; color: #fff; transition: color 0.3s;">
+                Gemeinsam veranlagt (Ehegattensplitting) EKST: <span id="rate-joint-display"
+                    style="font-size: 0.85em; opacity: 0.8;"></span>
+            </span>
+        </div>
+
+        <!-- LIVE DELTA / IMPACT BADGE -->
+        <div id="tax-impact-badge"
+            style="font-size: 0.88rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.08); display: inline-block;">
+            <!-- Dynamically populated by JS -->
+        </div>
+    </div>
     <div class="three-column-grid">
         <div class="card gkv">
             <h2>Ergebnis Modell 1: Deutschland</h2>
@@ -1654,15 +1708,34 @@
             return amount.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
         }
 
-        function estimateTax(annualIncome) {
-            let taxable = annualIncome - 11784;
-            if (taxable <= 0) return 0;
-            let tax = 0;
-            if (taxable <= 50000) { tax = taxable * 0.20; }
-            else { tax = 50000 * 0.20 + (taxable - 50000) * 0.35; }
-            return tax / 12;
-        }
+        // function estimateTax(annualIncome) {
+        //     let taxable = annualIncome - 11784;
+        //     if (taxable <= 0) return 0;
+        //     let tax = 0;
+        //     if (taxable <= 50000) { tax = taxable * 0.20; }
+        //     else { tax = 50000 * 0.20 + (taxable - 50000) * 0.35; }
+        //     return tax / 12;
+        // }
+        function estimateTax2026(annualIncome, isJoint = false) {
+            const calcIncome = Math.floor(isJoint ? annualIncome / 2 : annualIncome);
+            if (calcIncome <= 12348) return 0;
 
+            let tax = 0;
+            if (calcIncome <= 17799) {
+                const y = (calcIncome - 12348) / 10000;
+                tax = (914.51 * y + 1400) * y;
+            } else if (calcIncome <= 69878) {
+                const z = (calcIncome - 17799) / 10000;
+                tax = (173.10 * z + 2397) * z + 1034.87;
+            } else if (calcIncome <= 277825) {
+                tax = 0.42 * calcIncome - 11135.63;
+            } else {
+                tax = 0.45 * calcIncome - 19470.38;
+            }
+
+            const annualTax = Math.floor(tax) * (isJoint ? 2 : 1);
+            return annualTax / 12; // Returns monthly tax
+        }
         function simulateETFWithStart(startCapital, monthlyRate, years, annualReturn) {
             let months = years * 12;
             let monthlyReturn = Math.pow(1 + annualReturn, 1 / 12) - 1;
@@ -1722,8 +1795,6 @@
             // Berechnet alles exakt EINMAL nach dem Laden
             calculate();
         }
-
-
         function calculate() {
             const getVal = (id) => {
                 let el = document.getElementById(id);
@@ -1741,11 +1812,16 @@
             let zuschussP2 = getVal('zuschuss-p2');
             let vermietungAirbnb = getVal('vermietung-airbnb');
 
-            // 1. Read the checkbox state
+            // Read the checkbox states
             let deductAirbnbCheckbox = document.getElementById('deduct-airbnb-checkbox');
             let isDeductAirbnb = deductAirbnbCheckbox ? deductAirbnbCheckbox.checked : false;
-            // Save state
+
+            let jointTaxToggle = document.getElementById('joint-tax-toggle');
+            let isJointTax = jointTaxToggle ? jointTaxToggle.checked : false;
+
+            // Save states
             localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
+            localStorage.setItem('joint-tax-toggle', isJointTax);
 
             let gesamtZuschuss = zuschussP1 + zuschussP2;
             let gesamtAbzugDe = gesamtZuschuss + vermietungAirbnb;
@@ -1757,7 +1833,6 @@
             localStorage.setItem('f_zuschuss_p1', zuschussP1);
             localStorage.setItem('f_zuschuss_p2', zuschussP2);
             localStorage.setItem('f_vermietung_airbnb', vermietungAirbnb);
-            localStorage.setItem('deduct-airbnb-checkbox', isDeductAirbnb);
 
             let totalDeCoL = 0;
             let totalThCoL = 0;
@@ -1796,7 +1871,7 @@
                 thMediaSum += swVal;
             }
 
-            // 2. Adjust totalThHouseCoL based on the checkbox toggle
+            // Adjust totalThHouseCoL based on the checkbox toggle
             let effectiveDeHousing = isDeductAirbnb
                 ? Math.max(0, deHousingSum - vermietungAirbnb)
                 : deHousingSum;
@@ -1841,11 +1916,97 @@
             const minGrenz = 1318.33, maxGrenz = 5812.50;
             let beitragsBasis = Math.max(minGrenz, Math.min(maxGrenz, brutto));
             let gkvKv = brutto === 0 ? minGrenz * 0.211 : beitragsBasis * 0.211;
-            let gkvTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - gkvKv) * 12) : 0;
+
+            // =========================================================================
+            // DYNAMIC TAX CALCULATION & TOGGLE UI UPDATES
+            // =========================================================================
+            const taxableAmountGkv = Math.max(0, brutto - gkvKv) * 12;
+
+            // Calculate tax for both Einzel (false) and Joint (true)
+            let gkvTaxSingle = typeof estimateTax2026 === 'function' ? estimateTax2026(taxableAmountGkv, false) : 0;
+            let gkvTaxJoint = typeof estimateTax2026 === 'function' ? estimateTax2026(taxableAmountGkv, true) : 0;
+
+            // Effective tax rates (%) relative to Brutto
+            let rateSingle = brutto > 0 ? ((gkvTaxSingle / brutto) * 100).toFixed(1) : "0.0";
+            let rateJoint = brutto > 0 ? ((gkvTaxJoint / brutto) * 100).toFixed(1) : "0.0";
+
+            // // Monthly difference (€): Positive value means Ehegattensplitting saves tax money
+            // let splittingSavings = gkvTaxSingle - gkvTaxJoint;
+            // Monthly and Annual differences (€): Positive value means Ehegattensplitting saves tax money
+            let splittingSavingsMonthly = gkvTaxSingle - gkvTaxJoint;
+            let splittingSavingsAnnual = splittingSavingsMonthly * 12;
+            // Update labels and opposite rates next to switch
+            let labelSingle = document.getElementById('label-single-tax');
+            let labelJoint = document.getElementById('label-joint-tax');
+            let displaySingleRate = document.getElementById('rate-single-display');
+            let displayJointRate = document.getElementById('rate-joint-display');
+            let impactBadge = document.getElementById('tax-impact-badge');
+
+            if (displaySingleRate) displaySingleRate.innerText = `(${rateSingle}%)`;
+            if (displayJointRate) displayJointRate.innerText = `(${rateJoint}%)`;
+
+            // if (isJointTax) {
+            //     // Joint is active
+            //     if (labelSingle) labelSingle.style.color = "var(--text-muted, #ccc)";
+            //     if (labelJoint) labelJoint.style.color = "#fff";
+
+            //     if (impactBadge) {
+            //         if (splittingSavings > 0) {
+            //             impactBadge.innerHTML = `Vorteil durch Splitting: <span style="color: #48bb78;">+${formatEuro(splittingSavings)} / M.</span> (Wechsel zu Einzel: ${rateSingle}%)`;
+            //         } else if (splittingSavings < 0) {
+            //             impactBadge.innerHTML = `<span style="color: #e53e3e;">You are losing ${formatEuro(Math.abs(splittingSavings))} / M.</span> because not married (Wechsel zu Einzel: ${rateSingle}%)`;
+            //         } else {
+            //             impactBadge.innerHTML = `Kein Unterschied bei Splitting (Wechsel zu Einzel: ${rateSingle}%)`;
+            //         }
+            //     }
+            // } else {
+            //     // Einzel is active
+            //     if (labelSingle) labelSingle.style.color = "#fff";
+            //     if (labelJoint) labelJoint.style.color = "var(--text-muted, #ccc)";
+
+            //     if (impactBadge) {
+            //         if (splittingSavings > 0) {
+            //             impactBadge.innerHTML = `<span style="color: #e53e3e;">You are losing ${formatEuro(splittingSavings)} / M.</span> because not married (Wechsel zu Splitting: ${rateJoint}%)`;
+            //         } else {
+            //             impactBadge.innerHTML = `Kein Unterschied bei Splitting (Wechsel zu Splitting: ${rateJoint}%)`;
+            //         }
+            //     }
+            // }
+
+            if (isJointTax) {
+                // Joint is active
+                if (labelSingle) labelSingle.style.color = "var(--text-muted, #ccc)";
+                if (labelJoint) labelJoint.style.color = "#fff";
+
+                if (impactBadge) {
+                    if (splittingSavingsMonthly > 0) {
+                        impactBadge.innerHTML = `Vorteil durch Splitting: <span style="color: #48bb78;">+${formatEuro(splittingSavingsMonthly)} / M. (${formatEuro(splittingSavingsAnnual)} / Jahr)</span> (Wechsel zu Einzel: ${rateSingle}%)`;
+                    } else if (splittingSavingsMonthly < 0) {
+                        impactBadge.innerHTML = `<span style="color: #e53e3e;">You are losing ${formatEuro(Math.abs(splittingSavingsMonthly))} / M. (${formatEuro(Math.abs(splittingSavingsAnnual))} / Jahr)</span> because not married (Wechsel zu Einzel: ${rateSingle}%)`;
+                    } else {
+                        impactBadge.innerHTML = `Kein Unterschied bei Splitting (Wechsel zu Einzel: ${rateSingle}%)`;
+                    }
+                }
+            } else {
+                // Einzel is active
+                if (labelSingle) labelSingle.style.color = "#fff";
+                if (labelJoint) labelJoint.style.color = "var(--text-muted, #ccc)";
+
+                if (impactBadge) {
+                    if (splittingSavingsMonthly > 0) {
+                        impactBadge.innerHTML = `<span style="color: #e53e3e;">You are losing ${formatEuro(splittingSavingsMonthly)} / M. (${formatEuro(splittingSavingsAnnual)} / Jahr)</span> because not married (Wechsel zu Splitting: ${rateJoint}%)`;
+                    } else {
+                        impactBadge.innerHTML = `Kein Unterschied bei Splitting (Wechsel zu Splitting: ${rateJoint}%)`;
+                    }
+                }
+            }
+
+            // Assign active tax value based on selected toggle mode
+            let gkvTax = isJointTax ? gkvTaxJoint : gkvTaxSingle;
             let gkvNetto = brutto - gkvKv - gkvTax;
             let gkvSavings = gkvNetto - totalDeCoL;
 
-            let intlTax = typeof estimateTax === 'function' ? estimateTax(Math.max(0, brutto - intlKv) * 12) : 0;
+            let intlTax = typeof estimateTax2026 === 'function' ? estimateTax2026(Math.max(0, brutto - intlKv) * 12, isJointTax) : 0;
             let intlNetto = brutto - intlKv - intlTax;
             let intlSavings = intlNetto - totalThCoL;
 
@@ -2033,10 +2194,9 @@
 
                 detailTableBody.appendChild(fragment);
             }
-            // >>> ADD THESE TWO LINES HERE <<<
-            // Use the newly calculated wealth totals for the graph
+
             updateChart(simDiff.total, simDe.total, simTh.total, simThHouse.total);
-            // 3. Update the cards and timeline labels
+
             updateScenarioCards([
                 { key: 'diff', sim: simDiff },
                 { key: 'de', sim: simDe },
@@ -2044,6 +2204,7 @@
                 { key: 'th-house', sim: simThHouse }
             ]);
         }
+
 
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
